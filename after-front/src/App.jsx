@@ -5,7 +5,6 @@ import MainDettaglio from './components/MainDettaglio';
 import MainCarello from './components/MainCarello';
 import MainWishlist from './components/MainWishlist';
 import MainUtente from './components/MainUtente';
-import PaginaDettaglio from './pages/PaginaDettaglio';
 
 function App() {
 
@@ -15,7 +14,7 @@ function App() {
         <Routes>
           <Route element={<DefaultLayout />}>
             <Route path="/" element={<MainHomepage />} />
-            <Route path="/dettaglio/:id" element={<PaginaDettaglio />} />
+            <Route path="/dettaglio/:id" element={<MainDettaglio />} />
             <Route path="/carello" element={<MainCarello />} />
             <Route path="/wishlist" element={<MainWishlist />} />
             <Route path="/utente" element={<MainUtente />} />

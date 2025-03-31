@@ -3,8 +3,6 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 export default function SearchBar() {
 
-    const [search, setSearch] = useState('');
-
     return (
         <>
             <div  className="d-flex gap-2">

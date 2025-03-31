@@ -1,26 +1,33 @@
 import { faCartShopping, faCloud, faFire, faGamepad, faHeart, faShareNodes, faUser, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import gioco from "../../data-test/data-test";
+import gamesData from "../../data-test/data-test.js";
+import { useParams } from 'react-router-dom';
 
 export default function MainDettaglio() {
+
+    const { id } = useParams();
+    const game = gamesData.find(game => game.id === Number(id));
+
     const [usersOnline, setUsersOnline] = useState(0);
 
     useEffect(() => {
         setUsersOnline(Math.floor(Math.random() * (1000 - 100 + 1)) + 100);
     }, []);
 
+
+
     return (
         <div className="container mt-5">
             <div className="row text-center">
                 <div className="col-6">
-                    <img src={gioco.image_url} alt={gioco.name} />
+                    <img src={game.image_url} alt={game.name} className="game-image-dettaglio"/>
                 </div>
                 <div className="col-6">
-                    <h1>{gioco.name}</h1>
-                    <p>Prezzo: {gioco.original_price} €</p>
-                    <p>Data di rilascio: {new Date(gioco.created_at).toLocaleDateString()}</p>
-                    <p>Disponibile per: {gioco.platform.join(", ")}</p>
+                    <h1>{game.name}</h1>
+                    <p>Prezzo: {game.original_price} €</p>
+                    <p>Data di rilascio: {new Date(game.created_at).toLocaleDateString()}</p>
+                    <p>Disponibile per: {game.platform.join(", ")}</p>
                     <p> users on this page: {usersOnline}
                         <FontAwesomeIcon icon={faFire} color="red" style={{ marginLeft: "3px" }} />
                     </p>
@@ -38,7 +45,7 @@ export default function MainDettaglio() {
 
                 <div className="col-12 mt-5">
                     <h2>Descrizione</h2>
-                    <p className="mt-3">{gioco.description}</p>
+                    <p className="mt-3">{game.description}</p>
                     <h2>Dettagli</h2>
                     <p className="mt-3">
                         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente nam officia temporibus. 
@@ -49,7 +56,7 @@ export default function MainDettaglio() {
                 </div>
 
                 <div className="col-12 mt-5">
-                    <iframe width="1000" height="500" src={gioco.trailer_url} title={gioco.name} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                    <iframe width="1000" height="500" src={game.trailer_url} title={game.name} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
                 </div>
 
                 <div className="container mt-5">
