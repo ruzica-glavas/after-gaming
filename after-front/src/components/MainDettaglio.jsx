@@ -25,11 +25,13 @@ export default function MainDettaglio() {
                         <FontAwesomeIcon icon={faFire} color="red" style={{ marginLeft: "3px" }} />
                     </p>
                     <div className="d-flex justify-content-center gap-3 mt-5">
-                        <button className="btn btn-primary">
-                            <FontAwesomeIcon icon={faHeart} style={{ color: "grey", fontSize: "24px" }} />Add to wishlist
+                        <button className="btn btn-primary d-flex gap-2">
+                            <FontAwesomeIcon icon={faHeart} style={{ color: "grey", fontSize: "24px" }} />
+                            <p className="mb-0">Add to wishlist</p>
                         </button>
-                        <button className="btn btn-primary">
-                            <FontAwesomeIcon icon={faCartShopping} style={{ color: "grey", fontSize: "24px" }} />Add to cart
+                        <button className="btn btn-primary d-flex gap-2">
+                            <FontAwesomeIcon icon={faCartShopping} style={{ color: "grey", fontSize: "24px" }} />
+                            <p className="mb-0">Add to cart</p>
                         </button>
                     </div>
                 </div>
@@ -82,31 +84,31 @@ export default function MainDettaglio() {
                         <h2>Caratteristiche del gioco</h2>
                         <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 mt-3 h-50">
                             <div class="col">
-                                <div class="p-3 border h-100 align-content-center">
+                                <div class="p-3 border h-100 align-content-center rounded">
                                     <FontAwesomeIcon icon={faUser} /> 
                                     <h3>Single-player</h3>
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="p-3 border h-100 align-content-center">
+                                <div class="p-3 border h-100 align-content-center rounded">
                                     <FontAwesomeIcon icon={faUsers} />
                                     <h3>Multiplayer</h3>
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="p-3 border h-100 align-content-center">
+                                <div class="p-3 border h-100 align-content-center rounded">
                                     <FontAwesomeIcon icon={faGamepad} />
                                     <h3>Xbox controller support</h3>
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="p-3 border h-100 align-content-center">
+                                <div class="p-3 border h-100 align-content-center rounded">
                                     <FontAwesomeIcon icon={faCloud} />
                                     <h3>Steam cloud</h3>
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="p-3 border h-100 align-content-center">
+                                <div class="p-3 border h-100 align-content-center rounded">
                                     <FontAwesomeIcon icon={faShareNodes} />
                                     <h3>Family sharing</h3>
                                 </div>
