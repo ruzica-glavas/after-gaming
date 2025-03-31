@@ -2,16 +2,13 @@ import mysql from "mysql2";
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
-import serverRouter from "../routers/serverRouter.js"
-
-
+import serverRouter from "../routers/serverRouter.js";
+import { PORT, default as app } from "./app.js";
 
 dotenv.config();
 
 app.use(cors());
 app.use(express.json());
-
-
 
 // Connessione al database MySQL
 const db = mysql.createConnection({
@@ -35,9 +32,11 @@ app.set("db", db);
 // Usa le route definite in serverRouter
 app.use("/api", serverRouter);
 
+// Middleware per la gestione degli errori
+app.use(errorHandler);
+
 app.listen(port, () => {
   console.log(`Server avviato sulla porta: ${port}`);
 });
-
 
 export default db;
