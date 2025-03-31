@@ -49,7 +49,38 @@ export default function MainDettaglio() {
                 <div className="col-12 mt-5">
                     <iframe width="1000" height="500" src={gioco.trailer_url} title={gioco.name} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
                 </div>
+
+                <div className="container mt-5">
+                    <div className="row">
+                        <h2>Configurazioni</h2>
+
+                    <div className="col-6 text-start mt-3">
+                        <h3>Configurazione Minima</h3>
+                        <ul className="list-unstyled text-start mt-3">
+                            <li><strong>OS:</strong> Windows 10/11</li>
+                            <li><strong>Processore:</strong> Intel Core i7 8700k / AMD Ryzen 5 3600</li>
+                            <li><strong>Memoria:</strong> 16 GB RAM</li>
+                            <li><strong>Grafica:</strong> Nvidia GeForce GTX 1070 8GB / AMD Radeon RX 5700 8GB / Intel Arc A580 8GB (REBAR ON)</li>
+                            <li><strong>DirectX:</strong> Version 12</li>
+                            <li><strong>Storage:</strong> 115 GB available space</li>
+                        </ul>
+                    </div>
+                    
+                    <div className="col-6 text-start mt-3">
+                        <h3>Configurazione Raccomandata</h3>
+                        <ul className="list-unstyled text-start mt-3">
+                            <li><strong>OS:</strong> Windows 10/11</li>
+                            <li><strong>Processore:</strong> Intel Core i5 11600k / AMD Ryzen 5 5600x</li>
+                            <li><strong>Memoria:</strong> 16 GB RAM</li>
+                            <li><strong>Grafica:</strong> Nvidia GeForce RTX 3060Ti 8GB / AMD Radeon RX 6700 XT 12GB / Intel Arc B580 12GB (REBAR ON)</li>
+                            <li><strong>DirectX:</strong> Version 12</li>
+                            <li><strong>Storage:</strong> 115 GB available space</li>
+                        </ul>
+                    </div>
+
+                </div>
             </div>
         </div>
+    </div>
     );
 }
