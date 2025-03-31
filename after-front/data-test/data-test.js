@@ -1,14 +1,76 @@
-const gioco = {
-    id: 1,
-    slug: "black-myth-wukong",
-    name: "Black Myth: Wukong",
-    description: "Black Myth: Wukong è un GDR d'azione ispirato al romanzo classico cinese 'Il viaggio in Occidente'. Il giocatore controlla il Predestinato, una scimmia antropomorfa basata su Sun Wukong, affrontando nemici e sfide in un mondo affascinante.",
-    price: 49.99,
-    original_price: 59.99,
-    image_url: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2358720/f40ef565c380c617020e559b4b4b089edd93ec09/capsule_616x353.jpg?t=1739542141",
-    platform: ["PlayStation 5", "Windows", "Xbox Series X/S"],
-    trailer_url: "https://www.youtube.com/embed/5pL3joRyeGY?si=wJ10u4OtuRBcKnsE",
-    created_at: new Date("2024-08-20")
-  };
-
-  export default gioco
+const games = [
+    {
+      id: 1,
+      slug: "helldivers-2",
+      name: "Helldivers 2",
+      description: "Uno sparatutto cooperativo in terza persona dove combatti per la democrazia galattica.",
+      price: 39.99,
+      original_price: 49.99,
+      image_url: "https://gmedia.playstation.com/is/image/SIEPDC/Helldiver-2-omens-of-tyranny-logo-01-11dec24$it?$native$",
+      platform: ["PC", "PlayStation 5"],
+      trailer_url: "https://www.youtube.com/watch?v=trailer-helldivers2",
+      created_at: "2024-02-08"
+    },
+    {
+      id: 2,
+      slug: "final-fantasy-7-rebirth",
+      name: "Final Fantasy VII Rebirth",
+      description: "La seconda parte del remake di Final Fantasy VII, con una storia ancora più espansa.",
+      price: 69.99,
+      original_price: 79.99,
+      image_url: "https://i0.wp.com/www.pcmrace.com/wp-content/uploads/2024/02/Final-Fantasy-VII-Rebirth-key-art-logo.jpg?resize=1200%2C520&ssl=1",
+      platform: ["PlayStation 5"],
+      trailer_url: "https://www.youtube.com/watch?v=trailer-ff7rebirth",
+      created_at: "2024-02-29"
+    },
+    {
+      id: 3,
+      slug: "dragon-dogma-2",
+      name: "Dragon’s Dogma 2",
+      description: "Un action RPG open world con combattimenti epici e un sistema di pedine migliorato.",
+      price: 59.99,
+      original_price: 69.99,
+      image_url: "https://www.rpgfan.com/wp-content/uploads/2023/05/Dragons-Dogma-2-Artwork-001-1280x720.jpg",
+      platform: ["PC", "PlayStation 5", "Xbox Series X"],
+      trailer_url: "https://www.youtube.com/watch?v=trailer-dragonsdogma2",
+      created_at: "2024-03-22"
+    },
+    {
+      id: 4,
+      slug: "stellar-blade",
+      name: "Stellar Blade",
+      description: "Un action game in stile sci-fi con combattimenti frenetici e una storia coinvolgente.",
+      price: 59.99,
+      original_price: 69.99,
+      image_url: "https://image.api.playstation.com/vulcan/ap/rnd/202401/2211/19248572f175c4e5ba87f43220fd82c0ad4651daabc5af92.jpg",
+      platform: ["PlayStation 5"],
+      trailer_url: "https://www.youtube.com/watch?v=trailer-stellarblade",
+      created_at: "2024-04-26"
+    },
+    {
+      id: 5,
+      slug: "black-myth-wukong",
+      name: "Black Myth: Wukong",
+      description: "Un soulslike basato sulla mitologia cinese, con grafica mozzafiato e combattimenti intensi.",
+      price: 59.99,
+      original_price: 69.99,
+      image_url: "https://cdn1.epicgames.com/spt-assets/ca9ef1bcf2f54043baac351366aec677/black-myth-wukong-jz9yr.jpg",
+      platform: ["PC", "PlayStation 5", "Xbox Series X"],
+      trailer_url: "https://www.youtube.com/watch?v=trailer-blackmyth",
+      created_at: "2024-08-20"
+    },
+    {
+      id: 6,
+      slug: "hades-2",
+      name: "Hades II",
+      description: "Seguito del pluripremiato roguelike, con nuove meccaniche e ambientazioni mitologiche.",
+      price: 29.99,
+      original_price: 39.99,
+      image_url: "https://preview.redd.it/hades-ii-main-menu-background-upscaled-to-4k-v0-gj5mdthv5bvc1.png?auto=webp&s=91a006092dc362d09845a021e092297c3ae072b4",
+      platform: ["PC"],
+      trailer_url: "https://www.youtube.com/watch?v=qC7rCUbExzE",
+      created_at: "2024-05-15"
+    }
+  ];
+  
+  export default games;
