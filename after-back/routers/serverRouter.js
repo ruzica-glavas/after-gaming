@@ -1,35 +1,43 @@
-const express = require("express");
-const router = express.Router();
-const afterController = require("../controllers/afterController");
+import {
+  getProducts,
+  getProductBySlug,
+  getDigitalKeys,
+  applyDiscount,
+  getPromotions,
+  checkout,
+} from "../controllers/afterController.js";
+import { validateDiscount, validateCheckout } from "../middleware.js";
+
+import { index, show } from "../controllers/afterController";
 
 router.get("/products", (req, res) => {
   req.db = req.app.get("db");
-  afterController.getProducts(req, res);
+  getProducts(req, res);
 });
 
 router.get("/products/:slug", (req, res) => {
   req.db = req.app.get("db");
-  afterController.getProductBySlug(req, res);
+  getProductBySlug(req, res);
 });
 
 router.get("/digital-keys", (req, res) => {
   req.db = req.app.get("db");
-  afterController.getDigitalKeys(req, res);
+  getDigitalKeys(req, res);
 });
 
-router.post("/apply-discount", (req, res) => {
+router.post("/apply-discount", validateDiscount, (req, res) => {
   req.db = req.app.get("db");
-  afterController.applyDiscount(req, res);
+  applyDiscount(req, res);
 });
 
-router.post("/checkout", (req, res) => {
+router.post("/checkout", validateCheckout, (req, res) => {
   req.db = req.app.get("db");
-  afterController.checkout(req, res);
+  checkout(req, res);
 });
 
 router.get("/promotions", (req, res) => {
   req.db = req.app.get("db");
-  afterController.getPromotions(req, res);
+  getPromotions(req, res);
 });
 
-module.exports = router;
+export default router;
