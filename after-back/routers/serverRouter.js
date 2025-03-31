@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const afterController = require("../controllers/afterController");
 
+import { index, show } from "../controllers/afterController";
+
 router.get("/products", (req, res) => {
   req.db = req.app.get("db");
   afterController.getProducts(req, res);

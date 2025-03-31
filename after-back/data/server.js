@@ -1,16 +1,17 @@
-const express = require("express");
-const mysql = require("mysql2");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const serverRouter = require("./routers/serverRouter");
+import mysql from "mysql2";
+import dotenv from "dotenv";
+import express from "express";
+import cors from "cors";
+import serverRouter from "../routers/serverRouter.js"
+
+
 
 dotenv.config();
 
-const app = express();
-
-// Middleware
 app.use(cors());
 app.use(express.json());
+
+
 
 // Connessione al database MySQL
 const db = mysql.createConnection({
@@ -34,8 +35,9 @@ app.set("db", db);
 // Usa le route definite in serverRouter
 app.use("/api", serverRouter);
 
-// Avvia il server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server avviato sulla porta ${PORT}`);
+app.listen(port, () => {
+  console.log(`🚀 Server avviato sulla porta: ${port}`);
 });
+
+
+export default db;
