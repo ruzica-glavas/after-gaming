@@ -8,6 +8,8 @@ import {
 } from "../controllers/afterController.js";
 import { validateDiscount, validateCheckout } from "../middleware.js";
 
+import { index, show } from "../controllers/afterController";
+
 router.get("/products", (req, res) => {
   req.db = req.app.get("db");
   getProducts(req, res);
