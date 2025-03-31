@@ -1,23 +1,35 @@
+import React from 'react'
+import { useState, useEffect } from 'react'
+import gamesData from '../../data-test/data-test.js'
+import Carosello from './Carosello'
+import UltimiArrivi from './UltimiArrivi.jsx'
+import Tendenze from './Tendenze.jsx'
+
 export default function MainHomepage() {
+
+    const [gameList, setGameList] = useState([])
+
+    useEffect(() => {
+        setGameList(gamesData)
+    }, [])
+
     return (
         <>
-            <div className="container d-flex flex-column justify-content-center">
-                <h2 className="text-center">Imperdibile</h2>
-                <img className="align-self-center" src="https://pbs.twimg.com/media/GmmT0BqW4AA28TI.jpg:large" style={{ width: "500px", height: "300px" }} alt=""/>
+            <div className="container d-flex flex-column align-items-center justify-content-center">
+                <h3>Imperdibili</h3>
+                <Carosello/>
             </div>
-            <div className="container d-flex justify-content-center gap-3 pt-4">
-                <div>
-                    <p>Ultime uscite {'\u2192'}</p>
-                    <img src="https://pbs.twimg.com/media/GmmT0BqW4AA28TI.jpg:large" style={{ width: "300px", height: "200px" }} alt=""/>
+            <div>
+                <div className="container d-flex flex-column pt-5 pb-4">
+                    <h4 className='px-4 pb-3'>Ultime uscite {'\u2192'}</h4>
+                    <UltimiArrivi/>
                 </div>
-                <hr style={{width: "2px", height: "245px", backgroundColor: "black", border: "none", margin: "0 10px"}} />
-                <div>
-                    <p>In tendenza {'\u2192'}</p>
-                    <img src="https://pbs.twimg.com/media/GmmT0BqW4AA28TI.jpg:large" style={{ width: "300px", height: "200px" }} alt=""/>
+                
+                <div className="container d-flex flex-column pt-5 pb-4">
+                    <h4 className='px-4 pb-3'>Tendenze {'\u2192'}</h4>
+                    <Tendenze/>
                 </div>
             </div>
-
         </>
-
     )
 };
