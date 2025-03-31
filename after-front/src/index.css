@@ -94,6 +94,13 @@
     border-radius: 15px;
 }
 
+.game-image-dettaglio {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
 .mb-0{
     margin-bottom: 0;
 }

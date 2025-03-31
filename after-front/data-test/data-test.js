@@ -8,7 +8,7 @@ const games = [
       original_price: 49.99,
       image_url: "https://gmedia.playstation.com/is/image/SIEPDC/Helldiver-2-omens-of-tyranny-logo-01-11dec24$it?$native$",
       platform: ["PC", "PlayStation 5"],
-      trailer_url: "https://www.youtube.com/watch?v=trailer-helldivers2",
+      trailer_url: "https://www.youtube.com/embed/UC5EpJR0GBQ?si=Dfn01km9vVVOm3T7",
       created_at: "2024-02-08"
     },
     {
