@@ -42,6 +42,7 @@
 
 
 
+
 .carousel-container {
     width: 80%;
     margin: auto;
@@ -91,4 +92,8 @@
     height: 200px;
     object-fit: cover;
     border-radius: 15px;
+}
+
+.mb-0{
+    margin-bottom: 0;
 }
