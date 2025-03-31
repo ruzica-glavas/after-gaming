@@ -1,7 +1,7 @@
-import gioco from "../../data-test/data-test";
-import { useEffect, useState } from "react";
+import { faCartShopping, faCloud, faFire, faGamepad, faHeart, faShareNodes, faUser, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFire, faCartShopping, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
+import gioco from "../../data-test/data-test";
 
 export default function MainDettaglio() {
     const [usersOnline, setUsersOnline] = useState(0);
@@ -36,9 +36,9 @@ export default function MainDettaglio() {
 
                 <div className="col-12 mt-5">
                     <h2>Descrizione</h2>
-                    <p>{gioco.description}</p>
+                    <p className="mt-3">{gioco.description}</p>
                     <h2>Dettagli</h2>
-                    <p>
+                    <p className="mt-3">
                         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente nam officia temporibus. 
                         Nam culpa corporis architecto voluptates, saepe obcaecati itaque vitae tempore atque. Velit modi, 
                         voluptates culpa ipsa quisquam porro!Lorem ipsum, dolor sit amet consectetur adipisicing elit.
@@ -76,6 +76,42 @@ export default function MainDettaglio() {
                             <li><strong>DirectX:</strong> Version 12</li>
                             <li><strong>Storage:</strong> 115 GB available space</li>
                         </ul>
+                    </div>
+
+                    <div class="container text-center mt-5">
+                        <h2>Caratteristiche del gioco</h2>
+                        <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 mt-3 h-50">
+                            <div class="col">
+                                <div class="p-3 border h-100 align-content-center">
+                                    <FontAwesomeIcon icon={faUser} /> 
+                                    <h3>Single-player</h3>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="p-3 border h-100 align-content-center">
+                                    <FontAwesomeIcon icon={faUsers} />
+                                    <h3>Multiplayer</h3>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="p-3 border h-100 align-content-center">
+                                    <FontAwesomeIcon icon={faGamepad} />
+                                    <h3>Xbox controller support</h3>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="p-3 border h-100 align-content-center">
+                                    <FontAwesomeIcon icon={faCloud} />
+                                    <h3>Steam cloud</h3>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="p-3 border h-100 align-content-center">
+                                    <FontAwesomeIcon icon={faShareNodes} />
+                                    <h3>Family sharing</h3>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
