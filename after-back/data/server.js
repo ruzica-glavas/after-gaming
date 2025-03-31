@@ -36,7 +36,7 @@ app.set("db", db);
 app.use("/api", serverRouter);
 
 app.listen(port, () => {
-  console.log(`🚀 Server avviato sulla porta: ${port}`);
+  console.log(`Server avviato sulla porta: ${port}`);
 });
 
 
