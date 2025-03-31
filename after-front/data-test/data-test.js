@@ -5,9 +5,9 @@ const gioco = {
     description: "Black Myth: Wukong è un GDR d'azione ispirato al romanzo classico cinese 'Il viaggio in Occidente'. Il giocatore controlla il Predestinato, una scimmia antropomorfa basata su Sun Wukong, affrontando nemici e sfide in un mondo affascinante.",
     price: 49.99,
     original_price: 59.99,
-    image_url: "https://upload.wikimedia.org/wikipedia/en/6/6e/Black_Myth_Wukong_cover_art.jpg",
+    image_url: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2358720/f40ef565c380c617020e559b4b4b089edd93ec09/capsule_616x353.jpg?t=1739542141",
     platform: ["PlayStation 5", "Windows", "Xbox Series X/S"],
-    trailer_url: "https://www.youtube.com/watch?v=O2nNljv0MOw",
+    trailer_url: "https://www.youtube.com/embed/5pL3joRyeGY?si=wJ10u4OtuRBcKnsE",
     created_at: new Date("2024-08-20")
   };
 
