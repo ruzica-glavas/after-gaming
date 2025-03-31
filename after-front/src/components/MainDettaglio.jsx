@@ -18,20 +18,36 @@ export default function MainDettaglio() {
                 </div>
                 <div className="col-6">
                     <h1>{gioco.name}</h1>
-                    <p>Prezzo: {gioco.price} €</p>
-                    <p>Prezzo originale: {gioco.original_price} €</p>
+                    <p>Prezzo: {gioco.original_price} €</p>
+                    <p>Data di rilascio: {new Date(gioco.created_at).toLocaleDateString()}</p>
                     <p>Disponibile per: {gioco.platform.join(", ")}</p>
                     <p> users on this page: {usersOnline}
                         <FontAwesomeIcon icon={faFire} color="red" style={{ marginLeft: "3px" }} />
                     </p>
                     <div className="d-flex justify-content-center gap-3 mt-5">
-                        <button>
+                        <button className="btn btn-primary">
                             <FontAwesomeIcon icon={faHeart} style={{ color: "grey", fontSize: "24px" }} />Add to wishlist
                         </button>
-                        <button>
+                        <button className="btn btn-primary">
                             <FontAwesomeIcon icon={faCartShopping} style={{ color: "grey", fontSize: "24px" }} />Add to cart
                         </button>
                     </div>
+                </div>
+
+                <div className="col-12 mt-5">
+                    <h2>Descrizione</h2>
+                    <p>{gioco.description}</p>
+                    <h2>Dettagli</h2>
+                    <p>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente nam officia temporibus. 
+                        Nam culpa corporis architecto voluptates, saepe obcaecati itaque vitae tempore atque. Velit modi, 
+                        voluptates culpa ipsa quisquam porro!Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                        Sapiente nam officia temporibus. Nam culpa corporis architecto voluptates, saepe obcaecati itaque
+                    </p>
+                </div>
+
+                <div className="col-12 mt-5">
+                    <iframe width="1000" height="500" src={gioco.trailer_url} title={gioco.name} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
                 </div>
             </div>
         </div>
