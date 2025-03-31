@@ -10,7 +10,7 @@ import {
   validateDiscount,
   validateCheckout,
   errorHandler,
-} from "./middleware.js";
+} from "./middlewares/middleware.js";
 
 //import router
 //import serverRouter from "./routers/serverRouter.js";

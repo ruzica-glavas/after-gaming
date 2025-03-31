@@ -1,6 +1,7 @@
 import helmet from "helmet";
 import compression from "compression";
 import { body, validationResult } from "express-validator";
+import cors from "cors";
 
 // Middleware di log
 export const logger = (req, res, next) => {
@@ -52,3 +53,6 @@ export const errorHandler = (err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: "Errore interno del server" });
 };
+
+export const corsMiddleware = cors();
+
