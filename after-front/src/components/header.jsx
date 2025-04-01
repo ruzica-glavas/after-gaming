@@ -64,7 +64,7 @@ export default function Header() {
                   <li>
                     <FontAwesomeIcon
                       icon={faHeart}
-                      style={{ color: "grey", fontSize: "24px" }}
+                      style={{ color: "white", fontSize: "24px" }}
                     />
                   </li>
                 </NavLink>
@@ -72,7 +72,7 @@ export default function Header() {
                   <li>
                     <FontAwesomeIcon
                       icon={faCartShopping}
-                      style={{ color: "grey", fontSize: "24px" }}
+                      style={{ color: "white", fontSize: "24px" }}
                     />
                   </li>
                 </NavLink>

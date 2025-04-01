@@ -25,6 +25,16 @@ nav.scrolled {
   background-color: rgba(51, 51, 51, 0.8);
 }
 
+nav.scrolled .searchbar-container {
+  opacity: 0.5;
+  transition: opacity 0.3s ease, border 0.3s ease;
+}
+
+nav.scrolled .searchbar:focus-within {
+  border: 2px solid #f06c00;
+  opacity: 1;
+}
+
 .length-input {
   width: 300px;
 }
