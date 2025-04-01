@@ -2,6 +2,10 @@
   outline: 1px red;
 }
 
+:root {
+  --orange-color: #f06c00;
+}
+
 body {
   background-color: #262626; /* Color  di sfondo */
   padding-top: 5.4rem; 
@@ -31,7 +35,7 @@ nav.scrolled .searchbar-container {
 }
 
 nav.scrolled .searchbar:focus-within {
-  border: 2px solid #f06c00;
+  border: 2px solid var(--orange-color);
   opacity: 1;
 }
 
@@ -113,6 +117,16 @@ nav.scrolled .searchbar:focus-within {
   height: 350px;
   object-fit: cover;
   border-radius: 15px;
+}
+
+.p0 {
+  padding: 0;
+}
+
+.game-image-dettaglio-container {
+  z-index:0;
+  border-radius: 15px;
+  background-color: rgba(51, 51, 51, 0.5);
 }
 
 .mb-0 {
