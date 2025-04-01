@@ -30,7 +30,7 @@ app.use(errorHandler);
 
 // Avvio del server
 app.listen(port, () => {
-  console.log(`🚀 Server avviato sulla porta ${port}`);
+  console.log(`Server avviato sulla porta ${port}`);
 });
 
 export default app;
