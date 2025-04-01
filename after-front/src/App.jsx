@@ -1,4 +1,5 @@
 import DefaultLayout from './layouts/DefaultLayout';
+import { GlobalProvider } from './contexts/GlobalContext';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import MainHomepage from "./components/MainHomepage";
 import MainDettaglio from './components/MainDettaglio';
@@ -11,18 +12,20 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<DefaultLayout />}>
-            <Route path="/" element={<MainHomepage />} />
-            <Route path="/ricerca" element={<Ricerca />} />
-            <Route path="/dettaglio/:id" element={<MainDettaglio />} />
-            <Route path="/carello" element={<MainCarello />} />
-            <Route path="/wishlist" element={<MainWishlist />} />
-            <Route path="/utente" element={<MainUtente />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <GlobalProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<DefaultLayout />}>
+              <Route path="/" element={<MainHomepage />} />
+              <Route path="/ricerca" element={<Ricerca />} />
+              <Route path="/dettaglio/:slug" element={<MainDettaglio />} />
+              <Route path="/carello" element={<MainCarello />} />
+              <Route path="/wishlist" element={<MainWishlist />} />
+              <Route path="/utente" element={<MainUtente />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </GlobalProvider>
     </>
   )
 };
