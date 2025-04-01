@@ -2,25 +2,25 @@ import React from "react";
 import { Container, Row, Col, ListGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faTwitter, faInstagram, faYoutube, faTwitch, faDiscord } from '@fortawesome/free-brands-svg-icons';
-import { faStar, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
 export default function Footer() {
     return (
-        <footer className="bg-dark text-white py-5">
-            <Container>
+        <footer className="bg-dark text-white py-3">
+            <Container style={{ paddingTop: '0', paddingBottom: '0', maxHeight: '400px' }}>
                 <Row>
-                    {/* Colonna Sinistra: Trustpilot */}
-                    <Col xs={12} md={3} className="d-flex flex-column align-items-start mb-4 mb-md-0">
-                        <div className="d-flex align-items-center trustpilot-container">
-                            <FontAwesomeIcon icon={faStar} className="text-warning mr-2 fa-2x" />
-                            <span className="h3">Trustpilot</span>
-                        </div>
-                        <div className="d-flex align-items-center mt-2">
-                            <span className="text-warning fa-3x">★★★★★</span> 
-                        </div>
-                        <div className="ml-2 fs-4 text-warning">
-                            5/5
-                        </div>
+                    {/* Colonna Sinistra: Solo Immagine Trustpilot */}
+                    <Col xs={12} md={3} className="d-flex justify-content-center align-items-start mb-4 mb-md-0">
+                        <img
+                            src="https://ledmansion.art/cdn/shop/files/kindpng_3686309.png?v=1727187641&width=969"
+                            alt="Trustpilot"
+                            style={{
+                                width: '60%',  // Immagine più piccola (60% della larghezza del contenitore)
+                                height: 'auto',
+                                objectFit: 'contain',
+                                marginTop: '10px',  // Spostamento dell'immagine di 10px verso il basso
+                            }}
+                        />
                     </Col>
 
                     {/* Colonna Centrale: Link alla Privacy, Termini d'Uso */}
@@ -60,47 +60,6 @@ export default function Footer() {
                     </Col>
                 </Row>
 
-                {/* Colonna Inferiore Destra: Icone Apple Store e Play Store */}
-                <Row>
-                    <Col className="d-flex justify-content-center justify-content-md-end align-items-center mt-3" style={{ gap: '15px' }}>
-                        {/* Apple Store */}
-                        <a
-                            href="https://apps.apple.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="Vai su Apple Store"
-                        >
-                            <img
-                                src="https://logodix.com/logo/51009.png"
-                                alt="Apple Store"
-                                style={{
-                                    height: '160px',
-                                    width: 'auto',
-                                    objectFit: 'contain',
-                                    cursor: 'pointer',
-                                }}
-                            />
-                        </a>
-                        {/* Play Store */}
-                        <a
-                            href="https://play.google.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="Vai su Google Play Store"
-                        >
-                            <img
-                                src="https://www.svgrepo.com/show/303139/google-play-badge-logo.svg"
-                                alt="Google Play Store"
-                                style={{
-                                    height: '180px',
-                                    width: 'auto',
-                                    objectFit: 'contain',
-                                    cursor: 'pointer',
-                                }}
-                            />
-                        </a>
-                    </Col>
-                </Row>
             </Container>
 
             {/* Nuova Sezione: Copyright e Posizione (Fuori dal Container) */}
@@ -125,4 +84,3 @@ export default function Footer() {
         </footer>
     );
 }
-
