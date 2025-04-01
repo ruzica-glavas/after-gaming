@@ -2,6 +2,43 @@
   outline: 1px red;
 }
 
+:root {
+  --orange-color: #f06c00;
+}
+
+body {
+  background-color: #262626; /* Color  di sfondo */
+  padding-top: 5.4rem; 
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  z-index: 1000;
+  background-color: #333; /* Colore di sfondo */
+  color: white; /* Colore del testo */
+  border-bottom: 1px solid #280c03;
+  padding-bottom: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+nav.scrolled {
+  background-color: rgba(51, 51, 51, 0.8);
+}
+
+nav.scrolled .searchbar-container {
+  opacity: 0.5;
+  transition: opacity 0.3s ease, border 0.3s ease;
+}
+
+nav.scrolled .searchbar:focus-within {
+  border: 2px solid var(--orange-color);
+  opacity: 1;
+}
+
 .length-input {
   width: 300px;
 }
@@ -80,6 +117,16 @@
   height: 350px;
   object-fit: cover;
   border-radius: 15px;
+}
+
+.p0 {
+  padding: 0;
+}
+
+.game-image-dettaglio-container {
+  z-index:0;
+  border-radius: 15px;
+  background-color: rgba(51, 51, 51, 0.5);
 }
 
 .mb-0 {
