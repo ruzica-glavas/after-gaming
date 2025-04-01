@@ -2,6 +2,29 @@
   outline: 1px red;
 }
 
+body {
+  background-color: #262626; /* Color  di sfondo */
+  padding-top: 5.4rem; 
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  z-index: 1000;
+  background-color: #333; /* Colore di sfondo */
+  color: white; /* Colore del testo */
+  border-bottom: 1px solid #280c03;
+  padding-bottom: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+nav.scrolled {
+  background-color: rgba(51, 51, 51, 0.8);
+}
+
 .length-input {
   width: 300px;
 }

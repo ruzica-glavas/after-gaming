@@ -22,7 +22,7 @@ export default function SearchBar() {
     }
 
     return (
-        <div className="d-flex gap-2">
+        <div className="d-flex gap-2" style={{ height: "2rem" }}>
             <form onSubmit={handleSubmit} className="d-flex gap-2">
                 <input
                     type="text"
@@ -31,7 +31,7 @@ export default function SearchBar() {
                     className="form-control length-input"
                     placeholder="Minecraft, RPG, ..."
                 />
-                <button type="submit" className="btn btn-primary rounded-circle pl-2" style={{ width: "45px", height: "45px" }}>
+                <button type="submit" className="btn btn-primary rounded-circle  d-flex align-items-center justify-content-center" style={{ width: "2rem", height: "2rem" }}>
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button>
             </form>
