@@ -62,7 +62,7 @@ export default function MainDettaglio() {
     }
 
     return (
-        <div className="container mt-5">
+        <div className="container mt-5 pb-5">
             <div className="row text-center">
                 <div className="col-6">
                     <img src={game.image_url} alt={game.name} className="game-image-dettaglio" />
