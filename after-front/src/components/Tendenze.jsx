@@ -9,31 +9,42 @@ export default function Tendenze() {
     fetch("http://localhost:3000/api/products") // Assicurati che questa API ritorni i dati corretti
       .then((res) => res.json())
       .then((data) => {
-        // Seleziona un numero casuale di giochi (ad esempio 6)
-        const randomGames = getRandomGames(data, 6);
-        setTendenzeGames(randomGames);
+        // Calcola lo sconto per ogni gioco e ordina in base allo sconto maggiore
+        const gamesWithDiscount = data.map((game) => {
+          const discount =
+            game.original_price && game.price < game.original_price
+              ? ((game.original_price - game.price) / game.original_price) * 100
+              : 0;
+          return { ...game, discount };
+        });
+
+        // Ordina i giochi in base allo sconto (dal maggiore al minore)
+        gamesWithDiscount.sort((a, b) => b.discount - a.discount);
+
+        // Seleziona i primi 6 giochi con lo sconto maggiore
+        const topDiscountedGames = gamesWithDiscount.slice(0, 6);
+
+        setTendenzeGames(topDiscountedGames);
       })
       .catch((error) =>
         console.error("Errore nel recupero dei giochi:", error)
       );
   }, []);
 
-  // Funzione per ottenere giochi casuali
-  const getRandomGames = (gamesArray, count) => {
-    let shuffled = gamesArray.sort(() => 0.5 - Math.random()); // Mischia l'array
-    return shuffled.slice(0, count); // Seleziona i primi "count" giochi
-  };
-
   return (
     <div className="">
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-6 mx-auto">
         {tendenzeGames.map((game) => (
-          <div key={game.id}>
-            <Link to={`/dettaglio/${game.id}`}>
+          <div key={game.id} className="col mb-4">
+            <Link to={`/dettaglio/${game.slug}`}>
               <img
                 src={game.image_url || "/default-image.png"}
                 alt={game.name}
                 className="game-image"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'https://via.placeholder.com/300x200?text=Immagine+non+disponibile';
+                }}
               />
             </Link>
             <div className="d-flex justify-content-between align-items-center w-100 mt-2">

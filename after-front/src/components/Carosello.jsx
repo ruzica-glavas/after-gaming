@@ -39,11 +39,16 @@ export default function Carosello() {
       <Slider {...impostazioni}>
         {discountedGames.map((game) => (
           <div key={game.id} className="slide">
-            <Link to={`/dettaglio/${game.id}`}>
+            {/* Modifica qui: usa game.slug invece di game.id */}
+            <Link to={`/dettaglio/${game.slug}`}>
               <img
                 src={game.image_url || "/default-image.png"}
                 alt={game.name}
                 className="carousel-image"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'https://via.placeholder.com/300x200?text=Immagine+non+disponibile';
+                }}
               />
             </Link>
             <h3 className="game-title">{game.name}</h3>
