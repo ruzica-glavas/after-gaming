@@ -5,6 +5,7 @@ import MainDettaglio from './components/MainDettaglio';
 import MainCarello from './components/MainCarello';
 import MainWishlist from './components/MainWishlist';
 import MainUtente from './components/MainUtente';
+import Ricerca from './components/Ricerca';
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route element={<DefaultLayout />}>
             <Route path="/" element={<MainHomepage />} />
+            <Route path="/ricerca" element={<Ricerca />} />
             <Route path="/dettaglio/:id" element={<MainDettaglio />} />
             <Route path="/carello" element={<MainCarello />} />
             <Route path="/wishlist" element={<MainWishlist />} />
