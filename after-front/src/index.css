@@ -7,41 +7,24 @@
 }
 
 
+.ml-2 {
+    margin-left: 10px;
+}
+
+.fs-4 {
+    display: block; 
+    margin-top: 5px; 
+}
 
 
+.trustpilot-container .fa-2x {
+    margin-right: 10px; 
+    vertical-align: middle; /* Allinea verticalmente l'icona al centro del testo */
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.trustpilot-container .h3 {
+    line-height: 1; /* Rimuovi eventuali spazi extra nel testo */
+}
 
 .carousel-container {
     width: 80%;
