@@ -40,7 +40,7 @@ export default function MainCarrello() {
                                     ))}
                                 </select>
                             </div>
-                            <span className="carrello-prezzo">{(prodotto.price * prodotto.quantita).toFixed(2)}€</span>
+                            <span className="carrello-prezzo ml-2">{(prodotto.price * prodotto.quantita).toFixed(2)}€</span>
                         </div>
                     ))}
                     <div className="carrello-totale">
