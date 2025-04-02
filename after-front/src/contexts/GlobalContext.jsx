@@ -42,6 +42,12 @@ export const GlobalProvider = ({ children }) => {
         ));
     };
 
+    const [datiUtente, setDatiUtente] = useState(null);
+
+    const salvaDatiUtente = (dati) => {
+        setDatiUtente(dati);
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -67,7 +73,9 @@ export const GlobalProvider = ({ children }) => {
         aggiungiAlCarrello,
         rimuoviDalCarrello,
         cambiaQuantita,
-        carrello
+        carrello,
+        datiUtente,
+        salvaDatiUtente
     };
 
     return (
