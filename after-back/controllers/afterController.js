@@ -11,7 +11,16 @@ export function createProduct(req, res) {
   const platform = req.body.platform;
   const trailer_url = req.body.trailer_url;
 
-  if (!name || !price || !category || !description || !original_price || !image_url || !platform || !trailer_url) {
+  if (
+    !name ||
+    !price ||
+    !category ||
+    !description ||
+    !original_price ||
+    !image_url ||
+    !platform ||
+    !trailer_url
+  ) {
     return res
       .status(400)
       .json({ error: "Tutti i campi obbligatori sono richiesti" });
@@ -20,7 +29,8 @@ export function createProduct(req, res) {
   const baseSlug = slugify(name, { lower: true, strict: true });
 
   // Verifica se lo slug esiste già e genera uno univoco
-  const checkSlugSql = "SELECT COUNT(*) AS count FROM products WHERE slug LIKE ?";
+  const checkSlugSql =
+    "SELECT COUNT(*) AS count FROM products WHERE slug LIKE ?";
   db.query(checkSlugSql, [baseSlug + "%"], function (err, results) {
     if (err) {
       return res.status(500).json({ error: "Errore nel database" });
@@ -120,30 +130,69 @@ export function getProductBySlug(req, res) {
 
 // controller per la ricerca
 export function searchProducts(req, res) {
-  const query = req.query.query;
+  var query = req.query.query;
+
   if (!query) {
     return res
       .status(400)
       .json({ error: "Il parametro 'query' è obbligatorio" });
   }
 
-  const searchQuery = "%" + query + "%";
+  var searchQuery = "%" + query + "%";
+  var sort = req.query.sort || "name"; // Default: ordinamento per nome
+  var sortOrder = sort.includes("desc") ? "DESC" : "ASC";
+  var sortField = sort.replace("_desc", "").replace("_asc", "");
+
+  var sql =
+    "SELECT id, slug, name, description, price, original_price, image_url, platform, trailer_url FROM products WHERE name LIKE ? OR description LIKE ? ORDER BY " +
+    sortField +
+    " " +
+    sortOrder;
+  db.query(sql, [searchQuery, searchQuery], function (err, results) {
+    if (err) {
+      console.error("Errore nella ricerca dei prodotti:", err);
+      return res.status(500).json({ error: "Errore interno del server" });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ message: "Nessun prodotto trovato" });
+    }
+    res.status(200).json(results);
+  });
+}
+
+export function getPromotions(req, res) {
   db.query(
-    "SELECT id, slug, name, description, price, original_price, image_url, platform, trailer_url FROM products WHERE name LIKE ? OR description LIKE ?",
-    [searchQuery, searchQuery],
+    "SELECT id, slug, name, description, price, original_price, image_url, platform, trailer_url FROM products WHERE original_price IS NOT NULL",
     function (err, results) {
       if (err) {
-        console.error("Errore nella ricerca dei prodotti:", err);
+        console.error("Errore nella query:", err);
         return res.status(500).json({ error: "Errore interno del server" });
-      }
-      if (results.length === 0) {
-        return res.status(404).json({ message: "Nessun prodotto trovato" });
       }
       res.status(200).json(results);
     }
   );
 }
 
+export function validateDiscountCode(req, res) {
+  var code = req.params.code;
+  var today = new Date().toISOString().split("T")[0];
 
-
-
+  db.query(
+    "SELECT * FROM discount_codes WHERE code = ? AND is_active = TRUE AND start_date <= ? AND end_date >= ?",
+    [code, today, today],
+    function (err, results) {
+      if (err) {
+        console.error("Errore nella query:", err);
+        return res.status(500).json({ error: "Errore interno del server" });
+      }
+      if (results.length === 0) {
+        return res
+          .status(404)
+          .json({ error: "Codice sconto non valido o scaduto" });
+      }
+      res
+        .status(200)
+        .json({ discount_percentage: results[0].discount_percentage });
+    }
+  );
+}

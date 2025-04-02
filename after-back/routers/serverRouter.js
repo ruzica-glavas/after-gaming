@@ -5,6 +5,8 @@ import {
   getProductBySlug,
   createProduct,
   searchProducts,
+  getPromotions,
+  validateDiscountCode,
 } from "../controllers/afterController.js";
 
 const router = express.Router();
@@ -15,5 +17,7 @@ router.get("/latest-products", getLatestProducts);
 router.get("/products/:slug", getProductBySlug);
 router.post("/products", createProduct);
 router.get("/search", searchProducts); //GET http://localhost:3000/api/search?query=cyber   esempio
+router.get("/promotions", getPromotions);
+router.get("/discount-codes/:code", validateDiscountCode);
 
 export default router;
