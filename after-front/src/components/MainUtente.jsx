@@ -1,155 +1,125 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from 'react';
+import { useGlobalContext } from '../contexts/GlobalContext';
 
-export default function MainUtente({ giochi }) {
-    // Stato per ogni campo del form
-    const [nome, setNome] = useState("");
-    const [cognome, setCognome] = useState("");
-    const [email, setEmail] = useState("");
-    const [telefono, setTelefono] = useState("");
-    
-    // Stato per i dati del riepilogo ordine
-    const [formData, setFormData] = useState(null);
-    
-    // Stato per gli errori
+export default function MainUtente() {
+    const { carrello, datiUtente, salvaDatiUtente } = useGlobalContext();
+    const [formData, setFormData] = useState({ nome: "", email: "", indirizzo: "" });
     const [errors, setErrors] = useState({});
 
-    // Funzione per la validazione email
-    const validateEmail = (email) => {
-        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-        return emailRegex.test(email);
+    const validate = () => {
+        let newErrors = {};
+
+        if (formData.nome.trim() === "") {
+            newErrors.nome = "Il nome è obbligatorio.";
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            newErrors.email = "Inserisci un'email valida.";
+        }
+        if (formData.indirizzo.trim() === "") {
+            newErrors.indirizzo = "L'indirizzo è obbligatorio.";
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
     };
 
-    // Funzione per la validazione del telefono
-    const validateTelefono = (telefono) => {
-        // Verifica se il numero di telefono ha tra 10 e 15 cifre
-        return telefono.length >= 10 && telefono.length <= 15;
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setErrors({ ...errors, [e.target.name]: "" }); // Rimuove l'errore se l'utente corregge
     };
 
-    // Funzione per gestire il submit
     const handleSubmit = (e) => {
-        e.preventDefault(); // Impedisce il ricaricamento della pagina al submit
-
-        const newErrors = {};
-
-        // Validazione email
-        if (!validateEmail(email)) {
-            newErrors.email = "L'email non è valida.";
+        e.preventDefault();
+        if (validate()) {
+            salvaDatiUtente(formData);
         }
-
-        // Validazione telefono
-        if (!validateTelefono(telefono)) {
-            newErrors.telefono = "Il numero di telefono deve avere tra 10 e 15 cifre.";
-        }
-
-        // Se ci sono errori, aggiorna lo stato degli errori
-        if (Object.keys(newErrors).length > 0) {
-            setErrors(newErrors);
-            return;
-        }
-
-        // Crea un oggetto con i dati del form
-        const data = {
-            nome,
-            cognome,
-            email,
-            telefono,
-            giochi
-        };
-
-        // Imposta i dati nel riepilogo
-        setFormData(data);
-
-        // Pulisci gli errori dopo l'invio
-        setErrors({});
     };
 
     return (
+        <div className="container mt-5 mb-5 p-4 text-white d-flex flex-column gap-4">
+            <div className='rounded p-2' style={{ backgroundColor: '#ffffff20' }}>
+                <h2 className="text-start">Inserisci i tuoi dati</h2>
+                <form onSubmit={handleSubmit} noValidate className="mb-4 p-2 shadow-sm rounded">
+                    <div className="mb-3">
+                        <label htmlFor="nome" className="form-label">Nome</label>
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            placeholder="Inserisci il tuo nome"
+                            value={formData.nome}
+                            onChange={handleChange}
+                            className="form-control"
+                        />
+                        {errors.nome && <div className="text-danger">{errors.nome}</div>}
+                    </div>
 
-        <div className="container text-white py-4 my-4 rounded" style={{ backgroundColor: "var(--dark-color)" }}>
-            <h2 className="text-center my-4">Inserisci i tuoi dati</h2>
+                    <div className="mb-3">
+                        <label htmlFor="email" className="form-label">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Inserisci la tua email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            className="form-control"
+                        />
+                        {errors.email && <div className="text-danger">{errors.email}</div>}
+                    </div>
 
-            {/* Dati personali */}
-            <form className="row g-3" onSubmit={handleSubmit} noValidate>
-                <div className="col-md-6">
-                    <label className="form-label">Nome</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Inserisci il nome"
-                        value={nome}
-                        onChange={(e) => setNome(e.target.value)}
-                    />
-                </div>
-                <div className="col-md-6">
-                    <label className="form-label">Cognome</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Inserisci il cognome"
-                        value={cognome}
-                        onChange={(e) => setCognome(e.target.value)}
-                    />
-                </div>
-                <div className="col-md-6">
-                    <label className="form-label">Email</label>
-                    <input
-                        type="email"
-                        className="form-control"
-                        placeholder="Inserisci l'email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    {errors.email && <div className="text-danger">{errors.email}</div>}
-                </div>
-                <div className="col-md-6">
-                    <label className="form-label">Telefono</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Inserisci il telefono"
-                        value={telefono}
-                        onChange={(e) => setTelefono(e.target.value)}
-                    />
-                    {errors.telefono && <div className="text-danger">{errors.telefono}</div>}
-                </div>
+                    <div className="mb-3">
+                        <label htmlFor="indirizzo" className="form-label">Indirizzo</label>
+                        <input
+                            type="text"
+                            id="indirizzo"
+                            name="indirizzo"
+                            placeholder="Inserisci il tuo indirizzo"
+                            value={formData.indirizzo}
+                            onChange={handleChange}
+                            className="form-control"
+                        />
+                        {errors.indirizzo && <div className="text-danger">{errors.indirizzo}</div>}
+                    </div>
 
-                <div className="col-12 text-end">
-                    
-                    <NavLink to="/carello" className="btn me-1">
-                        <button type="submit" className="btn text-white" style={{ backgroundColor: "var(--orange-color)" }}>Indietro</button>
-                    </NavLink>
+                    <div className='text-end'>
+                        <button type="submit" className="btn text-white" style={{ backgroundColor: "#f06c00" }}>
+                            Conferma Dati
+                        </button>
+                    </div>
+                </form>
+            </div>
 
-                    <button type="submit" className="btn text-white" style={{ backgroundColor: "var(--orange-color)" }}>
-                        Invia
-                    </button>
-                    
-                </div>
-            </form>
-            <hr />
-            {/* Riepilogo ordine */}
-            {formData && (
-                <div className="mt-4">
-                    <h3>Riepilogo ordine</h3>
-                    <ul className="list-unstyled text-white mt-3">
-                        <li><strong>Nome:</strong> {formData.nome}</li>
-                        <li><strong>Cognome:</strong> {formData.cognome}</li>
-                        <li><strong>Email:</strong> {formData.email}</li>
-                        <li><strong>Telefono:</strong> {formData.telefono}</li>
-                    </ul>
-                    <div>
-                        <h4>Giochi dell'ordine:</h4>
-                        <ul>
-                            {formData.giochi.length > 0 ? (
-                                formData.giochi.map((gioco, index) => (
-                                    <li key={index}>
-                                        {gioco.name} - {gioco.price}€ x {gioco.quantita}
-                                    </li>
-                                ))
-                            ) : (
-                                <p>Nessun gioco selezionato.</p>
-                            )}
+            {datiUtente && (
+                <div className="carrello-riepilogo p-4 shadow-sm rounded" style={{ backgroundColor: '#ffffff20' }}>
+                    <h4 className="mb-3">Riepilogo Ordine</h4>
+                    {carrello.length === 0 ? (
+                        <p className="text-white">Il carrello è vuoto.</p>
+                    ) : (
+                        <ul className="list-group mb-3">
+                            {carrello.map(prodotto => (
+                                <li key={prodotto.id} className="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>{prodotto.name} - {prodotto.quantita} x</span>
+                                    <span>€{Number(prodotto.price).toFixed(2)}</span>
+                                </li>
+                            ))}
                         </ul>
+                    )}
+                    <p className="text-end fw-bold">
+                        Totale: €{
+                            carrello.reduce((sum, p) => sum + (Number(p.price) * p.quantita || 0), 0).toFixed(2)
+                        }
+                    </p>
+                    <div className='text-end'>
+                        <button className="btn text-white" style={{ backgroundColor: "#f06c00" }}>
+                            Procedi al pagamento
+                        </button>
+                    </div>
+                    <div className="mt-4 border-top pt-4 text-start">
+                        <h4 className="mb-3">Dati Utente</h4>
+                        <p><strong>Nome:</strong> {datiUtente.nome}</p>
+                        <p><strong>Email:</strong> {datiUtente.email}</p>
+                        <p><strong>Indirizzo:</strong> {datiUtente.indirizzo}</p>
                     </div>
                 </div>
             )}
