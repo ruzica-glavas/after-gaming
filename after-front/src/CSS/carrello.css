@@ -7,7 +7,6 @@
 
 .carrello-titolo {
     font-size: 24px;
-    font-weight: bold;
     margin-bottom: 15px;
 }
 
@@ -75,4 +74,10 @@
 
 .order-button{
     background: linear-gradient(90deg, #ff6600, #ff8533);
+}
+
+.image-suggested{
+    width: 250px;
+    height: auto;
+    border-radius: 4px;
 }
