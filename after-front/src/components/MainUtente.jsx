@@ -1,6 +1,7 @@
+
 export default function MainUtente() {
     return (
-        <div className="container text-white">
+        <div className="container text-white py-4 my-4 rounded" style={{ backgroundColor: "var(--dark-color)" }}>
             <h2 className="text-center my-4">Inserisci i tuoi dati</h2>
             <form className="row g-3">
                 <div className="col-md-6">
@@ -32,8 +33,8 @@ export default function MainUtente() {
                         <option value="altro">Altro</option>
                     </select>
                 </div>
-                <div className="col-12 text-center">
-                    <button type="submit" className="btn btn-primary">Invia</button>
+                <div className="col-12 text-end">
+                    <button type="submit" className="btn btn-primary" style={{ backgroundColor: "var(--orange-color)"}}>Invia</button>
                 </div>
             </form>
         </div>
