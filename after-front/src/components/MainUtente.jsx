@@ -16,53 +16,55 @@ export default function MainUtente() {
     };
 
     return (
-        <div className="container mt-5 mb-5 p-4 rounded text-white"style={{ backgroundColor: '#ffffff20' }}>
-            <h2 className="text-center mb-4">Inserisci i tuoi dati</h2>
-            <form onSubmit={handleSubmit} className="mb-4 p-4 shadow-sm rounded">
-                <div className="mb-3">
-                    <label htmlFor="nome" className="form-label">Nome</label>
-                    <input
-                        type="text"
-                        id="nome"
-                        name="nome"
-                        placeholder="Inserisci il tuo nome"
-                        value={formData.nome}
-                        onChange={handleChange}
-                        required
-                        className="form-control"
-                    />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="Inserisci la tua email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        className="form-control"
-                    />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="indirizzo" className="form-label">Indirizzo</label>
-                    <input
-                        type="text"
-                        id="indirizzo"
-                        name="indirizzo"
-                        placeholder="Inserisci il tuo indirizzo"
-                        value={formData.indirizzo}
-                        onChange={handleChange}
-                        required
-                        className="form-control"
-                    />
-                </div>
-                <button type="submit" className="btn w-100">Conferma Dati</button>
-            </form>
-
+        <div className="container mt-5 mb-5 p-4 text-white d-flex flex-column gap-4">
+            <div className='rounded' style={{ backgroundColor: '#ffffff20' }}>
+                <h2 className="text-center mb-4">Inserisci i tuoi dati</h2>
+                <form onSubmit={handleSubmit} className="mb-4 p-4 shadow-sm rounded">
+                    <div className="mb-3">
+                        <label htmlFor="nome" className="form-label">Nome</label>
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            placeholder="Inserisci il tuo nome"
+                            value={formData.nome}
+                            onChange={handleChange}
+                            required
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="email" className="form-label">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Inserisci la tua email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="indirizzo" className="form-label">Indirizzo</label>
+                        <input
+                            type="text"
+                            id="indirizzo"
+                            name="indirizzo"
+                            placeholder="Inserisci il tuo indirizzo"
+                            value={formData.indirizzo}
+                            onChange={handleChange}
+                            required
+                            className="form-control"
+                        />
+                    </div>
+                    <button type="submit" className="btn w-100 text-white ">Conferma Dati</button>
+                </form>
+            </div>
+            
             {datiUtente && (
-                <div className="carrello-riepilogo p-4 shadow-sm rounded">
+                <div className="carrello-riepilogo p-4 shadow-sm rounded "style={{ backgroundColor: '#ffffff20' }}>
                     <h4 className="mb-3">Riepilogo Ordine</h4>
                     {carrello.length === 0 ? (
                         <p className="text-muted">Il carrello è vuoto.</p>
@@ -81,6 +83,12 @@ export default function MainUtente() {
                             carrello.reduce((sum, p) => sum + (Number(p.price) * p.quantita || 0), 0).toFixed(2)
                         }
                     </p>
+                    <div className="mt-4 border-top pt-4 text-start">
+                        <h4 className="mb-3">Dati Utente</h4>
+                        <p><strong>Nome:</strong> {datiUtente.nome}</p>
+                        <p><strong>Email:</strong> {datiUtente.email}</p>
+                        <p><strong>Indirizzo:</strong> {datiUtente.indirizzo}</p>
+                    </div>
                 </div>
             )}
         </div>
