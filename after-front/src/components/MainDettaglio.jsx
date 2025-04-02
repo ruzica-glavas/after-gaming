@@ -148,7 +148,7 @@ export default function MainDettaglio() {
                     ))}
 
                     <div className="container text-center mt-5 text-white">
-                        <h2 className="text-white">Caratteristiche del gioco</h2>
+                        <h2 className="text-white text-start">Caratteristiche del gioco</h2>
                         <div className="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 mt-3">
                             {featureList.map(({ icon, label }, index) => (
                                 <div key={index} className="col">
@@ -162,7 +162,7 @@ export default function MainDettaglio() {
                     </div>
 
                     <div className="container d-flex flex-column pt-5 pb-4">
-                        <h4 className="text-white px-4 pb-3">
+                        <h4 className="text-white px-4 pb-3 text-start">
                             Ultime uscite <Link to="/ultimi-arrivi"><button className="btn rounded-circle fs-7" style={{ backgroundColor: "#f06c00" }}>{'\u2794'}</button></Link>
                         </h4>
                         <UltimiArrivi />
