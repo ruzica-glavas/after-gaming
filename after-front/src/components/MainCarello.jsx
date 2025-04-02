@@ -1,4 +1,6 @@
 import React from 'react';
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useGlobalContext } from '../contexts/GlobalContext';
 
 export default function MainCarrello() {
@@ -21,12 +23,12 @@ export default function MainCarrello() {
                             <img src={prodotto.image_url} alt={prodotto.name} className="carrello-img" />
                             <div className="carrello-info">
                                 <span className="carrello-nome">{prodotto.name}</span>
-                                <span className="carrello-piattaforma">Steam</span>
-                                <button 
-                                    className="carrello-rimuovi"
+                                <span className="carrello-piattaforma">{prodotto.platform}</span>
+                                <button
+                                    className="carrello-rimuovi btn btn-outline-danger rounded"
                                     onClick={() => rimuoviDalCarrello(prodotto.id)}
                                 >
-                                    🗑 Sposta alla lista desideri
+                                    <FontAwesomeIcon icon={faTrash} /> Rimuovi
                                 </button>
                             </div>
                             <div className="carrello-quantita">
@@ -45,6 +47,7 @@ export default function MainCarrello() {
                     ))}
                     <div className="carrello-totale">
                         <h3>Totale: {totale.toFixed(2)}€</h3>
+                        <button className="order-button btn text-white p-3 px-5">Procedi al pagamento {'\u2794'}</button>
                     </div>
                 </>
             )}
