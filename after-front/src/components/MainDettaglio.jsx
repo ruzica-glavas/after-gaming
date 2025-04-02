@@ -1,47 +1,27 @@
+// /Users/Greggione/Desktop/Boolean/after-gaming/after-front/src/components/MainDettaglio.jsx
+
 import { faCartShopping, faCloud, faFire, faGamepad, faHeart, faShareNodes, faUser, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
-import axios from 'axios'; // Assicurati di importare Axios
-import { Link } from "react-router-dom";
-import UltimiArrivi from "./UltimiArrivi";
+import { useGlobalContext } from '../contexts/GlobalContext'; // Importa il contesto globale
+import AggiungiAlCarrelloButton from './AggiungiAlCarrelloButton'; // Importa il componente del pulsante
 
 export default function MainDettaglio() {
     const { slug } = useParams(); // Ottieni il parametro "slug" dall'URL
+    const { products, loading, error } = useGlobalContext(); // Usa il contesto globale
     const [game, setGame] = useState(null);
     const [usersOnline, setUsersOnline] = useState(0);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null); // Stato per gestire gli errori
 
     useEffect(() => {
-        setLoading(true); // Inizia il caricamento
-
-        // Fai una chiamata GET per ottenere tutti i giochi
-        axios.get('http://localhost:3000/api/products') // Cambia l'endpoint con quello corretto
-            .then(response => {
-                const games = response.data; // Supponiamo che la risposta sia un array di giochi
-
-                // Trova il gioco con lo slug
-                const foundGame = games.find(game => game.slug === slug);
-
-                if (foundGame) {
-                    setGame(foundGame);
-                } else {
-                    console.error("Gioco non trovato con slug:", slug);
-                    setGame(null);
-                }
-
-                setLoading(false); // Finito il caricamento
-            })
-            .catch(err => {
-                console.error("Errore nel recupero dei giochi:", err);
-                setError("Errore nel recupero dei giochi");
-                setLoading(false); // Finito il caricamento anche in caso di errore
-            });
-
+        // Trova il gioco con lo slug dai prodotti nel contesto globale
+        if (products && products.length > 0) {
+            const foundGame = products.find(game => game.slug === slug);
+            setGame(foundGame);
+        }
         // Imposta un numero casuale di utenti online
         setUsersOnline(Math.floor(Math.random() * (1000 - 100 + 1)) + 100);
-    }, [slug]);
+    }, [slug, products]); // Aggiungi 'products' come dipendenza
 
     // Se il gioco è ancora in caricamento
     if (loading) {
@@ -83,10 +63,8 @@ export default function MainDettaglio() {
                                 <FontAwesomeIcon icon={faHeart} style={{ color: "white", fontSize: "24px" }} />
                                 <p className="mb-0">Add to wishlist</p>
                             </button>
-                            <button className="btn d-flex gap-2" style={{ backgroundColor: "var(--orange-color)", color: "white" }}>
-                                <FontAwesomeIcon icon={faCartShopping} style={{ color: "white", fontSize: "24px" }} />
-                                <p className="mb-0">Add to cart</p>
-                            </button>
+                            {/* Aggiungi il componente AggiungiAlCarrelloButton */}
+                            <AggiungiAlCarrelloButton game={game} />
                         </div>
                     </div>
                 </div>
@@ -171,14 +149,11 @@ export default function MainDettaglio() {
                                 </div>
                             </div>
                         </div>
-                        <div className="container d-flex flex-column pt-5 pb-4">
-                            <h4 className="text-white px-4 pb-3">Ultime uscite <Link to={`/ultimi-arrivi`}><button className="btn rounded-circle fs-7" style={{ backgroundColor: "#f06c00" }}>{'\u2192'}</button></Link></h4>
-                            <UltimiArrivi />
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     );
 }
+
 
