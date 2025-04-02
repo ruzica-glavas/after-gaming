@@ -1,5 +1,3 @@
-// /Users/Greggione/Desktop/Boolean/after-gaming/after-front/src/contexts/GlobalContext.jsx
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const GlobalContext = createContext();
