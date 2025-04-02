@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import UltimiArrivi from "./UltimiArrivi";
+import AggiungiAlCarrelloButton from "./AggiungiAlCarrelloButton";
 
 export default function MainDettaglio() {
     const { slug } = useParams();
@@ -36,20 +37,20 @@ export default function MainDettaglio() {
         const trailer = document.getElementById("game-trailer");
         if (trailer) {
             trailer.scrollIntoView({ behavior: "smooth" });
-    
+
             const iframe = trailer.querySelector("iframe");
             if (iframe) {
                 // Avvia il video automaticamente
                 iframe.src += (iframe.src.includes("?") ? "&" : "?") + "autoplay=1";
-    
+
                 // Richiede la modalità schermo intero
                 if (iframe.requestFullscreen) {
                     iframe.requestFullscreen();
-                } else if (iframe.mozRequestFullScreen) { 
+                } else if (iframe.mozRequestFullScreen) {
                     iframe.mozRequestFullScreen();
                 } else if (iframe.webkitRequestFullscreen) {
                     iframe.webkitRequestFullscreen();
-                } else if (iframe.msRequestFullscreen) { 
+                } else if (iframe.msRequestFullscreen) {
                     iframe.msRequestFullscreen();
                 }
             }
@@ -100,16 +101,17 @@ export default function MainDettaglio() {
                     <p className="text-white">Data di rilascio: <b>{new Date(game.created_at).toLocaleDateString()}</b></p>
 
                     <div className="d-flex justify-content-center gap-3 mt-5">
-                        {[
-                            { icon: faHeart, label: "Add to wishlist" },
-                            { icon: faCartShopping, label: "Add to cart" },
-                            { icon: faPlay, label: "Video", onClick: handleTrailerClick },
-                        ].map(({ icon, label, onClick }, index) => (
-                            <button key={index} className="btn d-flex gap-2" style={buttonStyle} onClick={onClick}>
-                                <FontAwesomeIcon icon={icon} style={iconStyle} />
-                                <p className="mb-0">{label}</p>
-                            </button>
-                        ))}
+                        <button className="btn d-flex gap-2" style={buttonStyle}>
+                            <FontAwesomeIcon icon={faHeart} style={iconStyle} />
+                            <p className="mb-0">Add to wishlist</p>
+                        </button>
+
+                        <AggiungiAlCarrelloButton game={game} />
+
+                        <button className="btn d-flex gap-2" style={buttonStyle} onClick={handleTrailerClick}>
+                            <FontAwesomeIcon icon={faPlay} style={iconStyle} />
+                            <p className="mb-0">Video</p>
+                        </button>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,3 @@
-// /Users/Greggione/Desktop/Boolean/after-gaming/after-front/src/components/AggiungiAlCarrelloButton.jsx
-
 import React from 'react';
 import { useGlobalContext } from '../contexts/GlobalContext';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
