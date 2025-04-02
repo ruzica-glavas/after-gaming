@@ -196,3 +196,122 @@ export function validateDiscountCode(req, res) {
     }
   );
 }
+
+//     funzione email
+export function sendEmail(req, res) {
+  const to = req.body.to;
+  const subject = req.body.subject;
+  const text = req.body.text;
+
+  if (!to || !subject || !text) {
+    return res
+      .status(400)
+      .json({ error: "Tutti i campi (to, subject, text) sono obbligatori" });
+  }
+
+  const transporter = req.transporter; // Usa il transporter dal middleware
+
+  const mailOptions = {
+    from: "no-reply@aftergaming.com", // Sostituisci con un indirizzo valido o usa un default
+    to: to,
+    subject: subject,
+    text: text,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.error("Errore nell'invio email:", error);
+      return res.status(500).json({ error: "Errore nell'invio email" });
+    }
+    console.log("Email inviata:", info.response);
+    res.status(200).json({ message: "Email inviata con successo" });
+  });
+}
+
+//  creazione ordine
+export function createOrder(req, res) {
+  var {
+    first_name,
+    last_name,
+    email,
+    billing_address,
+    shipping_address,
+    products,
+    total,
+  } = req.body;
+
+  if (!email || !products || !total) {
+    return res
+      .status(400)
+      .json({ error: "Email, prodotti e totale sono obbligatori" });
+  }
+
+  db.query(
+    "INSERT INTO orders (total, billing_address, shipping_address, first_name, last_name, email, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())",
+    [total, billing_address, shipping_address, first_name, last_name, email],
+    function (err, orderResult) {
+      if (err) {
+        console.error("Errore nella query:", err);
+        return res.status(500).json({ error: "Errore nell'ordine" });
+      }
+
+      var orderId = orderResult.insertId;
+      var orderItems = products.map(function (p) {
+        return [orderId, p.product_id, p.quantity, p.price];
+      });
+
+      db.query(
+        "INSERT INTO order_product (order_id, product_id, quantity, price_at_purchase) VALUES ?",
+        [orderItems],
+        function (err) {
+          if (err) {
+            console.error("Errore negli item:", err);
+            return res
+              .status(500)
+              .json({ error: "Errore negli item dell'ordine" });
+          }
+
+          var orderDetails = products
+            .map(function (p) {
+              return `${p.quantity}x ${p.name} - ${p.price}€`;
+            })
+            .join("\n");
+          var emailText = `
+Ordine #${orderId} Confermato!
+
+Grazie ${first_name} ${last_name} per il tuo acquisto!
+Dettagli dell'ordine:
+${orderDetails}
+Totale: ${total}€
+Indirizzo di spedizione: ${shipping_address}
+
+Riceverai un'email con gli aggiornamenti sullo stato della spedizione.
+Contattaci a support@aftergaming.com per assistenza.
+
+Cordiali saluti,
+Il team di After Gaming
+          `.trim();
+
+          req.transporter.sendMail(
+            {
+              from: "no-reply@aftergaming.com",
+              to: email,
+              subject: `Conferma Ordine #${orderId}`,
+              text: emailText,
+            },
+            function (emailErr, info) {
+              if (emailErr) {
+                console.error("Errore nell'invio email:", emailErr);
+              } else {
+                console.log("Email inviata:", info.response);
+              }
+              res
+                .status(201)
+                .json({ message: "Ordine creato con successo", orderId });
+            }
+          );
+        }
+      );
+    }
+  );
+}
