@@ -72,7 +72,7 @@ export default function MainDettaglio() {
                     </div>
                     <div className="col-6 d-flex flex-column justify-content-center align-items-center">
                         <h1 className="text-white">{game.name}</h1>
-                        <p className="text-white">Prezzo: <b>{game.price}</b> €</p>
+                        <p className="text-white"><b>{game.price}</b> €</p>
                         <p className="text-white">Data di rilascio: <b>{new Date(game.created_at).toLocaleDateString()}</b></p>
 
                         <p className="text-white"> Utenti a questa pagina: <fragment style={{ color: "var(--orange-color)" }}>{usersOnline}</fragment>
@@ -91,7 +91,7 @@ export default function MainDettaglio() {
                     </div>
                 </div>
 
-                <div className="col-12 mt-5">
+                <div className="col-12 mt-5 text-start ">
                     <h2 className="text-white">Descrizione</h2>
                     <p className="mt-3 text-secondary">{game.description}</p>
                     <h2 className="text-white">Dettagli</h2>
@@ -110,9 +110,9 @@ export default function MainDettaglio() {
 
                 <div className="container mt-5">
                     <div className="row">
-                        <h2 className="text-white">Configurazioni</h2>
+                        <h2 className="text-white text-start"><b>Configurazioni</b></h2>
 
-                        <div className="col-6 text-start mt-3">
+                        <div className="col-6 text-start mt-4">
                             <h3 className="text-white">Configurazione Minima</h3>
                             <ul className="list-unstyled text-start mt-3 text-secondary">
                                 <li><strong className="text-white">OS:</strong> Windows 10/11</li>
@@ -140,31 +140,31 @@ export default function MainDettaglio() {
                             <h2 className="text-white">Caratteristiche del gioco</h2>
                             <div className="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 mt-3 h-50">
                                 <div className="col">
-                                    <div className="p-3 border h-100 align-content-center rounded ">
+                                    <div className="p-3 border h-100 align-content-center rounded hover-effect">
                                         <FontAwesomeIcon icon={faUser} />
                                         <h3>Single-player</h3>
                                     </div>
                                 </div>
                                 <div className="col">
-                                    <div className="p-3 border h-100 align-content-center rounded ">
+                                    <div className="p-3 border h-100 align-content-center rounded hover-effect">
                                         <FontAwesomeIcon icon={faUsers} />
                                         <h3>Multiplayer</h3>
                                     </div>
                                 </div>
                                 <div className="col">
-                                    <div className="p-3 border h-100 align-content-center rounded ">
+                                    <div className="p-3 border h-100 align-content-center rounded hover-effect">
                                         <FontAwesomeIcon icon={faGamepad} />
                                         <h3>Xbox controller support</h3>
                                     </div>
                                 </div>
                                 <div className="col">
-                                    <div className="p-3 border h-100 align-content-center rounded ">
+                                    <div className="p-3 border h-100 align-content-center rounded hover-effect">
                                         <FontAwesomeIcon icon={faCloud} />
                                         <h3>Steam cloud</h3>
                                     </div>
                                 </div>
                                 <div className="col">
-                                    <div className="p-3 border h-100 align-content-center rounded ">
+                                    <div className="p-3 border h-100 align-content-center rounded hover-effect">
                                         <FontAwesomeIcon icon={faShareNodes} />
                                         <h3>Family sharing</h3>
                                     </div>
@@ -172,7 +172,7 @@ export default function MainDettaglio() {
                             </div>
                         </div>
                         <div className="container d-flex flex-column pt-5 pb-4">
-                            <h4 className="text-white px-4 pb-3">Ultime uscite <Link to={`/ultimi-arrivi`}><button className="btn rounded-circle fs-7" style={{ backgroundColor: "#f06c00" }}>{'\u2192'}</button></Link></h4>
+                            <h4 className="text-white px-4 pb-3">Ultime uscite <Link to={`/ultimi-arrivi`}><button className="btn rounded-circle fs-7" style={{ backgroundColor: "#f06c00" }}>{'\u2794'}</button></Link></h4>
                             <UltimiArrivi />
                         </div>
                     </div>

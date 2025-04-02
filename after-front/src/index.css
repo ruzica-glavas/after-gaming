@@ -244,3 +244,9 @@ nav.scrolled .searchbar:focus-within {
 .social-icon:hover {
   color: var(--orange-color) !important;
 }
+
+.hover-effect:hover {
+  color: var(--orange-color);
+  cursor: pointer;
+  border-color: var(--orange-color) !important;
+}
