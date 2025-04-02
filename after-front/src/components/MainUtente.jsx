@@ -59,7 +59,9 @@ export default function MainUtente() {
                             className="form-control"
                         />
                     </div>
-                    <button type="submit" className="btn w-100 text-white ">Conferma Dati</button>
+                    <div className='text-end'>
+                         <button type="submit" className="btn text-white"style={{ backgroundColor: "#f06c00" }}>Conferma Dati</button>
+                    </div>
                 </form>
             </div>
             
@@ -83,6 +85,9 @@ export default function MainUtente() {
                             carrello.reduce((sum, p) => sum + (Number(p.price) * p.quantita || 0), 0).toFixed(2)
                         }
                     </p>
+                    <div className='text-end'>
+                        <button className="btn text-white" style={{ backgroundColor: "#f06c00" }}>Procedi al pagamento</button>
+                    </div>
                     <div className="mt-4 border-top pt-4 text-start">
                         <h4 className="mb-3">Dati Utente</h4>
                         <p><strong>Nome:</strong> {datiUtente.nome}</p>
