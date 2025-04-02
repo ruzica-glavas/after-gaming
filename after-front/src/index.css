@@ -145,6 +145,6 @@ nav.scrolled .searchbar:focus-within {
 }
 
 .discounted-price {
-  color: red;
+  color: white;
   font-weight: bold;
 }
