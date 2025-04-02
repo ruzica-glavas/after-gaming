@@ -130,7 +130,7 @@ export function getProductBySlug(req, res) {
 
 // controller per la ricerca
 export function searchProducts(req, res) {
-  var query = req.query.query;
+  const query = req.query.query;
 
   if (!query) {
     return res
@@ -138,12 +138,12 @@ export function searchProducts(req, res) {
       .json({ error: "Il parametro 'query' è obbligatorio" });
   }
 
-  var searchQuery = "%" + query + "%";
-  var sort = req.query.sort || "name"; // Default: ordinamento per nome
-  var sortOrder = sort.includes("desc") ? "DESC" : "ASC";
-  var sortField = sort.replace("_desc", "").replace("_asc", "");
+  const searchQuery = "%" + query + "%";
+  const sort = req.query.sort || "name"; // Default: ordinamento per nome
+  const sortOrder = sort.includes("desc") ? "DESC" : "ASC";
+  const sortField = sort.replace("_desc", "").replace("_asc", "");
 
-  var sql =
+  const sql =
     "SELECT id, slug, name, description, price, original_price, image_url, platform, trailer_url FROM products WHERE name LIKE ? OR description LIKE ? ORDER BY " +
     sortField +
     " " +
@@ -174,8 +174,8 @@ export function getPromotions(req, res) {
 }
 
 export function validateDiscountCode(req, res) {
-  var code = req.params.code;
-  var today = new Date().toISOString().split("T")[0];
+  const code = req.params.code;
+  const today = new Date().toISOString().split("T")[0];
 
   db.query(
     "SELECT * FROM discount_codes WHERE code = ? AND is_active = TRUE AND start_date <= ? AND end_date >= ?",
@@ -230,7 +230,7 @@ export function sendEmail(req, res) {
 
 //  creazione ordine
 export function createOrder(req, res) {
-  var {
+  const {
     first_name,
     last_name,
     email,
@@ -255,8 +255,8 @@ export function createOrder(req, res) {
         return res.status(500).json({ error: "Errore nell'ordine" });
       }
 
-      var orderId = orderResult.insertId;
-      var orderItems = products.map(function (p) {
+      const orderId = orderResult.insertId;
+      const orderItems = products.map(function (p) {
         return [orderId, p.product_id, p.quantity, p.price];
       });
 
@@ -271,12 +271,12 @@ export function createOrder(req, res) {
               .json({ error: "Errore negli item dell'ordine" });
           }
 
-          var orderDetails = products
+          const orderDetails = products
             .map(function (p) {
               return `${p.quantity}x ${p.name} - ${p.price}€`;
             })
             .join("\n");
-          var emailText = `
+          const emailText = `
 Ordine #${orderId} Confermato!
 
 Grazie ${first_name} ${last_name} per il tuo acquisto!
