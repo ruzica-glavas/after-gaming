@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import axios from 'axios'; // Assicurati di importare Axios
+import { Link } from "react-router-dom";
+import UltimiArrivi from "./UltimiArrivi";
 
 export default function MainDettaglio() {
     const { slug } = useParams(); // Ottieni il parametro "slug" dall'URL
@@ -18,10 +20,10 @@ export default function MainDettaglio() {
         axios.get('http://localhost:3000/api/products') // Cambia l'endpoint con quello corretto
             .then(response => {
                 const games = response.data; // Supponiamo che la risposta sia un array di giochi
-                
+
                 // Trova il gioco con lo slug
                 const foundGame = games.find(game => game.slug === slug);
-                
+
                 if (foundGame) {
                     setGame(foundGame);
                 } else {
@@ -70,9 +72,9 @@ export default function MainDettaglio() {
                     </div>
                     <div className="col-6 d-flex flex-column justify-content-center align-items-center">
                         <h1 className="text-white">{game.name}</h1>
-                        <p className="text-white">Prezzo: <b>{game.original_price}</b> €</p>
+                        <p className="text-white">Prezzo: <b>{game.price}</b> €</p>
                         <p className="text-white">Data di rilascio: <b>{new Date(game.created_at).toLocaleDateString()}</b></p>
-                        
+
                         <p className="text-white"> Utenti a questa pagina: <fragment style={{ color: "var(--orange-color)" }}>{usersOnline}</fragment>
                             <FontAwesomeIcon icon={faFire} style={{ color: "var(--orange-color)", marginLeft: "3px" }} />
                         </p>
@@ -94,10 +96,10 @@ export default function MainDettaglio() {
                     <p className="mt-3 text-secondary">{game.description}</p>
                     <h2 className="text-white">Dettagli</h2>
                     <p className="mt-3 text-secondary">
-                        Scopri un'esperienza di gioco unica con {game.name}. Immergiti in un mondo ricco di avventure, 
-                        sfide e divertimento. Progettato per offrire ore di intrattenimento, questo gioco combina 
-                        grafica mozzafiato, gameplay coinvolgente e una storia avvincente. Che tu sia un giocatore 
-                        esperto o un principiante, {game.name} è perfetto per te. Preparati a vivere un'avventura 
+                        Scopri un'esperienza di gioco unica con {game.name}. Immergiti in un mondo ricco di avventure,
+                        sfide e divertimento. Progettato per offrire ore di intrattenimento, questo gioco combina
+                        grafica mozzafiato, gameplay coinvolgente e una storia avvincente. Che tu sia un giocatore
+                        esperto o un principiante, {game.name} è perfetto per te. Preparati a vivere un'avventura
                         indimenticabile!
                     </p>
                 </div>
@@ -121,7 +123,7 @@ export default function MainDettaglio() {
                                 <li><strong className="text-white">Storage:</strong> 115 GB available space</li>
                             </ul>
                         </div>
-                        
+
                         <div className="col-6 text-start mt-3 text-secondary">
                             <h3 className="text-white">Configurazione Raccomandata</h3>
                             <ul className="list-unstyled text-start mt-3 text-secondary">
@@ -139,7 +141,7 @@ export default function MainDettaglio() {
                             <div className="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 mt-3 h-50">
                                 <div className="col">
                                     <div className="p-3 border h-100 align-content-center rounded ">
-                                        <FontAwesomeIcon icon={faUser} /> 
+                                        <FontAwesomeIcon icon={faUser} />
                                         <h3>Single-player</h3>
                                     </div>
                                 </div>
@@ -169,10 +171,14 @@ export default function MainDettaglio() {
                                 </div>
                             </div>
                         </div>
-
+                        <div className="container d-flex flex-column pt-5 pb-4">
+                            <h4 className="text-white px-4 pb-3">Ultime uscite <Link to={`/ultimi-arrivi`}><button className="btn rounded-circle fs-7" style={{ backgroundColor: "#f06c00" }}>{'\u2192'}</button></Link></h4>
+                            <UltimiArrivi />
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     );
 }
+

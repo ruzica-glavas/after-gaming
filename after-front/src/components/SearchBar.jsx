@@ -8,13 +8,11 @@ export default function SearchBar() {
     const navigate = useNavigate()
 
     function handleInput(e) {
-
         const query = e.target.value;
 
         setSearch(query);
         
         navigate(`/ricerca?q=${encodeURIComponent(query)}`);
-
     }
 
     function handleSubmit(e) {
@@ -22,20 +20,21 @@ export default function SearchBar() {
     }
 
     return (
-        <div className="searchbar-container d-flex gap-2" style={{ height: "2rem" }}>
+        <div className="d-flex gap-2">
             <form onSubmit={handleSubmit} className="d-flex gap-2">
                 <input
                     type="text"
                     value={search}
                     onChange={handleInput}
-                    className="searchbar form-control length-input"
+                    className="form-control length-input"
                     placeholder="Minecraft, RPG, ..."
                 />
-                <button type="submit" className="btn rounded-circle  d-flex align-items-center justify-content-center" style={{ width: "2rem", height: "2rem", backgroundColor: "#f06c00" }}>
+                <button type="submit" className="btn rounded-circle d-flex align-items-center justify-content-center" style={{ width: "2rem", height: "2rem", backgroundColor: "#f06c00" }}>
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button>
             </form>
         </div>
     );
 }
+
 
