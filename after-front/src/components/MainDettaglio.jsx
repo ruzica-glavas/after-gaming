@@ -58,7 +58,6 @@ export default function MainDettaglio() {
 
     const buttonStyle = { backgroundColor: "var(--orange-color)", color: "white" };
     const iconStyle = { fontSize: "24px" };
-
     const featureList = [
         { icon: faUser, label: "Single-player" },
         { icon: faUsers, label: "Multiplayer" },
@@ -68,6 +67,28 @@ export default function MainDettaglio() {
     ];
 
     return (
+        <div className="container mt-5 pb-5">
+            <div className="text-center">
+                <div className="game-image-dettaglio-container row">
+                    <div className="col-6 p-0">
+                        <img src={game.image_url} alt={game.name} className="game-image-dettaglio" />
+                    </div>
+                    <div className="col-6 d-flex flex-column justify-content-center align-items-center">
+                        <h1 className="text-white">{game.name}</h1>
+                        <p className="text-white">Prezzo: <b>{game.price}</b> €</p>
+                        <p className="text-white">Data di rilascio: <b>{new Date(game.created_at).toLocaleDateString()}</b></p>
+
+                        <p className="text-white"> Utenti a questa pagina: <fragment style={{ color: "var(--orange-color)" }}>{usersOnline}</fragment>
+                            <FontAwesomeIcon icon={faFire} style={{ color: "var(--orange-color)", marginLeft: "3px" }} />
+                        </p>
+                        <div className="d-flex justify-content-center gap-3 mt-5">
+                            <button className="btn d-flex gap-2" style={{ backgroundColor: "var(--orange-color)", color: "white" }}>
+                                <FontAwesomeIcon icon={faHeart} style={{ color: "white", fontSize: "24px" }} />
+                                <p className="mb-0">Add to wishlist</p>
+                            </button>
+                            {/* Aggiungi il componente AggiungiAlCarrelloButton */}
+                            <AggiungiAlCarrelloButton game={game} />
+                        </div>
         <div className="container mt-5 pb-5 text-center">
             <div className="game-image-dettaglio-container row">
                 <div className="col-6 p-0">
@@ -157,6 +178,20 @@ export default function MainDettaglio() {
                                         <h3>{label}</h3>
                                     </div>
                                 </div>
+                                <div className="col">
+                                    <div className="p-3 border h-100 align-content-center rounded ">
+                                        <FontAwesomeIcon icon={faCloud} />
+                                        <h3>Steam cloud</h3>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="p-3 border h-100 align-content-center rounded ">
+                                        <FontAwesomeIcon icon={faShareNodes} />
+                                        <h3>Family sharing</h3>
+                                    </div>
+                                </div>
+                            </div>
+
                             ))}
                         </div>
                     </div>
@@ -171,4 +206,3 @@ export default function MainDettaglio() {
             </div>
         </div>
     );
-}

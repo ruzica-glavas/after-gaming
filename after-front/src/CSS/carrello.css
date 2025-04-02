@@ -1,0 +1,75 @@
+.carrello-container {
+    background-color: #181818;
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+}
+
+.carrello-titolo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.carrello-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #242424;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.carrello-img {
+    width: 120px;
+    height: auto;
+    border-radius: 4px;
+}
+
+.carrello-info {
+    flex: 1;
+    padding-left: 15px;
+}
+
+.carrello-nome {
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+}
+
+.carrello-piattaforma {
+    font-size: 14px;
+    color: gray;
+    display: block;
+}
+
+.carrello-rimuovi {
+    font-size: 14px;
+    color: #ff4747;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.carrello-quantita select {
+    background-color: #333;
+    color: white;
+    border: 1px solid #444;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.carrello-prezzo {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.carrello-totale {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 20px;
+    font-weight: bold;
+}
