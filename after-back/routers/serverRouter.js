@@ -3,7 +3,8 @@ import {
   getProducts,
   getLatestProducts,
   getProductBySlug,
-  createProduct
+  createProduct,
+  searchProducts,
 } from "../controllers/afterController.js";
 
 const router = express.Router();
@@ -13,5 +14,6 @@ router.get("/products", getProducts);
 router.get("/latest-products", getLatestProducts);
 router.get("/products/:slug", getProductBySlug);
 router.post("/products", createProduct);
+router.get("/search", searchProducts); //GET http://localhost:3000/api/search?query=cyber   esempio
 
 export default router;

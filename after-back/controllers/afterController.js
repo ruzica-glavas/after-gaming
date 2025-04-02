@@ -1,36 +1,60 @@
-import slugify from "slugify"
+import slugify from "slugify";
 import db from "../data/db.js";
 
 export function createProduct(req, res) {
-  const { name, price, category } = req.body;
-  
+  var name = req.body.name;
+  var price = req.body.price;
+  var category = req.body.category;
+  var description = req.body.description;
+  var original_price = req.body.original_price;
+  var image_url = req.body.image_url;
+  var platform = req.body.platform;
+  var trailer_url = req.body.trailer_url;
+
   if (!name || !price || !category) {
-    return res.status(400).json({ error: "Tutti i campi sono obbligatori" });
+    return res
+      .status(400)
+      .json({ error: "Tutti i campi obbligatori sono richiesti" });
   }
 
-  const baseSlug = slugify(name, { lower: true, strict: true });
+  var baseSlug = slugify(name, { lower: true, strict: true });
 
   // Verifica se lo slug esiste già e genera uno univoco
-  const checkSlugSql = "SELECT COUNT(*) AS count FROM products WHERE slug LIKE ?";
-  db.query(checkSlugSql, [`${baseSlug}%`], (err, results) => {
+  var checkSlugSql = "SELECT COUNT(*) AS count FROM products WHERE slug LIKE ?";
+  db.query(checkSlugSql, [baseSlug + "%"], function (err, results) {
     if (err) {
       return res.status(500).json({ error: "Errore nel database" });
     }
 
-    const count = results[0].count;
-    const finalSlug = count > 0 ? `${baseSlug}-${count}` : baseSlug;
+    var count = results[0].count;
+    var finalSlug = count > 0 ? baseSlug + "-" + count : baseSlug;
 
-    const insertSql =
-      "INSERT INTO products (name, price, category, slug) VALUES (?, ?, ?, ?)";
-    db.query(insertSql, [name, price, category, finalSlug], (err, result) => {
-      if (err) {
-        return res.status(500).json({ error: "Errore nell'inserimento del prodotto" });
+    var insertSql =
+      "INSERT INTO products (name, price, category, description, original_price, image_url, platform, trailer_url, slug) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    db.query(
+      insertSql,
+      [
+        name,
+        price,
+        category,
+        description,
+        original_price,
+        image_url,
+        platform,
+        trailer_url,
+        finalSlug,
+      ],
+      function (err, result) {
+        if (err) {
+          return res
+            .status(500)
+            .json({ error: "Errore nell'inserimento del prodotto" });
+        }
+        res.status(201).json({ message: "Prodotto creato", slug: finalSlug });
       }
-      res.status(201).json({ message: "Prodotto creato", slug: finalSlug });
-    });
+    );
   });
 }
-
 
 export function getProducts(req, res) {
   let sql = "SELECT * FROM products";
@@ -54,7 +78,9 @@ export function getProducts(req, res) {
 
   db.query(sql, params, (err, results) => {
     if (err) {
-      return res.status(500).json({ error: "Errore lato server in getProducts" });
+      return res
+        .status(500)
+        .json({ error: "Errore lato server in getProducts" });
     }
     res.json(results);
   });
@@ -73,15 +99,15 @@ export function getLatestProducts(req, res) {
   });
 }
 
-
-
 export function getProductBySlug(req, res) {
   const { slug } = req.params;
   const sql = "SELECT * FROM products WHERE slug = ?";
 
   db.query(sql, [slug], (err, results) => {
     if (err) {
-      return res.status(500).json({ error: "Errore lato server in getProductBySlug" });
+      return res
+        .status(500)
+        .json({ error: "Errore lato server in getProductBySlug" });
     }
 
     if (results.length === 0) {
@@ -90,4 +116,30 @@ export function getProductBySlug(req, res) {
 
     res.json(results[0]);
   });
+}
+
+// controller per la ricerca
+export function searchProducts(req, res) {
+  var query = req.query.query;
+  if (!query) {
+    return res
+      .status(400)
+      .json({ error: "Il parametro 'query' è obbligatorio" });
+  }
+
+  var searchQuery = "%" + query + "%";
+  db.query(
+    "SELECT id, slug, name, description, price, original_price, image_url, platform, trailer_url FROM products WHERE name LIKE ? OR description LIKE ?",
+    [searchQuery, searchQuery],
+    function (err, results) {
+      if (err) {
+        console.error("Errore nella ricerca dei prodotti:", err);
+        return res.status(500).json({ error: "Errore interno del server" });
+      }
+      if (results.length === 0) {
+        return res.status(404).json({ message: "Nessun prodotto trovato" });
+      }
+      res.status(200).json(results);
+    }
+  );
 }
