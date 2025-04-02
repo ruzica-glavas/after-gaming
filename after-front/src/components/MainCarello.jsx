@@ -72,7 +72,7 @@ export default function MainCarrello() {
 
             {/* Sezione Consigliati */}
             {giochiConsigliati.length > 0 && (
-                <div className="giochi-consigliati mt-5 container">
+                <div className="giochi-consigliati mt-5">
                     <h5 className="text-white">Giochi Consigliati</h5>
                     <div className="">
                         {giochiConsigliati.slice(0, 3).map(gioco => (
