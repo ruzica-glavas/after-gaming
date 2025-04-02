@@ -23,7 +23,7 @@ export default function MainCarrello() {
     if (error) return <div className="text-center py-4 text-danger">Si è verificato un errore nel caricamento dei giochi.</div>;
 
     return (
-        <div className="carrello-container container d-flex flex-column">
+        <div className="carrello-container container d-flex flex-column mb-3">
             <div className="d-flex justify-content-between flex-wrap gap-2">
                 {/* Sezione Carrello */}
                 <div className="carrello-items" style={{ flex: 1, minWidth: '60%' }}>
@@ -70,7 +70,7 @@ export default function MainCarrello() {
                     <h3>Totale Parziale: <strong>&euro;{totalDiscounted.toFixed(2)}</strong></h3>
 
                     <NavLink to="/utente" className=" w-100 mt-3 p-3 ">
-                        <button className="order-button text-white btn w-100 mt-3 p-3">Procedi al pagamento {'➔'}</button>
+                        <button className="order-button text-white btn w-75 mt-3 p-3">Procedi al pagamento {'➔'}</button>
                     </NavLink>
 
                 </div>

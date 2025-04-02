@@ -9,6 +9,7 @@ export const GlobalProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [carrello, setCarrello] = useState([]);
+    const [isCartOpen, setIsCartOpen] = useState(false); // New state for off-canvas
 
     useEffect(() => {
         const carrelloData = localStorage.getItem('carrello');
@@ -30,6 +31,10 @@ export const GlobalProvider = ({ children }) => {
         } else {
             setCarrello([...carrello, { ...prodotto, quantita: 1 }]);
         }
+        setIsCartOpen(true); // Open the off-canvas when adding to cart
+        setTimeout(() => {
+            setIsCartOpen(false);
+        }, 3000);
     };
 
     const rimuoviDalCarrello = (prodottoId) => {
@@ -66,6 +71,10 @@ export const GlobalProvider = ({ children }) => {
         fetchData();
     }, []);
 
+    const closeCart = () => {
+        setIsCartOpen(false);
+    };
+
     const contextValue = {
         products,
         loading,
@@ -75,7 +84,9 @@ export const GlobalProvider = ({ children }) => {
         cambiaQuantita,
         carrello,
         datiUtente,
-        salvaDatiUtente
+        salvaDatiUtente,
+        isCartOpen,
+        closeCart
     };
 
     return (
@@ -84,3 +95,4 @@ export const GlobalProvider = ({ children }) => {
         </GlobalContext.Provider>
     );
 };
+
