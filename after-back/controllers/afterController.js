@@ -2,34 +2,34 @@ import slugify from "slugify";
 import db from "../data/db.js";
 
 export function createProduct(req, res) {
-  var name = req.body.name;
-  var price = req.body.price;
-  var category = req.body.category;
-  var description = req.body.description;
-  var original_price = req.body.original_price;
-  var image_url = req.body.image_url;
-  var platform = req.body.platform;
-  var trailer_url = req.body.trailer_url;
+  const name = req.body.name;
+  const price = req.body.price;
+  const category = req.body.category;
+  const description = req.body.description;
+  const original_price = req.body.original_price;
+  const image_url = req.body.image_url;
+  const platform = req.body.platform;
+  const trailer_url = req.body.trailer_url;
 
-  if (!name || !price || !category) {
+  if (!name || !price || !category || !description || !original_price || !image_url || !platform || !trailer_url) {
     return res
       .status(400)
       .json({ error: "Tutti i campi obbligatori sono richiesti" });
   }
 
-  var baseSlug = slugify(name, { lower: true, strict: true });
+  const baseSlug = slugify(name, { lower: true, strict: true });
 
   // Verifica se lo slug esiste già e genera uno univoco
-  var checkSlugSql = "SELECT COUNT(*) AS count FROM products WHERE slug LIKE ?";
+  const checkSlugSql = "SELECT COUNT(*) AS count FROM products WHERE slug LIKE ?";
   db.query(checkSlugSql, [baseSlug + "%"], function (err, results) {
     if (err) {
       return res.status(500).json({ error: "Errore nel database" });
     }
 
-    var count = results[0].count;
-    var finalSlug = count > 0 ? baseSlug + "-" + count : baseSlug;
+    const count = results[0].count;
+    const finalSlug = count > 0 ? baseSlug + "-" + count : baseSlug;
 
-    var insertSql =
+    const insertSql =
       "INSERT INTO products (name, price, category, description, original_price, image_url, platform, trailer_url, slug) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     db.query(
       insertSql,
@@ -120,14 +120,14 @@ export function getProductBySlug(req, res) {
 
 // controller per la ricerca
 export function searchProducts(req, res) {
-  var query = req.query.query;
+  const query = req.query.query;
   if (!query) {
     return res
       .status(400)
       .json({ error: "Il parametro 'query' è obbligatorio" });
   }
 
-  var searchQuery = "%" + query + "%";
+  const searchQuery = "%" + query + "%";
   db.query(
     "SELECT id, slug, name, description, price, original_price, image_url, platform, trailer_url FROM products WHERE name LIKE ? OR description LIKE ?",
     [searchQuery, searchQuery],
@@ -143,3 +143,7 @@ export function searchProducts(req, res) {
     }
   );
 }
+
+
+
+
