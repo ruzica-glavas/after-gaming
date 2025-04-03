@@ -338,3 +338,22 @@ footer .location-container:hover svg {
   font-size: 18px;
   font-weight: 100;
 }
+
+.discount-badge {
+  position: absolute;
+  bottom: -35px;
+  right: -10px;
+  background-color: rgb(255, 81, 0);
+  color: white;
+  padding: 5px 10px;
+  font-size: 50px;
+  font-weight: 300;
+  border-radius: 5px;
+  z-index: 10;
+}
+
+.image-wrapper {
+  position: relative;
+  display: inline-block;
+  overflow:visible;
+}

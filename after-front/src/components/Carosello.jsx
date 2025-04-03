@@ -22,10 +22,10 @@ export default function Carosello() {
   }, []);
 
   const impostazioni = {
-    dots: false,  // Rimosso i puntini sotto il carosello
+    dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 1, // Mostra sempre solo una slide
+    slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
@@ -35,29 +35,39 @@ export default function Carosello() {
   return (
     <div className="carousel-container">
       <Slider {...impostazioni}>
-        {discountedGames.map((game) => (
-          <div key={game.id} className="slide">
-            <Link to={`/dettaglio/${game.slug}`} className="game-link">
-              <div className="image-wrapper">
-                <img
-                  src={game.image_url}
-                  alt={game.name}
-                  className="carousel-image"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src =
-                      "https://via.placeholder.com/300x200?text=Immagine+non+disponibile";
-                  }}
-                />
-              </div>
-              <h3 className="game-title">{game.name}</h3>
-              <p className="game-price">
-                <span className="original-price">{game.original_price}€</span>
-                <span className="discounted-price">{game.price}€</span>
-              </p>
-            </Link>
-          </div>
-        ))}
+        {discountedGames.map((game) => {
+          const discount = game.original_price && game.price < game.original_price
+            ? Math.round(((game.original_price - game.price) / game.original_price) * 100)
+            : 0;
+
+          return (
+            <div key={game.id} className="slide">
+              <Link to={`/dettaglio/${game.slug}`} className="game-link">
+                <div className="image-wrapper">
+                  {/* Badge di sconto */}
+                  {discount > 0 && (
+                    <span className="discount-badge">-{discount}%</span>
+                  )}
+                  <img
+                    src={game.image_url}
+                    alt={game.name}
+                    className="carousel-image"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src =
+                        "https://via.placeholder.com/300x200?text=Immagine+non+disponibile";
+                    }}
+                  />
+                </div>
+                <h3 className="game-title">{game.name}</h3>
+                <p className="game-price">
+                  <span className="original-price">{game.original_price}€</span>
+                  <span className="discounted-price">{game.price}€</span>
+                </p>
+              </Link>
+            </div>
+          );
+        })}
       </Slider>
     </div>
   );
