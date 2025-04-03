@@ -155,7 +155,7 @@ Azione richiesta: elaborare l'ordine.
               customerEmailResponse.status
             ); // Debug: stato email acquirente
             if (!customerEmailResponse.ok) {
-              throw new Error("Mail inviate con successo"); ///////da cambiare///////
+              //throw new Error("Mail inviate con successo"); ///////da cambiare///////
             }
 
             console.log("Invio email al venditore:", vendorEmailText); // Debug: email venditore
@@ -175,7 +175,7 @@ Azione richiesta: elaborare l'ordine.
               vendorEmailResponse.status
             ); // Debug: stato email venditore
             if (!vendorEmailResponse.ok) {
-              alert("Mail inviate con successo"); //////////da cambiare//////////
+              //alert("Mail inviate con successo"); //////////da cambiare//////////
               //throw new Error("Errore nell'invio dell'email al venditore");
             }
 
