@@ -6,6 +6,7 @@ import axios from 'axios';
 import UltimiArrivi from "./UltimiArrivi";
 import AggiungiAlCarrelloButton from "./AggiungiAlCarrelloButton";
 import { useGlobalContext } from '../contexts/GlobalContext';
+import AggiungiAllaWishlistButton from "./AggiungiAllaWishlistButton";
 
 export default function MainDettaglio() {
     const { slug } = useParams();
@@ -82,10 +83,7 @@ export default function MainDettaglio() {
                     <p className="text-white">Data di rilascio: <b>{new Date(game.created_at).toLocaleDateString()}</b></p>
 
                     <div className="d-flex justify-content-center gap-3 mt-5">
-                        <button className="btn d-flex gap-2" style={buttonStyle}>
-                            <FontAwesomeIcon icon={faHeart} style={iconStyle} onClick={() => aggiungiAllaWishlist(game)} />
-                            <p className="mb-0">Add to wishlist</p>
-                        </button>
+                        <AggiungiAllaWishlistButton game={game} />
 
                         <AggiungiAlCarrelloButton game={game} />
 

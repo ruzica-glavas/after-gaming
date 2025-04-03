@@ -11,9 +11,9 @@ export default function MainWishlist() {
 
     return (
         <div className="wishlist-container container">
-            <h2 className="wishlist-titolo">La tua Wishlist</h2>
+            <h2 className="wishlist-titolo text-white">La tua Wishlist</h2>
             {wishlist.length === 0 ? (
-                <p className="wishlist-vuoto">La tua wishlist è vuota.</p>
+                <p className="wishlist-vuoto  text-white">La tua wishlist è vuota.</p>
             ) : (
                 <>
                     {wishlist.map(prodotto => (
