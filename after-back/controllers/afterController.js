@@ -246,9 +246,9 @@ export function createOrder(req, res) {
 
   const slugs = products.map((p) => p.slug);
 
-  // Recupera i prodotti con i prezzi reali dal DB
+  // Recupera i prodotti con i prezzi reali dal DB usando gli slug
   db.query(
-    "SELECT slug, price FROM products WHERE slug IN (?)",
+    "SELECT id, slug, price FROM products WHERE slug IN (?)",
     [slugs],
     function (err, productRows) {
       if (err) {
@@ -264,22 +264,25 @@ export function createOrder(req, res) {
           .json({ error: "Uno o più prodotti non esistono" });
       }
 
-      // Mappa per i prezzi effettivi
-      const productMap = new Map(productRows.map((p) => [p.slug, p.price]));
+      // Mappa per i prezzi effettivi e product_id
+      const productMap = new Map(
+        productRows.map((p) => [p.slug, { id: p.id, price: p.price }])
+      );
 
       let total = 0;
       const orderItems = [];
 
       for (const p of products) {
-        const price = productMap.get(p.slug);
-        if (!price) {
+        const productInfo = productMap.get(p.slug);
+        if (!productInfo) {
           return res
             .status(400)
             .json({ error: `Prodotto non valido: ${p.slug}` });
         }
+        const price = productInfo.price;
         const itemTotal = price * p.quantity;
         total += itemTotal;
-        orderItems.push([p.slug, p.quantity, price]);
+        orderItems.push([productInfo.id, p.quantity, price]); // Usa product_id invece di slug
       }
 
       // Inseriamo l'ordine
@@ -300,11 +303,16 @@ export function createOrder(req, res) {
           }
 
           const orderId = orderResult.insertId;
-          const orderItemsValues = orderItems.map((item) => [orderId, ...item]);
+          const orderItemsValues = orderItems.map((item) => [
+            orderId,
+            item[0],
+            item[1],
+            item[2],
+          ]);
 
-          // Inseriamo i prodotti dell'ordine
+          // Inseriamo i prodotti dell'ordine usando product_id
           db.query(
-            "INSERT INTO order_product (order_id, slug, quantity, price_at_purchase) VALUES ?",
+            "INSERT INTO order_product (order_id, product_id, quantity, price_at_purchase) VALUES ?",
             [orderItemsValues],
             function (err) {
               if (err) {
@@ -316,10 +324,10 @@ export function createOrder(req, res) {
 
               // Costruisci il dettaglio dell'ordine per l'email
               const orderDetails = orderItems
-                .map(
-                  ([slug, quantity, price]) =>
-                    `${quantity}x ${slug} - ${price}€`
-                )
+                .map(([productId, quantity, price]) => {
+                  const product = productRows.find((p) => p.id === productId);
+                  return `${quantity}x ${product.slug} - ${price}€`;
+                })
                 .join("\n");
 
               const emailText = `
@@ -338,7 +346,6 @@ Cordiali saluti,
 Il team di After Gaming
             `.trim();
 
-              // Invia l'email di conferma solo se il transporter è disponibile
               if (req.transporter) {
                 req.transporter.sendMail(
                   {
