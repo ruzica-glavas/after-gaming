@@ -3,6 +3,7 @@ import { faTrash, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useGlobalContext } from '../contexts/GlobalContext';
 import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function MainCarrello() {
     const { carrello, loading, error, rimuoviDalCarrello, cambiaQuantita, aggiungiAlCarrello, products } = useGlobalContext();
@@ -32,7 +33,17 @@ export default function MainCarrello() {
                     ) : (
                         carrello.map(prodotto => (
                             <div key={prodotto.id} className="carrello-item text-white d-flex align-items-center mb-3">
-                                <img src={prodotto.image_url} alt={prodotto.name} className="carrello-img me-3" />
+                                <Link to={`/dettaglio/${prodotto.slug}`}>
+                                    <img
+                                        src={prodotto.image_url}
+                                        alt={prodotto.name}
+                                        className="carrello-img me-3"
+                                        onError={(e) => {
+                                            e.target.onerror = null;
+                                            e.target.src = 'https://via.placeholder.com/300x200?text=Immagine+non+disponibile';
+                                        }}
+                                    />
+                                </Link>
                                 <div className="carrello-info flex-grow-1">
                                     <span className="carrello-nome d-block">{prodotto.name}</span>
                                     <span className="carrello-piattaforma d-block">{prodotto.platform}</span>
@@ -78,16 +89,26 @@ export default function MainCarrello() {
             {/* Sezione Consigliati */}
             {giochiConsigliati.length > 0 && (
                 <div className="giochi-consigliati mt-5">
-                    <h5 className="text-white">Giochi Consigliati</h5>
+                    <h5 className="text-white pb-2">Giochi Consigliati</h5>
                     <div className="">
                         {giochiConsigliati.slice(0, 3).map(gioco => (
                             <div key={gioco.id} className="gioco-card d-flex gap-3 text-white p-3 m-2" style={{ background: '#444', borderRadius: '8px' }}>
-                                <img src={gioco.image_url} alt={gioco.name} className="image-suggested rounded mb-2" />
+                                <Link to={`/dettaglio/${gioco.slug}`}>
+                                    <img
+                                        src={gioco.image_url}
+                                        alt={gioco.name}
+                                        className="image-suggested rounded mb-2"
+                                        onError={(e) => {
+                                            e.target.onerror = null;
+                                            e.target.src = 'https://via.placeholder.com/300x200?text=Immagine+non+disponibile';
+                                        }}
+                                    />
+                                </Link>
                                 <div>
                                     <span className="d-block fw-bold">{gioco.name}</span>
                                     <span>{gioco.platform}</span>
                                     <p className="fw-bold mt-2">&euro;{gioco.price}</p>
-                                    <button 
+                                    <button
                                         className="btn btn-outline-secondary text-white mt-2"
                                         onClick={() => aggiungiAlCarrello(gioco)}
                                     >
