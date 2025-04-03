@@ -110,7 +110,7 @@ export default function MainDettaglio() {
             </div>
 
             <div id="game-trailer" className="col-12 mt-5">
-                <iframe width="1000" height="500" src={game.trailer_url} title={game.name} allow="autoplay encrypted-media"></iframe>
+                <iframe width="1000" height="500" src={game.trailer_url} title={game.name} allow="autoplay"></iframe>
             </div>
 
             <div className="container mt-5">

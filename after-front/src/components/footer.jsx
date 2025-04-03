@@ -5,7 +5,7 @@ import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
 export default function Footer() {
     return (
-        <footer className="bg-dark text-white py-3">
+        <footer className="bg-black text-white py-3">
             <Container style={{ paddingTop: '0', paddingBottom: '0', maxHeight: '400px' }}>
                 <Row className="text-center text-md-start">
 
@@ -31,7 +31,7 @@ export default function Footer() {
                                     key={index} 
                                     action 
                                     href={`/${text.replace(/\s+/g, '').toLowerCase()}`} 
-                                    className="bg-dark text-white fs-7"
+                                    className="bg-black text-white fs-7"
                                 >
                                     {text}
                                 </ListGroup.Item>
@@ -59,7 +59,7 @@ export default function Footer() {
             </Container>
 
             {/* Sezione inferiore del Footer */}
-            <div className="bg-dark text-white py-3">
+            <div className="bg-black text-white py-3">
                 <Container>
                     <Row className="d-flex flex-column flex-md-row align-items-center justify-content-between">
 

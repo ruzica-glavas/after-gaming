@@ -9,11 +9,15 @@ export const GlobalProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [carrello, setCarrello] = useState([]);
+<<<<<<< HEAD
     
     const [wishlist, setWishlist] = useState(() => {
         const wishlistData = localStorage.getItem('wishlist');
         return wishlistData ? JSON.parse(wishlistData) : [];
     });
+=======
+    const [isCartOpen, setIsCartOpen] = useState(false); // New state for off-canvas
+>>>>>>> 00796f1f338446f182c072244d6b3e6a272ea09b
 
     useEffect(() => {
         const carrelloData = localStorage.getItem('carrello');
@@ -35,6 +39,10 @@ export const GlobalProvider = ({ children }) => {
         } else {
             setCarrello([...carrello, { ...prodotto, quantita: 1 }]);
         }
+        setIsCartOpen(true); // Open the off-canvas when adding to cart
+        setTimeout(() => {
+            setIsCartOpen(false);
+        }, 3000);
     };
 
     const rimuoviDalCarrello = (prodottoId) => {
@@ -47,6 +55,7 @@ export const GlobalProvider = ({ children }) => {
         ));
     };
 
+<<<<<<< HEAD
 
     const aggiungiAllaWishlist = (prodotto) => {
         setWishlist(prevWishlist => {
@@ -71,6 +80,14 @@ export const GlobalProvider = ({ children }) => {
 
 
 
+=======
+    const [datiUtente, setDatiUtente] = useState(null);
+
+    const salvaDatiUtente = (dati) => {
+        setDatiUtente(dati);
+    };
+
+>>>>>>> 00796f1f338446f182c072244d6b3e6a272ea09b
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -89,6 +106,10 @@ export const GlobalProvider = ({ children }) => {
         fetchData();
     }, []);
 
+    const closeCart = () => {
+        setIsCartOpen(false);
+    };
+
     const contextValue = {
         products,
         loading,
@@ -97,9 +118,16 @@ export const GlobalProvider = ({ children }) => {
         rimuoviDalCarrello,
         cambiaQuantita,
         carrello,
+<<<<<<< HEAD
         wishlist, 
         aggiungiAllaWishlist, 
         rimuoviDallaWishlist
+=======
+        datiUtente,
+        salvaDatiUtente,
+        isCartOpen,
+        closeCart
+>>>>>>> 00796f1f338446f182c072244d6b3e6a272ea09b
     };
 
     return (
@@ -108,3 +136,4 @@ export const GlobalProvider = ({ children }) => {
         </GlobalContext.Provider>
     );
 };
+
