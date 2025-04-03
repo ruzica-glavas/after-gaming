@@ -76,13 +76,18 @@
   
   .wishlist-aggiungi-carrello {
     font-size: 12px;
-    color: #4CAF50;
-    background: none;
+    color: white; /* Imposta il colore del testo a bianco */
+    background-color: orange; /* Imposta il colore di sfondo a arancione */
     cursor: pointer;
     margin-top: 5px;
     padding: 8px 12px;
     border-radius: 4px;
-    border: 1px solid #4CAF50;
+    border: 1px solid orange; /* Bordo arancione per il bottone */
+  }
+
+  .wishlist-aggiungi-carrello:hover {
+    background-color: darkorange; 
+    border-color: darkorange; 
   }
   
   /* Responsive per mobile */
