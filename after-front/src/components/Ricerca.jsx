@@ -34,30 +34,41 @@ export default function Ricerca() {
 
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-6 mx-auto">
                 {filteredGames.length > 0 ? (
-                    filteredGames.map((game) => (
-                        <div key={game.id} className="col mb-4">
-                            <Link to={`/dettaglio/${game.slug}`}>
-                                <img
-                                    src={game.image_url}
-                                    alt={game.name}
-                                    className="game-image"
-                                    onError={(e) => {
-                                        e.target.onerror = null;
-                                        e.target.src = 'https://via.placeholder.com/300x200?text=Immagine+non+disponibile';
-                                    }}
-                                />
-                            </Link>
-                            <div className="d-flex justify-content-between align-items-center w-100 mt-2">
-                                <p className="game-name">{game.name}</p>
-                                <p className="game-price">
-                                    {game.original_price && (
-                                        <span className="original-price">{game.original_price}€</span>
+                    filteredGames.map((game) => {
+                        const discount = game.original_price && game.price < game.original_price
+                            ? Math.round(((game.original_price - game.price) / game.original_price) * 100)
+                            : 0;
+
+                        return (
+                            <div key={game.id} className="col mb-4">
+                                <div className="game-image-wrapper-ricerca">
+                                    {discount > 0 && (
+                                        <span className="discount-badge-ricerca">-{discount}%</span>
                                     )}
-                                    <span className="discounted-price">{game.price}€</span>
-                                </p>
+                                    <Link to={`/dettaglio/${game.slug}`}>
+                                        <img
+                                            src={game.image_url}
+                                            alt={game.name}
+                                            className="game-image"
+                                            onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src = 'https://via.placeholder.com/300x200?text=Immagine+non+disponibile';
+                                            }}
+                                        />
+                                    </Link>
+                                    <div className="d-flex justify-content-between align-items-center w-100 mt-2">
+                                        <p className="game-name">{game.name}</p>
+                                        <p className="game-price">
+                                            {game.original_price && (
+                                                <span className="original-price">{game.original_price}€</span>
+                                            )}
+                                            <span className="discounted-price">{game.price}€</span>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    ))
+                        );
+                    })
                 ) : (
                     <div className="col-12 text-center py-4">
                         <p>Nessun gioco trovato per "{searchQuery}".</p>
@@ -67,4 +78,3 @@ export default function Ricerca() {
         </div>
     );
 }
-

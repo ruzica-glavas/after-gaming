@@ -1,0 +1,28 @@
+.game-image-wrapper-tendenze {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+    
+  .discount-badge-tendenze {
+    position: absolute;
+    bottom: 0px;
+    left: -10px;
+    background-color: rgb(255, 81, 0);
+    color: white;
+    font-weight: 300;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    z-index: 10;
+  }
+  
+  .game-image-wrapper-tendenze:hover .game-image {
+    transform: scale(1.05);
+  }
+  
+  .game-image-wrapper-tendenze:hover .discount-badge-tendenze {
+    opacity: 0;
+    transform: scale(0.9);
+  }
