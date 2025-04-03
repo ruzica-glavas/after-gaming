@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faInstagram, faXTwitter, faYoutube, faTwitch, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
+
 export default function Footer() {
     return (
         <footer className="bg-black text-white py-3">
