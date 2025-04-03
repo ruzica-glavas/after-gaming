@@ -199,9 +199,7 @@ export function validateDiscountCode(req, res) {
 
 //     funzione email
 export function sendEmail(req, res) {
-  const to = req.body.to;
-  const subject = req.body.subject;
-  const text = req.body.text;
+  const { to, subject, text } = req.body;
 
   if (!to || !subject || !text) {
     return res
@@ -209,16 +207,20 @@ export function sendEmail(req, res) {
       .json({ error: "Tutti i campi (to, subject, text) sono obbligatori" });
   }
 
-  const transporter = req.transporter; // Usa il transporter dal middleware
+  if (!req.transporter) {
+    return res
+      .status(500)
+      .json({ error: "Il servizio email non è disponibile" });
+  }
 
   const mailOptions = {
-    from: "hi@demomailtrap.co", // Sostituisci con un indirizzo valido o usa un default
-    to: "ruzi.glavas99@gmail.com",
+    from: "hi@demomailtrap.co",
+    to: to, // Usare l'indirizzo passato dal FE
     subject: subject,
     text: text,
   };
 
-  transporter.sendMail(mailOptions, function (error, info) {
+  req.transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.error("Errore nell'invio email:", error);
       return res.status(500).json({ error: "Errore nell'invio email" });
@@ -228,7 +230,6 @@ export function sendEmail(req, res) {
   });
 }
 
-//  creazione ordine
 export function createOrder(req, res) {
   const {
     first_name,
@@ -237,46 +238,91 @@ export function createOrder(req, res) {
     billing_address,
     shipping_address,
     products,
-    total,
   } = req.body;
 
-  if (!email || !products || !total) {
-    return res
-      .status(400)
-      .json({ error: "Email, prodotti e totale sono obbligatori" });
+  if (!email || !products || products.length === 0) {
+    return res.status(400).json({ error: "Email e prodotti sono obbligatori" });
   }
 
+  const slugs = products.map((p) => p.slug);
+
+  // Recupera i prodotti con i prezzi reali dal DB
   db.query(
-    "INSERT INTO orders (total, billing_address, shipping_address, first_name, last_name, email, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())",
-    [total, billing_address, shipping_address, first_name, last_name, email],
-    function (err, orderResult) {
+    "SELECT slug, price FROM products WHERE slug IN (?)",
+    [slugs],
+    function (err, productRows) {
       if (err) {
-        console.error("Errore nella query:", err);
-        return res.status(500).json({ error: "Errore nell'ordine" });
+        console.error("Errore nella query prodotti:", err);
+        return res
+          .status(500)
+          .json({ error: "Errore nel recupero dei prodotti" });
       }
 
-      const orderId = orderResult.insertId;
-      const orderItems = products.map(function (p) {
-        return [orderId, p.product_id, p.quantity, p.price];
-      });
+      if (productRows.length !== products.length) {
+        return res
+          .status(400)
+          .json({ error: "Uno o più prodotti non esistono" });
+      }
 
+      // Mappa per i prezzi effettivi
+      const productMap = new Map(productRows.map((p) => [p.slug, p.price]));
+
+      let total = 0;
+      const orderItems = [];
+
+      for (const p of products) {
+        const price = productMap.get(p.slug);
+        if (!price) {
+          return res
+            .status(400)
+            .json({ error: `Prodotto non valido: ${p.slug}` });
+        }
+        const itemTotal = price * p.quantity;
+        total += itemTotal;
+        orderItems.push([p.slug, p.quantity, price]);
+      }
+
+      // Inseriamo l'ordine
       db.query(
-        "INSERT INTO order_product (order_id, product_id, quantity, price_at_purchase) VALUES ?",
-        [orderItems],
-        function (err) {
+        "INSERT INTO orders (total, billing_address, shipping_address, first_name, last_name, email, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())",
+        [
+          total,
+          billing_address,
+          shipping_address,
+          first_name,
+          last_name,
+          email,
+        ],
+        function (err, orderResult) {
           if (err) {
-            console.error("Errore negli item:", err);
-            return res
-              .status(500)
-              .json({ error: "Errore negli item dell'ordine" });
+            console.error("Errore nella creazione dell'ordine:", err);
+            return res.status(500).json({ error: "Errore nell'ordine" });
           }
 
-          const orderDetails = products
-            .map(function (p) {
-              return `${p.quantity}x ${p.name} - ${p.price}€`;
-            })
-            .join("\n");
-          const emailText = `
+          const orderId = orderResult.insertId;
+          const orderItemsValues = orderItems.map((item) => [orderId, ...item]);
+
+          // Inseriamo i prodotti dell'ordine
+          db.query(
+            "INSERT INTO order_product (order_id, slug, quantity, price_at_purchase) VALUES ?",
+            [orderItemsValues],
+            function (err) {
+              if (err) {
+                console.error("Errore negli item dell'ordine:", err);
+                return res
+                  .status(500)
+                  .json({ error: "Errore negli item dell'ordine" });
+              }
+
+              // Costruisci il dettaglio dell'ordine per l'email
+              const orderDetails = orderItems
+                .map(
+                  ([slug, quantity, price]) =>
+                    `${quantity}x ${slug} - ${price}€`
+                )
+                .join("\n");
+
+              const emailText = `
 Ordine #${orderId} Confermato!
 
 Grazie ${first_name} ${last_name} per il tuo acquisto!
@@ -290,21 +336,29 @@ Contattaci a support@aftergaming.com per assistenza.
 
 Cordiali saluti,
 Il team di After Gaming
-          `.trim();
+            `.trim();
 
-          req.transporter.sendMail(
-            {
-              from: "no-reply@aftergaming.com",
-              to: email,
-              subject: `Conferma Ordine #${orderId}`,
-              text: emailText,
-            },
-            function (emailErr, info) {
-              if (emailErr) {
-                console.error("Errore nell'invio email:", emailErr);
+              // Invia l'email di conferma solo se il transporter è disponibile
+              if (req.transporter) {
+                req.transporter.sendMail(
+                  {
+                    from: "no-reply@aftergaming.com",
+                    to: email,
+                    subject: `Conferma Ordine #${orderId}`,
+                    text: emailText,
+                  },
+                  function (emailErr, info) {
+                    if (emailErr) {
+                      console.error("Errore nell'invio email:", emailErr);
+                    } else {
+                      console.log("Email inviata:", info.response);
+                    }
+                  }
+                );
               } else {
-                console.log("Email inviata:", info.response);
+                console.error("Servizio email non disponibile.");
               }
+
               res
                 .status(201)
                 .json({ message: "Ordine creato con successo", orderId });
