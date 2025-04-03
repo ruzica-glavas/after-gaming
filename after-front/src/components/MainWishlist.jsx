@@ -32,9 +32,9 @@ export default function MainWishlist() {
                                 <span className="wishlist-prezzo-originale d-block">
                                     &euro;{prodotto.original_price}
                                 </span>
-                                {prodotto.discounted_price && (
+                                {prodotto.price && (
                                     <span className="wishlist-prezzo-scontato d-block">
-                                        &euro;{prodotto.discounted_price}
+                                        &euro;{prodotto.price}
                                     </span>
                                 )}
                             </div>
@@ -46,8 +46,6 @@ export default function MainWishlist() {
                             <FontAwesomeIcon icon={faCartPlus} /> Carrello
                         </button>
                     </div>
-                    
-                    
                     ))}
                 </div>
             )}

@@ -14,11 +14,11 @@ export default function MainHomepage() {
             </div>
             <div>
                 <div className="container d-flex flex-column pt-5 pb-4">
-                    <h4 className="text-white px-4 pb-3">Tendenze <Link to={`/tendenze`}><button className="btn rounded-circle fs-7" style={{backgroundColor: "#f06c00" }}>{'\u2794'}</button></Link></h4>
+                    <h4 className="text-white px-4 pb-3">Tendenze <Link to={`/tendenze`}><button className="link-button">{'\u2794'}</button></Link></h4>
                     <Tendenze />
                 </div>
                 <div className="container d-flex flex-column pt-5 pb-4">
-                    <h4 className="text-white px-4 pb-3">Ultime uscite <Link to={`/ultimi-arrivi`}><button className="btn rounded-circle fs-7" style={{backgroundColor: "#f06c00" }}>{'\u2794'}</button></Link></h4>
+                    <h4 className="text-white px-4 pb-3">Ultime uscite <Link to={`/ultimi-arrivi`}><button className="link-button">{'\u2794'}</button></Link></h4>
                     <UltimiArrivi />
                 </div>
             </div>
