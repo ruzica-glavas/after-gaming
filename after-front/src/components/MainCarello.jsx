@@ -2,7 +2,6 @@ import React from 'react';
 import { faTrash, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useGlobalContext } from '../contexts/GlobalContext';
-import MainUtente from "./MainUtente";
 import { NavLink } from 'react-router-dom';
 
 export default function MainCarrello() {

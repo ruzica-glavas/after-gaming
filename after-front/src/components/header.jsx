@@ -32,7 +32,7 @@ export default function Header() {
 
   return (
     <>
-      <nav>
+      <nav className="px-4 pl-3 pr-3">
         <div>
           <div className="d-flex justify-space-between">
             <div className="container py-3">
@@ -66,7 +66,7 @@ export default function Header() {
               <div className="d-flex justify-content-center">
                 <ul className="d-flex gap-3 align-items-center list-unstyled m-0">
                   <NavLink to="/wishlist">
-                    <li>
+                    <li className="hover-icon">
                       <FontAwesomeIcon
                         icon={faHeart}
                         style={{ color: "white", fontSize: "24px" }}
@@ -74,12 +74,12 @@ export default function Header() {
                     </li>
                   </NavLink>
                   <NavLink to="/carello">
-                    <li>
+                    <li className="hover-icon">
                       <FontAwesomeIcon
                         icon={faCartShopping}
                         style={{ color: "white", fontSize: "24px" }}
                       />
-                      <span className="ms-1 badge badge-outline fs-6">{carrello.length}</span>
+                      <span className="ms-0 badge badge-outline fs-6 cart-badge">{carrello.length}</span>
                     </li>
                   </NavLink>
                 </ul>

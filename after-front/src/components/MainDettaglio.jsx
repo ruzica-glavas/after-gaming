@@ -154,7 +154,7 @@ export default function MainDettaglio() {
                         <div className="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 mt-3">
                             {featureList.map(({ icon, label }, index) => (
                                 <div key={index} className="col">
-                                    <div className="p-3 border h-100 rounded hover-effect">
+                                    <div className="p-3 border h-100 rounded text-center hover-gioco">
                                         <FontAwesomeIcon icon={icon} />
                                         <h3>{label}</h3>
                                     </div>
