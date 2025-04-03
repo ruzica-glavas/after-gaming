@@ -83,7 +83,7 @@ export default function MainUtente() {
                     </div>
 
                     <div className='text-end'>
-                        <button type="submit" className="btn text-white" style={{ backgroundColor: "#f06c00" }}>
+                        <button type="submit" className="btn text-white hover-gioco" style={{ backgroundColor: "#f06c00" }}>
                             Conferma Dati
                         </button>
                     </div>
@@ -111,7 +111,7 @@ export default function MainUtente() {
                         }
                     </p>
                     <div className='text-end'>
-                        <button className="btn text-white" style={{ backgroundColor: "#f06c00" }}>
+                        <button className="btn text-white hover-gioco" style={{ backgroundColor: "#f06c00" }}>
                             Procedi al pagamento
                         </button>
                     </div>
