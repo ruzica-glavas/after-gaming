@@ -1,0 +1,103 @@
+/* wishlist */
+.wishlist-container {
+    background-color: #181818;
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+  }
+  
+  .wishlist-titolo {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  
+  .wishlist-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #242424;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .wishlist-image-container {
+    position: relative;
+    width: 500px; /* Forziamo una larghezza fissa */
+    height: 300px; /* Forziamo un'altezza fissa */
+  }
+  
+  .wishlist-img {
+    width: 100%; /* Fa sì che l'immagine si adatti al contenitore */
+    height: 100%; /* L'immagine si adatta alla altezza del contenitore */
+    object-fit: cover; /* Mantiene le proporzioni dell'immagine */
+    border-radius: 5px;
+  }
+  
+  .wishlist-remove-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: red; /* Cambia il colore in rosso */
+    cursor: pointer;
+    font-size: 18px; /* Aumentiamo la dimensione dell'icona */
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 50%;
+    z-index: 1; /* Assicura che l'icona sia sopra l'immagine */
+  }
+  
+  .wishlist-nome {
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+  }
+  
+  .wishlist-prezzi {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 10px; /* Aggiungi spazio tra i prezzi */
+  }
+  
+  .wishlist-prezzo-originale {
+    font-size: 16px;
+    text-decoration: line-through; /* Barrato per il prezzo originale */
+    color: grey; 
+  }
+  
+  .wishlist-prezzo-scontato {
+    font-size: 18px;
+    font-weight: bold;
+    color: white; 
+  }
+  
+  
+  .wishlist-aggiungi-carrello {
+    font-size: 12px;
+    color: #4CAF50;
+    background: none;
+    cursor: pointer;
+    margin-top: 5px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #4CAF50;
+  }
+  
+  /* Responsive per mobile */
+  @media (max-width: 576px) {
+    .wishlist-image-container {
+        width: 120px; /* Modifichiamo la larghezza per dispositivi mobili */
+        height: 100px; /* Modifichiamo l'altezza per dispositivi mobili */
+    }
+  
+    .wishlist-img {
+        width: 100%;
+        height: 100%;
+    }
+  
+    .wishlist-remove-icon {
+        font-size: 14px; /* Diminuiamo la dimensione dell'icona per dispositivi mobili */
+    }
+  }
