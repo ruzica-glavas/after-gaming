@@ -228,6 +228,37 @@ nav.scrolled .searchbar:focus-within {
   border-radius: 15px;
 }
 
+.cart-badge {
+  position: absolute;
+  top: 10px;
+  right: 20px; 
+  background-color: var(--orange-color);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 6px;
+  border-radius: 50%; 
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+
+.hover-icon {
+  transition: color 0.3s ease-in-out;
+}
+
+.hover-icon:hover svg {
+  color: var(--orange-color) !important;
+  transition: color 0.3s ease-in-out;
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
 .game-image-dettaglio-container {
   z-index:0;
   border-radius: 15px;
