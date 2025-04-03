@@ -5,18 +5,23 @@ const GlobalContext = createContext();
 export const useGlobalContext = () => useContext(GlobalContext);
 
 export const GlobalProvider = ({ children }) => {
+
+    
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [carrello, setCarrello] = useState([]);
-
     
     const [wishlist, setWishlist] = useState(() => {
         const wishlistData = localStorage.getItem('wishlist');
         return wishlistData ? JSON.parse(wishlistData) : [];
     });
 
-    const [isCartOpen, setIsCartOpen] = useState(false); // New state for off-canvas
+    const [isCartOpen, setIsCartOpen] = useState(false);
+
+    const [carrello, setCarrello] = useState(() => {
+        const carrelloSalvato = localStorage.getItem("carrello");
+        return carrelloSalvato ? JSON.parse(carrelloSalvato) : [];
+    });
 
 
     useEffect(() => {
