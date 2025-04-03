@@ -47,13 +47,13 @@ export default function Header() {
             <div className="container pt-1 pl-3">
               <div className="d-flex justify-content-center pb-1">
                 <ul className="d-flex gap-3 align-items-center list-unstyled mb-0">
-                  <li>
+                  <li className="hover-gioco">
                     <FontAwesomeIcon icon={faDesktop} /> PC
                   </li>
-                  <li>
+                  <li className="hover-gioco">
                     <FontAwesomeIcon icon={faPlaystation} /> Playstation
                   </li>
-                  <li>
+                  <li className="hover-gioco">
                     <FontAwesomeIcon icon={faXbox} /> Xbox
                   </li>
                 </ul>

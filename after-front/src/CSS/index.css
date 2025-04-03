@@ -304,14 +304,13 @@ footer .fs-7:hover {
   color: var(--orange-color) !important;
 }
 
-footer .location-container {
-  transition: color 0.3s ease-in-out;
-  cursor: pointer;
-}
 
+<<<<<<< HEAD
 footer .location-container:hover svg {
   color: var(--orange-color) !important;
 }
 
 
  
+=======
+>>>>>>> 95977d8384a2144fc0ec4e551b2ff218bc52e5d4

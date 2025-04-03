@@ -27,7 +27,7 @@ export default function SearchBar() {
                     value={search}
                     onChange={handleInput}
                     className="form-control length-input"
-                    placeholder="Minecraft, RPG, ..."
+                    placeholder="Cerca gioco..."
                 />
                 <button type="submit" className="btn rounded-circle d-flex align-items-center justify-content-center" style={{ width: "2rem", height: "2rem", backgroundColor: "#f06c00" }}>
                     <FontAwesomeIcon icon={faMagnifyingGlass} />

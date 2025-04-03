@@ -72,8 +72,7 @@ export default function Footer() {
                         {/* Posizione Geografica */}
                         <Col className="text-center text-md-end">
                             <div className="location-container d-flex justify-content-center justify-content-md-end align-items-center gap-2">
-                                <FontAwesomeIcon icon={faMapMarkerAlt} />
-                                <p className="fs-7 mb-0">Italy</p>
+                                <p className="fs-7 mb-0"><FontAwesomeIcon icon={faMapMarkerAlt} /> Italy</p>
                             </div>
                         </Col>
 

@@ -69,7 +69,7 @@ export default function MainCarrello() {
                     <h3>Totale Parziale: <strong>&euro;{totalDiscounted.toFixed(2)}</strong></h3>
 
                     <NavLink to="/utente" className=" w-100 mt-3 p-3 ">
-                        <button className="order-button text-white btn w-75 mt-3 p-3">Procedi al pagamento {'➔'}</button>
+                        <button className="order-button text-white btn w-75 mt-3 p-3 hover-gioco">Procedi al pagamento {'➔'}</button>
                     </NavLink>
 
                 </div>
