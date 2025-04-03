@@ -63,13 +63,13 @@ export const GlobalProvider = ({ children }) => {
         setWishlist(wishlist.filter(item => item.id !== prodottoId));
         console.log("Prodotto rimosso dalla wishlist:", prodottoId); // Debug: Log del prodotto rimosso
     };
-    // Modifica: Salvataggio della wishlist in localStorage ogni volta che cambia
+    //Salvataggio della wishlist in localStorage ogni volta che cambia
     useEffect(() => {
         localStorage.setItem('wishlist', JSON.stringify(wishlist));
         console.log("Wishlist aggiornata in localStorage:", wishlist); // Debug: Log dell'aggiornamento di localStorage
     }, [wishlist]);
 
-    
+
 
     useEffect(() => {
         const fetchData = async () => {
