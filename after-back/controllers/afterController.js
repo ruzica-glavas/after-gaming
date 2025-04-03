@@ -212,8 +212,8 @@ export function sendEmail(req, res) {
   const transporter = req.transporter; // Usa il transporter dal middleware
 
   const mailOptions = {
-    from: "no-reply@aftergaming.com", // Sostituisci con un indirizzo valido o usa un default
-    to: to,
+    from: "hi@demomailtrap.co", // Sostituisci con un indirizzo valido o usa un default
+    to: "ruzi.glavas99@gmail.com",
     subject: subject,
     text: text,
   };

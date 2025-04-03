@@ -24,7 +24,7 @@ app.use(logger); // Logger personalizzato
 app.set("db", db);
 
 // Configura il transporter Nodemailer per Mailtrap
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
   req.transporter = nodemailer.createTransport({
     host: process.env.MAILTRAP_HOST,
     port: process.env.MAILTRAP_PORT,
@@ -33,6 +33,22 @@ app.use((req, res, next) => {
       pass: process.env.MAILTRAP_PASS,
     },
   });
+  next();
+});*/
+
+// Creazione del transporter per Mailtrap
+const transporter = nodemailer.createTransport({
+  host: process.env.MAILTRAP_HOST,
+  port: process.env.MAILTRAP_PORT,
+  auth: {
+    user: process.env.MAILTRAP_USER,
+    pass: process.env.MAILTRAP_PASS,
+  },
+});
+
+// Middleware per aggiungere il transporter alla richiesta
+app.use((req, res, next) => {
+  req.transporter = transporter;
   next();
 });
 
