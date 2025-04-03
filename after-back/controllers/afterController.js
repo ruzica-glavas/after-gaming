@@ -342,7 +342,7 @@ Il team di After Gaming
               if (req.transporter) {
                 req.transporter.sendMail(
                   {
-                    from: "no-reply@aftergaming.com",
+                    from: "hi@demomailtrap.co",
                     to: email,
                     subject: `Conferma Ordine #${orderId}`,
                     text: emailText,

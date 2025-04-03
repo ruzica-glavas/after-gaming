@@ -35,6 +35,36 @@ export default function MainUtente() {
         }
     };
 
+    const inviaEmailConferma = async () => {
+        if (!datiUtente || carrello.length === 0) {
+            alert("Completa i dati utente e aggiungi prodotti al carrello.");
+            return;
+        }
+    
+        const dettagliOrdine = carrello.map(p => `${p.name} - ${p.quantita} x €${Number(p.price).toFixed(2)}`).join("\n");
+        const testoEmail = `Grazie per il tuo ordine!\n\nDettagli:\n${dettagliOrdine}\n\nTotale: €${
+            carrello.reduce((sum, p) => sum + (Number(p.price) * p.quantita || 0), 0).toFixed(2)
+        }`;
+    
+        try {
+            const response = await fetch("http://localhost:3000/api/send-email", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    to: datiUtente.email,
+                    subject: "Conferma Ordine",
+                    text: testoEmail
+                })
+            });
+    
+            if (!response.ok) throw new Error("Errore nell'invio dell'email.");
+            alert("Email di conferma inviata con successo!");
+        } catch (error) {
+            console.error("Errore:", error);
+            alert("Si è verificato un errore durante l'invio dell'email.");
+        }
+    };
+    
     return (
         <div className="container mt-5 mb-5 p-4 text-white d-flex flex-column gap-4">
             <div className='rounded p-2' style={{ backgroundColor: '#ffffff20' }}>
@@ -111,9 +141,9 @@ export default function MainUtente() {
                         }
                     </p>
                     <div className='text-end'>
-                        <button className="btn text-white hover-gioco" style={{ backgroundColor: "#f06c00" }}>
-                            Procedi al pagamento
-                        </button>
+                    <button onClick={inviaEmailConferma} className="btn text-white hover-gioco" style={{ backgroundColor: "#f06c00" }}>
+                        Procedi al pagamento
+                    </button>
                     </div>
                     <div className="mt-4 border-top pt-4 text-start">
                         <h4 className="mb-3">Dati Utente</h4>
