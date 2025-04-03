@@ -180,6 +180,7 @@ nav.scrolled .searchbar:focus-within {
 }
 
 .game-name {
+  color: white;
   font-size: 15px;
   font-weight: 300;
 }
