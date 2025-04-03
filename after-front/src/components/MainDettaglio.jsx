@@ -5,12 +5,14 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import UltimiArrivi from "./UltimiArrivi";
 import AggiungiAlCarrelloButton from "./AggiungiAlCarrelloButton";
+import { useGlobalContext } from '../contexts/GlobalContext';
 
 export default function MainDettaglio() {
     const { slug } = useParams();
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { aggiungiAllaWishlist } = useGlobalContext();
 
     useEffect(() => {
         const fetchGame = async () => {
@@ -81,7 +83,7 @@ export default function MainDettaglio() {
 
                     <div className="d-flex justify-content-center gap-3 mt-5">
                         <button className="btn d-flex gap-2" style={buttonStyle}>
-                            <FontAwesomeIcon icon={faHeart} style={iconStyle} />
+                            <FontAwesomeIcon icon={faHeart} style={iconStyle} onClick={() => aggiungiAllaWishlist(game)} />
                             <p className="mb-0">Add to wishlist</p>
                         </button>
 

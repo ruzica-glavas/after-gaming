@@ -9,6 +9,11 @@ export const GlobalProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [carrello, setCarrello] = useState([]);
+    
+    const [wishlist, setWishlist] = useState(() => {
+        const wishlistData = localStorage.getItem('wishlist');
+        return wishlistData ? JSON.parse(wishlistData) : [];
+    });
 
     useEffect(() => {
         const carrelloData = localStorage.getItem('carrello');
@@ -42,6 +47,30 @@ export const GlobalProvider = ({ children }) => {
         ));
     };
 
+
+    const aggiungiAllaWishlist = (prodotto) => {
+        setWishlist(prevWishlist => {
+            if (prevWishlist.find(item => item.id === prodotto.id)) {
+                return prevWishlist; 
+            }
+            return [...prevWishlist, prodotto];
+            console.log("Prodotto aggiunto alla wishlist:", prodotto); // Debug: Log del prodotto aggiunto
+            console.log("Nuova wishlist:", nuovaWishlist); // Debug: Log della nuova wishlist
+        });
+    };
+
+    const rimuoviDallaWishlist = (prodottoId) => {
+        setWishlist(wishlist.filter(item => item.id !== prodottoId));
+        console.log("Prodotto rimosso dalla wishlist:", prodottoId); // Debug: Log del prodotto rimosso
+    };
+    // Modifica: Salvataggio della wishlist in localStorage ogni volta che cambia
+    useEffect(() => {
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        console.log("Wishlist aggiornata in localStorage:", wishlist); // Debug: Log dell'aggiornamento di localStorage
+    }, [wishlist]);
+
+    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -67,7 +96,10 @@ export const GlobalProvider = ({ children }) => {
         aggiungiAlCarrello,
         rimuoviDalCarrello,
         cambiaQuantita,
-        carrello
+        carrello,
+        wishlist, 
+        aggiungiAllaWishlist, 
+        rimuoviDallaWishlist
     };
 
     return (
