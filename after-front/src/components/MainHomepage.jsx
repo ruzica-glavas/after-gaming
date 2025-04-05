@@ -9,7 +9,7 @@ export default function MainHomepage() {
     return (
         <>
             <div className="container d-flex flex-column align-items-center justify-content-center">
-                <h3 className='carousel-title text-white'>------- IMPERDIBILI -------</h3>
+                <h3 className='carousel-title text-white py-4 fw-bold'>------- IMPERDIBILI -------</h3>
                 <Carosello />
             </div>
             <div>

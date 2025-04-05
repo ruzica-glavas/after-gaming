@@ -60,12 +60,12 @@ export default function MainCarrello() {
                                         onChange={(e) => cambiaQuantita(prodotto.id, parseInt(e.target.value))}
                                         className="quantita-dropdown"
                                     >
-                                        {[...Array(10).keys()].map(num => (
+                                        {[...Array(4).keys()].map(num => (
                                             <option key={num + 1} value={num + 1}>{num + 1}</option>
                                         ))}
                                     </select>
                                 </div>
-                                <span className="carrello-prezzo">{(prodotto.price * prodotto.quantita).toFixed(2)}€</span>
+                                <span className="carrello-prezzo">&euro;{(prodotto.price * prodotto.quantita).toFixed(2)}</span>
                             </div>
                         ))
                     )}

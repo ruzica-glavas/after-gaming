@@ -42,7 +42,7 @@ export default function Footer() {
 
                     {/* Colonna Destra: Social Media */}
                     <Col xs={12} md={6} className="d-flex justify-content-center justify-content-md-end align-items-start">
-                        <div className="d-flex flex-wrap justify-content-center gap-3">
+                        <div className="d-flex flex-wrap justify-content-center gap-3 py-2 social-icon">
                             {[faFacebookF, faXTwitter, faInstagram, faYoutube, faTwitch, faDiscord].map((icon, index) => (
                                 <a 
                                     key={index} 
@@ -71,7 +71,7 @@ export default function Footer() {
 
                         {/* Posizione Geografica */}
                         <Col className="text-center text-md-end">
-                            <div className="location-container d-flex justify-content-center justify-content-md-end align-items-center gap-2">
+                            <div className="location-container d-flex justify-content-center justify-content-md-end align-items-center gap-2 py-4">
                                 <p className="fs-7 mb-0"><FontAwesomeIcon icon={faMapMarkerAlt} /> Italy</p>
                             </div>
                         </Col>

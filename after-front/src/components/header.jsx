@@ -1,18 +1,15 @@
-import { NavLink } from "react-router-dom";
-import SearchBar from "./SearchBar";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlaystation } from "@fortawesome/free-brands-svg-icons";
-import { faDesktop } from "@fortawesome/free-solid-svg-icons";
-import { faXbox } from "@fortawesome/free-brands-svg-icons";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faPlaystation, faXbox } from "@fortawesome/free-brands-svg-icons";
+import { faDesktop, faCartShopping, faHeart, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import logo from "../public/imgs/logo_transparent.png";
 import { useEffect } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import CartOffCanvas from "./CartOffCanvas";
 
 export default function Header() {
-  const { carrello, isCartOpen, closeCart } = useGlobalContext();
+  const { wishlist, carrello, isCartOpen, closeCart } = useGlobalContext();
+  const navigate = useNavigate(); // Per navigare e aggiornare l'URL
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,6 +27,12 @@ export default function Header() {
     };
   }, []);
 
+  // Funzione per aggiornare la query string nell'URL con il filtro della piattaforma
+  const handlePlatformFilter = (platform) => {
+    // Aggiungi o aggiorna il parametro della piattaforma nell'URL
+    navigate(`/ricerca?q=&platform=${platform}`);
+  };
+
   return (
     <>
       <nav className="px-4 pl-3 pr-3">
@@ -44,33 +47,45 @@ export default function Header() {
                 />
               </NavLink>
             </div>
-            <div className="container pt-1 pl-3">
-              <div className="d-flex justify-content-center pb-1">
-                <ul className="d-flex gap-3 align-items-center list-unstyled mb-0">
-                  <li className="hover-gioco">
-                    <FontAwesomeIcon icon={faDesktop} /> PC
-                  </li>
-                  <li className="hover-gioco">
-                    <FontAwesomeIcon icon={faPlaystation} /> Playstation
-                  </li>
-                  <li className="hover-gioco">
-                    <FontAwesomeIcon icon={faXbox} /> Xbox
-                  </li>
-                </ul>
-              </div>
-              <div className="container d-flex justify-content-center">
-                <SearchBar />
+            <div className="container d-flex justify-content-center align-items-center">
+              <NavLink to="/ricerca">
+                <li className="hover-icon-small">
+                  <FontAwesomeIcon icon={faMagnifyingGlass} />
+                </li>
+              </NavLink>
+              <div className="container d-flex justify-content-center align-items-center pt-1 pl-3 search-platform">
+                <div className="pb-1">
+                  <ul className="d-flex gap-2 list-unstyled mb-0">
+                    <li className="hover-gioco fs-5" onClick={() => handlePlatformFilter("PC")}>
+                      <FontAwesomeIcon icon={faDesktop} className="icona-gioco" /> PC
+                    </li>
+                    <li className="hover-gioco fs-5" onClick={() => handlePlatformFilter("PS5")}>
+                      <FontAwesomeIcon icon={faPlaystation} className="icona-gioco" /> Playstation
+                    </li>
+                    <li className="hover-gioco fs-5" onClick={() => handlePlatformFilter("Xbox")}>
+                      <FontAwesomeIcon icon={faXbox} className="icona-gioco" /> Xbox
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
             <div className="container d-flex justify-content-end gap-3">
               <div className="d-flex justify-content-center">
                 <ul className="d-flex gap-3 align-items-center list-unstyled m-0">
+                  <NavLink to="/ricerca">
+                    <li className="hover-icon-big">
+                      <FontAwesomeIcon icon={faMagnifyingGlass}
+                        style={{ color: "white", fontSize: "24px" }}
+                      />
+                    </li>
+                  </NavLink>
                   <NavLink to="/wishlist">
                     <li className="hover-icon">
                       <FontAwesomeIcon
                         icon={faHeart}
                         style={{ color: "white", fontSize: "24px" }}
                       />
+                      <span className="ms-0 badge badge-outline fs-6 wish-badge">{wishlist.length}</span>
                     </li>
                   </NavLink>
                   <NavLink to="/carello">

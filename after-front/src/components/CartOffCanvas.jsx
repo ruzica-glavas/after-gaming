@@ -51,7 +51,7 @@ function CartOffCanvas({ show, handleClose }) {
                                                 onChange={(e) => cambiaQuantita(prodotto.id, parseInt(e.target.value))}
                                                 className="quantita-dropdown"
                                             >
-                                                {[...Array(10).keys()].map(num => (
+                                                {[...Array(4).keys()].map(num => (
                                                     <option key={num + 1} value={num + 1}>{num + 1}</option>
                                                 ))}
                                             </select>

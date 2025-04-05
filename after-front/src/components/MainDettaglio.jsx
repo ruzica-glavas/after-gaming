@@ -87,7 +87,7 @@ export default function MainDettaglio() {
 
                         <AggiungiAlCarrelloButton game={game} />
 
-                        <button className="btn d-flex gap-2" style={buttonStyle} onClick={handleTrailerClick}>
+                        <button className="d-flex gap-1 px-4 py-2 order-button text-white btn hover-gioco" style={buttonStyle} onClick={handleTrailerClick}>
                             <FontAwesomeIcon icon={faPlay} style={iconStyle} />
                             <p className="mb-0">Video</p>
                         </button>

@@ -1,18 +1,24 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function SearchBar() {
-    const [search, setSearch] = useState('')
-    const navigate = useNavigate()
+    const [search, setSearch] = useState('');
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+
+    // Effetto per impostare il valore iniziale di 'search' dal parametro URL
+    useEffect(() => {
+        const query = searchParams.get("q") || "";
+        setSearch(query);
+    }, [searchParams]); // Si attiva ogni volta che searchParams cambia
 
     function handleInput(e) {
         const query = e.target.value;
 
         setSearch(query);
-        
-        navigate(`/ricerca?q=${encodeURIComponent(query)}`);
+
+        // Aggiorna l'URL con il nuovo parametro di ricerca
+        navigate(`?q=${encodeURIComponent(query)}`);
     }
 
     function handleSubmit(e) {
@@ -20,19 +26,14 @@ export default function SearchBar() {
     }
 
     return (
-        <div className="d-flex gap-2">
-            <form onSubmit={handleSubmit} className="d-flex gap-2">
-                <input
-                    type="text"
-                    value={search}
-                    onChange={handleInput}
-                    className="form-control length-input"
-                    placeholder="Cerca gioco..."
-                />
-                <button type="submit" className="btn rounded-circle d-flex align-items-center justify-content-center" style={{ width: "2rem", height: "2rem", backgroundColor: "#f06c00" }}>
-                    <FontAwesomeIcon icon={faMagnifyingGlass} />
-                </button>
-            </form>
+        <div className="d-flex pb-4 pt-4">
+            <input
+                type="text"
+                value={search}
+                onChange={handleInput}
+                className="form-control length-input custom-placeholder"
+                placeholder="Cerca gioco..."
+            />
         </div>
     );
 }
