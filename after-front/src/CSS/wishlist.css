@@ -90,6 +90,24 @@
     background-color: darkorange; 
     border-color: darkorange; 
   }
+
+  .wishlist-remove-icon {
+    transition: all 0.3s ease;
+    font-size: 1.5rem;
+  }
+  
+  .wishlist-remove-icon:hover {
+    color: #dc3545; /* Colore rosso più vivo */
+    background-color: #fff;
+    transform: scale(1.2); /* Ingrandimento al passaggio del mouse */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Aggiunta di un'ombra */
+  }
+  
+  .wishlist-remove-icon:active {
+    transform: scale(0.9); /* Effetto di clic (pulsante che si riduce) */
+    background-color: #dc3545; /* Cambio di colore durante il clic */
+    color: white; /* Icona bianca al clic */
+  }
   
   /* Responsive per mobile */
   @media (max-width: 576px) {

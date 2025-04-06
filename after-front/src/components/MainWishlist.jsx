@@ -11,41 +11,55 @@ export default function MainWishlist() {
 
     return (
         <div className="wishlist-container container d-flex flex-column mb-3">
-            <h2 className="wishlist-titolo text-white">La tua Wishlist</h2>
+            <h2 className="wishlist-titolo text-white mb-4">La tua Wishlist</h2>
+
             {wishlist.length === 0 ? (
                 <p className="wishlist-vuoto text-white">La tua wishlist è vuota.</p>
             ) : (
-                <div className="wishlist-items" style={{ flex: 1, minWidth: '60%' }}>
+                <div className="wishlist-items">
                     {wishlist.map(prodotto => (
-                        <div key={prodotto.id} className="wishlist-item text-white d-flex flex-column align-items-center mb-3">
-                        <div className="wishlist-image-container">
-                            <img src={prodotto.image_url} alt={prodotto.name} className="wishlist-img" />
-                            <FontAwesomeIcon
-                                icon={faTimes}
-                                className="wishlist-remove-icon"
-                                onClick={() => rimuoviDallaWishlist(prodotto.id)}
-                            />
-                        </div>
-                        <div className="text-center">
-                            <span className="wishlist-nome d-block">{prodotto.name}</span>
-                            <div className="wishlist-prezzi">
-                                <span className="wishlist-prezzo-originale d-block">
-                                    &euro;{prodotto.original_price}
-                                </span>
-                                {prodotto.price && (
-                                    <span className="wishlist-prezzo-scontato d-block">
-                                        &euro;{prodotto.price}
-                                    </span>
-                                )}
+                        <div key={prodotto.id} className="wishlist-item card bg-dark text-white mb-3 p-3">
+                            <div className="row g-3 align-items-stretch">
+                                {/* Immagine a sinistra */}
+                                <div className="col-md-3 position-relative text-center">
+                                    <img
+                                        src={prodotto.image_url}
+                                        alt={prodotto.name}
+                                        className="wishlist-img img-fluid rounded"
+                                    />
+                                    <FontAwesomeIcon
+                                        icon={faTimes}
+                                        className="wishlist-remove-icon position-absolute top-0 end-0 m-3 text-danger bg-black bg-opacity-50 p-2 rounded-circle"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() => rimuoviDallaWishlist(prodotto.id)}
+                                    />
+                                </div>
+
+                                {/* Info e bottone a destra */}
+                                <div className="col-md-9 d-flex flex-column justify-content-between align-items-end text-end">
+                                    <div>
+                                        <span className="wishlist-nome d-block mb-2 text-end">{prodotto.name}</span>
+                                        <div className="wishlist-prezzi">
+                                            <span className="wishlist-prezzo-originale d-block">
+                                                &euro;{prodotto.original_price}
+                                            </span>
+                                            {prodotto.price && (
+                                                <span className="wishlist-prezzo-scontato d-block">
+                                                    &euro;{prodotto.price}
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <button
+                                        className="wishlist-aggiungi-carrello btn btn-outline-success rounded mt-2"
+                                        onClick={() => aggiungiAlCarrello(prodotto)}
+                                    >
+                                        <FontAwesomeIcon icon={faCartPlus} /> Carrello
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <button
-                            className="wishlist-aggiungi-carrello btn btn-outline-success rounded mt-2"
-                            onClick={() => aggiungiAlCarrello(prodotto)}
-                        >
-                            <FontAwesomeIcon icon={faCartPlus} /> Carrello
-                        </button>
-                    </div>
                     ))}
                 </div>
             )}
