@@ -23,6 +23,10 @@ export const GlobalProvider = ({ children }) => {
         return carrelloSalvato ? JSON.parse(carrelloSalvato) : [];
     });
 
+    const svuotaCarrello = () => {
+        setCarrello([]);
+      };
+
 
     useEffect(() => {
         const carrelloData = localStorage.getItem('carrello');
@@ -129,8 +133,9 @@ export const GlobalProvider = ({ children }) => {
         datiUtente,
         salvaDatiUtente,
         isCartOpen,
-        closeCart
-    };
+        closeCart,
+        svuotaCarrello
+        };
 
     return (
         <GlobalContext.Provider value={contextValue}>

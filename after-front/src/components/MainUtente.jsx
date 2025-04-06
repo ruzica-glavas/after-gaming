@@ -2,7 +2,31 @@ import React, { useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 
 export default function MainUtente() {
-  const { carrello, datiUtente, salvaDatiUtente } = useGlobalContext();
+  const { carrello, datiUtente, salvaDatiUtente, svuotaCarrello } = useGlobalContext();
+
+  const [codiceSconto, setCodiceSconto] = useState("");
+  const [scontoApplicato, setScontoApplicato] = useState(0);
+  const [messaggioSconto, setMessaggioSconto] = useState("");
+  const [discountCodes, setDiscountCodes] = useState([]); // Stato per i codici sconto
+  const [isLoadingDiscountCodes, setIsLoadingDiscountCodes] = useState(true);
+
+  const gestisciCodiceSconto = () => {
+    // Esempio semplice: un solo codice sconto valido
+    if (codiceSconto.toLowerCase() === "after10") {
+      setScontoApplicato(10); // 10% di sconto
+      setMessaggioSconto("✅ Codice sconto applicato: -10%");
+    } else {
+      setScontoApplicato(0);
+      setMessaggioSconto("❌ Codice sconto non valido.");
+    }
+  };
+
+  const totaleOriginale = carrello.reduce(
+    (sum, p) => sum + Number(p.price || 0) * (p.quantita || 1),
+    0
+  );
+
+  const totaleScontato = (totaleOriginale * (1 - scontoApplicato / 100)).toFixed(2);
 
   const [formData, setFormData] = useState({
     nome: "",
@@ -71,6 +95,7 @@ export default function MainUtente() {
       first_name: datiUtente.nome,
       last_name: datiUtente.cognome,
       email: datiUtente.email,
+      total: Number(totaleScontato),
       billing_address: datiUtente.indirizzo,
       shipping_address: datiUtente.indirizzo,
       products: carrello.map((p) => ({
@@ -114,8 +139,8 @@ Ordine #${orderId} Confermato!
 Grazie ${datiUtente.nome} ${datiUtente.cognome} per il tuo acquisto!
 Dettagli dell'ordine:
 ${orderDetails}
-Totale: €${total}
-Indirizzo di spedizione: ${datiUtente.indirizzo}
+Totale: €${totaleScontato}
+Indirizzo di fatturazione: ${datiUtente.indirizzo}
 
 Riceverai aggiornamenti sullo stato della spedizione.
 Contattaci a support@aftergaming.com per assistenza.
@@ -130,7 +155,7 @@ Nuovo Ordine #${orderId}
 Ordine da ${datiUtente.nome} ${datiUtente.cognome} (${datiUtente.email})
 Dettagli:
 ${orderDetails}
-Totale: €${total}
+Totale: €${totaleScontato}
 Indirizzo di spedizione: ${datiUtente.indirizzo}
 
 Azione richiesta: elaborare l'ordine.
@@ -157,9 +182,8 @@ Azione richiesta: elaborare l'ordine.
         );
       })
       .then(() => {
-        alert(
-          "Ordine completato! Email inviate con successo sia all'acquirente che al venditore."
-        );
+        svuotaCarrello()
+        alert("Ordine completato! Email inviate con successo sia all'acquirente che al venditore.");
       })
       .catch((error) => {
         console.error("Errore catturato:", error);
@@ -251,6 +275,28 @@ Azione richiesta: elaborare l'ordine.
             />
             {errors.indirizzo && <div className="text-danger">{errors.indirizzo}</div>}
           </div>
+          <div className="mb-3">
+            <label htmlFor="codiceSconto" className="form-label">Hai un codice sconto?</label>
+            <div className="d-flex gap-2">
+              <input
+                type="text"
+                id="codiceSconto"
+                name="codiceSconto"
+                placeholder="Inserisci codice"
+                value={codiceSconto}
+                onChange={(e) => setCodiceSconto(e.target.value)}
+                className="form-control"
+              />
+              <button
+                type="button"
+                onClick={gestisciCodiceSconto}
+                className="btn btn-outline-light"
+              >
+                Applica
+              </button>
+            </div>
+            {messaggioSconto && <div className="mt-2">{messaggioSconto}</div>}
+          </div>
 
           <div className="text-end">
             <button
@@ -285,13 +331,7 @@ Azione richiesta: elaborare l'ordine.
             </ul>
           )}
           <p className="text-end fw-bold">
-            Totale: €
-            {carrello
-              .reduce(
-                (sum, p) => sum + Number(p.price || 0) * (p.quantita || 1),
-                0
-              )
-              .toFixed(2)}
+            Totale: €{totaleScontato}
           </p>
           <div className="mt-1 pt-2 d-flex justify-content-between align-items-start flex-wrap border-top row">
             <div className="text-start w-100">
