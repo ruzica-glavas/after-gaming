@@ -73,7 +73,7 @@ export default function Header() {
               <div className="d-flex justify-content-center">
                 <ul className="d-flex gap-3 align-items-center list-unstyled m-0">
                   <NavLink to="/ricerca">
-                    <li className="hover-icon-big">
+                    <li className="hover-icon-big hover-icon">
                       <FontAwesomeIcon icon={faMagnifyingGlass}
                         style={{ color: "white", fontSize: "24px" }}
                       />
