@@ -53,7 +53,10 @@ export default function MainWishlist() {
 
                                     <button
                                         className="wishlist-aggiungi-carrello btn btn-outline-success rounded mt-2"
-                                        onClick={() => aggiungiAlCarrello(prodotto)}
+                                        onClick={() => {
+                                            aggiungiAlCarrello(prodotto);
+                                            rimuoviDallaWishlist(prodotto.id);
+                                        }}
                                     >
                                         <FontAwesomeIcon icon={faCartPlus} /> Carrello
                                     </button>

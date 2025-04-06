@@ -53,6 +53,7 @@ export default function MainCarrello() {
                                     <button
                                         className="carrello-rimuovi btn btn-outline-danger rounded me-3"
                                         onClick={() => rimuoviDalCarrello(prodotto.id)}
+
                                     >
                                         <FontAwesomeIcon icon={faTrash} /> Rimuovi
                                     </button>
