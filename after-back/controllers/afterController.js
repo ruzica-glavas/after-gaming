@@ -337,7 +337,7 @@ Grazie ${first_name} ${last_name} per il tuo acquisto!
 Dettagli dell'ordine:
 ${orderDetails}
 Totale: ${total}€
-Indirizzo di spedizione: ${shipping_address}
+Indirizzo di fatturazione: ${shipping_address}
 
 Riceverai un'email con gli aggiornamenti sullo stato della spedizione.
 Contattaci a support@aftergaming.com per assistenza.
