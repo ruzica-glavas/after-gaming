@@ -37,13 +37,13 @@
   
   .wishlist-remove-icon {
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 9px;
+    right: 15px;
     color: white; /* Cambia il colore in rosso */
     cursor: pointer;
     font-size: 20px; /* Aumentiamo la dimensione dell'icona */
     background-color: rgba(0, 0, 0, 0.5);
-    padding: 7px;
+    padding: 6px;
     padding-inline: 10px;
     border-radius: 45%;
     z-index: 1; /* Assicura che l'icona sia sopra l'immagine */

@@ -29,7 +29,7 @@ export default function MainWishlist() {
                                     />
                                     <FontAwesomeIcon
                                         icon={faTimes}
-                                        className="wishlist-remove-icon position-absolute top-0 end-0 m-3 text-danger bg-black bg-opacity-50 p-2 rounded-circle"
+                                        className="wishlist-remove-icon"
                                         style={{ cursor: "pointer" }}
                                         onClick={() => rimuoviDallaWishlist(prodotto.id)}
                                     />
