@@ -12,6 +12,7 @@ export default function MainUtente() {
   });
 
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false); // 🔄 stato per il loader
 
   const validate = () => {
     let newErrors = {};
@@ -41,14 +42,15 @@ export default function MainUtente() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      console.log("Dati salvati nel contesto:", formData); // Debug: verifica i dati salvati
+      console.log("Dati salvati nel contesto:", formData);
       salvaDatiUtente(formData);
     }
   };
 
   const confermaOrdine = () => {
-    console.log("Inizio confermaOrdine - datiUtente:", datiUtente); // Debug: stato iniziale di datiUtente
-    console.log("Inizio confermaOrdine - carrello:", carrello); // Debug: stato iniziale di carrello
+    setIsLoading(true); // 🔄 Avvia il loader
+    console.log("Inizio confermaOrdine - datiUtente:", datiUtente);
+    console.log("Inizio confermaOrdine - carrello:", carrello);
 
     if (
       !datiUtente ||
@@ -59,10 +61,9 @@ export default function MainUtente() {
       !carrello ||
       carrello.length === 0
     ) {
-      console.log("Validazione fallita - datiUtente o carrello incompleti"); // Debug: motivo della validazione fallita
-      alert(
-        "Completa i dati utente e aggiungi almeno un prodotto al carrello."
-      );
+      console.log("Validazione fallita - datiUtente o carrello incompleti");
+      alert("Completa i dati utente e aggiungi almeno un prodotto al carrello.");
+      setIsLoading(false); // ❌ Stop se errore
       return;
     }
 
@@ -78,25 +79,20 @@ export default function MainUtente() {
       })),
     };
 
-    console.log("Dati inviati al backend:", orderData); // Debug: dati inviati al backend
-
     fetch("http://localhost:3000/api/orders", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(orderData),
     })
       .then((orderResponse) => {
-        console.log("Risposta dal backend (status):", orderResponse.status); // Debug: stato della risposta
         if (!orderResponse.ok) {
           return orderResponse.text().then((errorText) => {
-            console.log("Errore dal backend:", errorText); // Debug: testo dell'errore
             throw new Error(`Errore nella creazione dell'ordine: ${errorText}`);
           });
         }
         return orderResponse.json();
       })
       .then((orderResult) => {
-        console.log("Risultato dell'ordine:", orderResult); // Debug: risultato dell'ordine
         const orderId = orderResult.orderId;
 
         const orderDetails = carrello
@@ -107,6 +103,7 @@ export default function MainUtente() {
               )}`
           )
           .join("\n");
+
         const total = carrello
           .reduce((sum, p) => sum + Number(p.price || 0) * (p.quantita || 1), 0)
           .toFixed(2);
@@ -125,7 +122,7 @@ Contattaci a support@aftergaming.com per assistenza.
 
 Cordiali saluti,
 Il team di After Gaming
-      `.trim();
+        `.trim();
 
         const vendorEmailText = `
 Nuovo Ordine #${orderId}
@@ -137,9 +134,8 @@ Totale: €${total}
 Indirizzo di spedizione: ${datiUtente.indirizzo}
 
 Azione richiesta: elaborare l'ordine.
-      `.trim();
+        `.trim();
 
-        console.log("Invio email all'acquirente:", customerEmailText); // Debug: email acquirente
         return fetch("http://localhost:3000/api/send-email", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -148,61 +144,60 @@ Azione richiesta: elaborare l'ordine.
             subject: `Conferma Ordine #${orderId}`,
             text: customerEmailText,
           }),
-        })
-          .then((customerEmailResponse) => {
-            console.log(
-              "Risposta email acquirente (status):",
-              customerEmailResponse.status
-            ); // Debug: stato email acquirente
-            if (!customerEmailResponse.ok) {
-              //throw new Error("Mail inviate con successo"); ///////da cambiare///////
-            }
-
-            console.log("Invio email al venditore:", vendorEmailText); // Debug: email venditore
-            return fetch("http://localhost:3000/api/send-email", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                to: "vendor@aftergaming.com",
-                subject: `Nuovo Ordine #${orderId}`,
-                text: vendorEmailText,
-              }),
-            });
+        }).then(() =>
+          fetch("http://localhost:3000/api/send-email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              to: "vendor@aftergaming.com",
+              subject: `Nuovo Ordine #${orderId}`,
+              text: vendorEmailText,
+            }),
           })
-          .then((vendorEmailResponse) => {
-            console.log(
-              "Risposta email venditore (status):",
-              vendorEmailResponse.status
-            ); // Debug: stato email venditore
-            if (!vendorEmailResponse.ok) {
-              //alert("Mail inviate con successo"); //////////da cambiare//////////
-              //throw new Error("Errore nell'invio dell'email al venditore");
-            }
-
-            alert(
-              "Ordine completato! Email inviate con successo sia all'acquirente che al venditore."
-            );
-          });
+        );
+      })
+      .then(() => {
+        alert(
+          "Ordine completato! Email inviate con successo sia all'acquirente che al venditore."
+        );
       })
       .catch((error) => {
-        console.error("Errore catturato:", error); // Debug: errore finale
+        console.error("Errore catturato:", error);
         alert(`Si è verificato un errore: ${error.message}`);
+      })
+      .finally(() => {
+        setIsLoading(false); // ✅ Fine: disattiva loader
       });
   };
 
   return (
     <div className="container mt-5 mb-5 p-4 text-white d-flex flex-column gap-4">
+      {/* Overlay per il loader */}
+      {isLoading && (
+        <div
+          className="overlay d-flex justify-content-center align-items-center"
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 9999,
+          }}
+        >
+          <div className="spinner-border text-light" role="status">
+            <span className="visually-hidden">Caricamento...</span>
+          </div>
+        </div>
+      )}
+
       <div className="rounded p-2" style={{ backgroundColor: "#ffffff20" }}>
         <h2 className="text-start">Inserisci i tuoi dati</h2>
-        <form
-          onSubmit={handleSubmit}
-          noValidate
-          className="mb-4 p-2 shadow-sm rounded"
-        >
+        <form onSubmit={handleSubmit} noValidate className="mb-4 p-2 shadow-sm rounded">
+          {/* Campi del form */}
           <div className="mb-3">
-            <label htmlFor="nome" className="form-label">
-              Nome
-            </label>
+            <label htmlFor="nome" className="form-label">Nome</label>
             <input
               type="text"
               id="nome"
@@ -216,9 +211,7 @@ Azione richiesta: elaborare l'ordine.
           </div>
 
           <div className="mb-3">
-            <label htmlFor="cognome" className="form-label">
-              Cognome
-            </label>
+            <label htmlFor="cognome" className="form-label">Cognome</label>
             <input
               type="text"
               id="cognome"
@@ -228,15 +221,11 @@ Azione richiesta: elaborare l'ordine.
               onChange={handleChange}
               className="form-control"
             />
-            {errors.cognome && (
-              <div className="text-danger">{errors.cognome}</div>
-            )}
+            {errors.cognome && <div className="text-danger">{errors.cognome}</div>}
           </div>
 
           <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Email
-            </label>
+            <label htmlFor="email" className="form-label">Email</label>
             <input
               type="email"
               id="email"
@@ -250,9 +239,7 @@ Azione richiesta: elaborare l'ordine.
           </div>
 
           <div className="mb-3">
-            <label htmlFor="indirizzo" className="form-label">
-              Indirizzo
-            </label>
+            <label htmlFor="indirizzo" className="form-label">Indirizzo</label>
             <input
               type="text"
               id="indirizzo"
@@ -262,9 +249,7 @@ Azione richiesta: elaborare l'ordine.
               onChange={handleChange}
               className="form-control"
             />
-            {errors.indirizzo && (
-              <div className="text-danger">{errors.indirizzo}</div>
-            )}
+            {errors.indirizzo && <div className="text-danger">{errors.indirizzo}</div>}
           </div>
 
           <div className="text-end">
@@ -280,10 +265,7 @@ Azione richiesta: elaborare l'ordine.
       </div>
 
       {datiUtente && (
-        <div
-          className="carrello-riepilogo p-4 shadow-sm rounded"
-          style={{ backgroundColor: "#ffffff20" }}
-        >
+        <div className="carrello-riepilogo p-4 shadow-sm rounded" style={{ backgroundColor: "#ffffff20" }}>
           <h4 className="mb-3">Riepilogo Ordine</h4>
           {carrello.length === 0 ? (
             <p className="text-white">Il carrello è vuoto.</p>
@@ -314,26 +296,30 @@ Azione richiesta: elaborare l'ordine.
           <div className="mt-1 pt-2 d-flex justify-content-between align-items-start flex-wrap border-top row">
             <div className="text-start w-100">
               <h4 className="mb-3">Dati Utente</h4>
-              <p>
-                <strong>Nome:</strong> {datiUtente.nome}
-              </p>
-              <p>
-                <strong>Cognome:</strong> {datiUtente.cognome}
-              </p>
-              <p>
-                <strong>Email:</strong> {datiUtente.email}
-              </p>
-              <p>
-                <strong>Indirizzo:</strong> {datiUtente.indirizzo}
-              </p>
+              <p><strong>Nome:</strong> {datiUtente.nome}</p>
+              <p><strong>Cognome:</strong> {datiUtente.cognome}</p>
+              <p><strong>Email:</strong> {datiUtente.email}</p>
+              <p><strong>Indirizzo:</strong> {datiUtente.indirizzo}</p>
             </div>
             <div className="text-end w-100 d-flex justify-content-end">
               <button
                 onClick={confermaOrdine}
                 className="btn text-white hover-gioco ms-auto"
                 style={{ backgroundColor: "#f06c00", minWidth: "220px", height: "100%" }}
+                disabled={isLoading}
               >
-                Procedi al pagamento
+                {isLoading ? (
+                  <span>
+                    <span
+                      className="spinner-border spinner-border-sm me-2"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                    Elaborazione in corso...
+                  </span>
+                ) : (
+                  "Procedi al pagamento"
+                )}
               </button>
             </div>
           </div>
