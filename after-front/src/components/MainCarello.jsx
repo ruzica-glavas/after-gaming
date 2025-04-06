@@ -80,7 +80,7 @@ export default function MainCarrello() {
                 </div>
 
                 {/* Sezione Riepilogo Carrello */}
-                <div className="carrello-riepilogo text-white p-4 rounded" style={{ flex: '0 0 35%', background: '#333' }}>
+                <div className="carrello-riepilogo text-white p-4 rounded d-flex flex-column" style={{ flex: '0 0 35%', background: '#333' }}>
                     <h4>Riepilogo Carrello</h4>
                     <p>Prezzo Originale: <del style={{ color: "#ff4c4c" }}>&euro;{totalOriginal.toFixed(2)}</del></p>
                     <p>Risparmio Totale: <strong style={{ color: "#ff6600" }}>&euro;{totalSavings.toFixed(2)}</strong></p>
@@ -88,8 +88,13 @@ export default function MainCarrello() {
                     <h3>Totale: <strong>&euro;{totalDiscounted.toFixed(2)}</strong></h3>
 
                     <NavLink to="/utente" className="w-100 mt-3 p-3">
-                        <button className="order-button text-white btn w-75 mt-3 p-3 hover-gioco">Procedi al pagamento {'➔'}</button>
+                        <button className="order-button text-white btn w-75 p-3 hover-gioco">Procedi al pagamento {'➔'}</button>
                     </NavLink>
+                    <hr />
+                    <NavLink to="/" className="w-100 p-3">
+                        <button className="back-button btn w-75 p-3">{'←'} Torna alla homepage </button>
+                    </NavLink>
+
                 </div>
             </div>
 

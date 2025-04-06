@@ -66,11 +66,27 @@
     font-weight: bold;
 }
 
-.order-button{
+.order-button {
     background: linear-gradient(90deg, #ff6600, #ff8533);
 }
 
-.image-suggested{
+.back-button {
+    background-color: #6b6b6b;
+    color: rgb(232, 232, 232);
+    border-radius: 20px;
+    border: 2px transparent;
+    transition: transform 0.3s ease-in-out, background 0.3s, border-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #6b6b6b;
+    color: white;
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.image-suggested {
     width: 250px;
     height: 150px;
     object-fit: cover;
@@ -78,8 +94,10 @@
 }
 
 .offcanvas-custom {
-    width: 90% !important; /* Imposta larghezza di default */
-    max-width: 500px; /* Larghezza massima per desktop */
+    width: 90% !important;
+    /* Imposta larghezza di default */
+    max-width: 500px;
+    /* Larghezza massima per desktop */
 }
 
 .carrello-item {
@@ -101,7 +119,7 @@
 /* Responsive per tablet */
 @media (min-width: 768px) {
     .offcanvas-custom {
-        width: 50% !important; 
+        width: 50% !important;
         max-width: 600px;
     }
 }
@@ -111,13 +129,13 @@
     .offcanvas-custom {
         width: 100% !important;
     }
-    
+
     .carrello-item {
         flex-direction: column;
         align-items: center;
         text-align: center;
     }
-    
+
     .carrello-img {
         width: 80px;
         height: 60px;
@@ -180,13 +198,13 @@
     .carrello-container {
         padding: 10px;
     }
-    
+
     .carrello-item {
         flex-direction: column;
         align-items: center;
         text-align: center;
     }
-    
+
     .carrello-img {
         width: 80px;
         height: 60px;

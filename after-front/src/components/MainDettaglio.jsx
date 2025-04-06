@@ -71,6 +71,8 @@ export default function MainDettaglio() {
         { icon: faShareNodes, label: "Family sharing" },
     ];
 
+    const shareUrl = window.location.href;  // URL della pagina corrente
+
     return (
         <div className="container mt-5 pb-5 text-center">
             <div className="game-image-dettaglio-container row">
@@ -84,13 +86,35 @@ export default function MainDettaglio() {
 
                     <div className="d-flex justify-content-center gap-3 mt-5">
                         <AggiungiAllaWishlistButton game={game} />
-
                         <AggiungiAlCarrelloButton game={game} />
-
                         <button className="d-flex gap-1 px-4 py-2 order-button text-white btn hover-gioco" style={buttonStyle} onClick={handleTrailerClick}>
                             <FontAwesomeIcon icon={faPlay} style={iconStyle} />
                             <p className="mb-0">Video</p>
                         </button>
+                    </div>
+
+                    {/* Link per la condivisione */}
+                    <div className="mt-3">
+                        <p className="text-white">Condividi tramite link:</p>
+                        <div className="d-flex align-items-center">
+                            <input
+                                type="text"
+                                value={shareUrl}
+                                readOnly
+                                className="form-control"
+                                style={{ width: "80%" }}
+                            />
+                            <button
+                                className=" ms-2 hover-gioco"
+                                onClick={() => {
+                                    navigator.clipboard.writeText(shareUrl)
+                                        .then(() => alert("Link copiato negli appunti!"))
+                                        .catch(err => alert("Errore nel copiare il link"));
+                                }}
+                            >
+                                Copia
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
