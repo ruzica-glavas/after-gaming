@@ -47,25 +47,32 @@ export default function MainCarrello() {
                                 <div className="carrello-info flex-grow-1">
                                     <span className="carrello-nome d-block">{prodotto.name}</span>
                                     <span className="carrello-piattaforma d-block">{prodotto.platform}</span>
+                                </div>
+                                <div className="d-flex align-items-center ms-3">
+                                    {/* Pulsante rimuovi */}
                                     <button
-                                        className="carrello-rimuovi btn btn-outline-danger rounded mt-2"
+                                        className="carrello-rimuovi btn btn-outline-danger rounded me-3"
                                         onClick={() => rimuoviDalCarrello(prodotto.id)}
                                     >
                                         <FontAwesomeIcon icon={faTrash} /> Rimuovi
                                     </button>
+
+                                    {/* Selettore quantità */}
+                                    <div className="carrello-quantita me-3">
+                                        <select
+                                            value={prodotto.quantita}
+                                            onChange={(e) => cambiaQuantita(prodotto.id, parseInt(e.target.value))}
+                                            className="quantita-dropdown"
+                                        >
+                                            {[...Array(4).keys()].map(num => (
+                                                <option key={num + 1} value={num + 1}>{num + 1}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    {/* Prezzo */}
+                                    <span className="carrello-prezzo">&euro;{(prodotto.price * prodotto.quantita).toFixed(2)}</span>
                                 </div>
-                                <div className="carrello-quantita me-3">
-                                    <select
-                                        value={prodotto.quantita}
-                                        onChange={(e) => cambiaQuantita(prodotto.id, parseInt(e.target.value))}
-                                        className="quantita-dropdown"
-                                    >
-                                        {[...Array(4).keys()].map(num => (
-                                            <option key={num + 1} value={num + 1}>{num + 1}</option>
-                                        ))}
-                                    </select>
-                                </div>
-                                <span className="carrello-prezzo">&euro;{(prodotto.price * prodotto.quantita).toFixed(2)}</span>
                             </div>
                         ))
                     )}
@@ -79,10 +86,9 @@ export default function MainCarrello() {
                     <hr />
                     <h3>Totale Parziale: <strong>&euro;{totalDiscounted.toFixed(2)}</strong></h3>
 
-                    <NavLink to="/utente" className=" w-100 mt-3 p-3 ">
+                    <NavLink to="/utente" className="w-100 mt-3 p-3">
                         <button className="order-button text-white btn w-75 mt-3 p-3 hover-gioco">Procedi al pagamento {'➔'}</button>
                     </NavLink>
-
                 </div>
             </div>
 
@@ -104,12 +110,15 @@ export default function MainCarrello() {
                                         }}
                                     />
                                 </Link>
-                                <div>
-                                    <span className="d-block fw-bold">{gioco.name}</span>
-                                    <span>{gioco.platform}</span>
-                                    <p className="fw-bold mt-2">&euro;{gioco.price}</p>
+                                <div className="d-flex justify-content-between w-100">
+                                    <div>
+                                        <span className="d-block fw-bold">{gioco.name}</span>
+                                        <span>{gioco.platform}</span>
+                                        <p className="fw-bold mt-2">&euro;{gioco.price}</p>
+                                    </div>
                                     <button
-                                        className="btn btn-outline-secondary text-white mt-2"
+                                        className="btn  rounded hover-gioco text-white"
+                                        style={{ width: '150px', height: '60px', background: '#ff6600', color: 'white' }}
                                         onClick={() => aggiungiAlCarrello(gioco)}
                                     >
                                         Aggiungi al Carrello <FontAwesomeIcon icon={faArrowUp} />
@@ -123,7 +132,3 @@ export default function MainCarrello() {
         </div>
     );
 };
-
-
-
-

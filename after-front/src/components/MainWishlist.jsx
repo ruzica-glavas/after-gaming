@@ -11,7 +11,7 @@ export default function MainWishlist() {
 
     return (
         <div className="wishlist-container container d-flex flex-column mb-3">
-            <h2 className="wishlist-titolo text-white mb-4">La tua Wishlist</h2>
+            <h2 className="wishlist-titolo text-white mb-4">La tua lista desideri</h2>
 
             {wishlist.length === 0 ? (
                 <p className="wishlist-vuoto text-white">La tua wishlist è vuota.</p>
