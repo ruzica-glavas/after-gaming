@@ -311,29 +311,31 @@ Azione richiesta: elaborare l'ordine.
               )
               .toFixed(2)}
           </p>
-          <div className="text-end">
-            <button
-              onClick={confermaOrdine}
-              className="btn text-white hover-gioco"
-              style={{ backgroundColor: "#f06c00" }}
-            >
-              Procedi al pagamento
-            </button>
-          </div>
-          <div className="mt-4 border-top pt-4 text-start">
-            <h4 className="mb-3">Dati Utente</h4>
-            <p>
-              <strong>Nome:</strong> {datiUtente.nome}
-            </p>
-            <p>
-              <strong>Cognome:</strong> {datiUtente.cognome}
-            </p>
-            <p>
-              <strong>Email:</strong> {datiUtente.email}
-            </p>
-            <p>
-              <strong>Indirizzo:</strong> {datiUtente.indirizzo}
-            </p>
+          <div className="mt-1 pt-2 d-flex justify-content-between align-items-start flex-wrap border-top row">
+            <div className="text-start w-100">
+              <h4 className="mb-3">Dati Utente</h4>
+              <p>
+                <strong>Nome:</strong> {datiUtente.nome}
+              </p>
+              <p>
+                <strong>Cognome:</strong> {datiUtente.cognome}
+              </p>
+              <p>
+                <strong>Email:</strong> {datiUtente.email}
+              </p>
+              <p>
+                <strong>Indirizzo:</strong> {datiUtente.indirizzo}
+              </p>
+            </div>
+            <div className="text-end w-100 d-flex justify-content-end">
+              <button
+                onClick={confermaOrdine}
+                className="btn text-white hover-gioco ms-auto"
+                style={{ backgroundColor: "#f06c00", minWidth: "220px", height: "100%" }}
+              >
+                Procedi al pagamento
+              </button>
+            </div>
           </div>
         </div>
       )}

@@ -84,7 +84,7 @@ export default function MainCarrello() {
                     <p>Prezzo Originale: <del style={{ color: "#ff4c4c" }}>&euro;{totalOriginal.toFixed(2)}</del></p>
                     <p>Risparmio Totale: <strong style={{ color: "#ff6600" }}>&euro;{totalSavings.toFixed(2)}</strong></p>
                     <hr />
-                    <h3>Totale Parziale: <strong>&euro;{totalDiscounted.toFixed(2)}</strong></h3>
+                    <h3>Totale: <strong>&euro;{totalDiscounted.toFixed(2)}</strong></h3>
 
                     <NavLink to="/utente" className="w-100 mt-3 p-3">
                         <button className="order-button text-white btn w-75 mt-3 p-3 hover-gioco">Procedi al pagamento {'➔'}</button>
