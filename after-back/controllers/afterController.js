@@ -337,11 +337,9 @@ export function createOrder(req, res) {
               for (const product of orderedProducts) {
                 const availableKeys = keyMap.get(product.productId) || [];
                 if (availableKeys.length < product.quantity) {
-                  return res
-                    .status(400)
-                    .json({
-                      error: `Chiavi insufficienti per il prodotto ${product.slug}`,
-                    });
+                  return res.status(400).json({
+                    error: `Chiavi insufficienti per il prodotto ${product.slug}`,
+                  });
                 }
 
                 for (let i = 0; i < product.quantity; i++) {
@@ -382,11 +380,9 @@ export function createOrder(req, res) {
                           "Errore nell'aggiornamento delle chiavi:",
                           err
                         );
-                        return res
-                          .status(500)
-                          .json({
-                            error: "Errore nell'aggiornamento delle chiavi",
-                          });
+                        return res.status(500).json({
+                          error: "Errore nell'aggiornamento delle chiavi",
+                        });
                       }
 
                       // Costruisci il dettaglio dell'ordine per l'email
@@ -446,12 +442,10 @@ Il team di After Gaming
                         console.error("Servizio email non disponibile.");
                       }
 
-                      res
-                        .status(201)
-                        .json({
-                          message: "Ordine creato con successo",
-                          orderId,
-                        });
+                      res.status(201).json({
+                        message: "Ordine creato con successo",
+                        orderId,
+                      });
                     }
                   );
                 }
@@ -462,4 +456,53 @@ Il team di After Gaming
       );
     }
   );
+}
+// Controller per inviare il codice sconto
+export function sendDiscountCode(req, res) {
+  const { email } = req.body;
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: "Email non valida" });
+  }
+
+  // Usa un codice sconto esistente dalla tabella discount_codes
+  const discountCode = "WELCOME5"; // Codice predefinito dalla tua tabella discount_codes
+  const discountValue = "5€"; // Valore fisso, puoi modificarlo o recuperarlo dal DB
+
+  const emailText = `
+Benvenuto su After Gaming!
+
+Grazie per esserti iscritto. Ecco il tuo codice sconto di ${discountValue}:
+${discountCode}
+
+Usalo al checkout per risparmiare sul tuo prossimo acquisto!
+Visita il nostro sito: http://localhost:3000
+
+Cordiali saluti,
+Il team di After Gaming
+  `.trim();
+
+  if (req.transporter) {
+    req.transporter.sendMail(
+      {
+        from: "hi@demomailtrap.co",
+        to: email,
+        subject: "Il tuo codice sconto di benvenuto",
+        text: emailText,
+      },
+      function (emailErr, info) {
+        if (emailErr) {
+          console.error("Errore nell'invio email:", emailErr);
+          return res
+            .status(500)
+            .json({ error: "Errore nell'invio del codice sconto" });
+        }
+        console.log("Email inviata:", info.response);
+        res.status(200).json({ message: "Codice sconto inviato con successo" });
+      }
+    );
+  } else {
+    console.error("Servizio email non disponibile.");
+    return res.status(500).json({ error: "Servizio email non disponibile" });
+  }
 }
