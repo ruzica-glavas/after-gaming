@@ -82,8 +82,8 @@ export default function MainCarrello() {
                 {/* Sezione Riepilogo Carrello */}
                 <div className="carrello-riepilogo text-white p-4 rounded d-flex flex-column" style={{ flex: '0 0 35%', background: '#333' }}>
                     <h4>Riepilogo Carrello</h4>
-                    <p>Prezzo Originale: <del style={{ color: "#ff4c4c" }}>&euro;{totalOriginal.toFixed(2)}</del></p>
-                    <p>Risparmio Totale: <strong style={{ color: "#ff6600" }}>&euro;{totalSavings.toFixed(2)}</strong></p>
+                    <p>Prezzo Originale: <strong style={{ color: "#ff4c4c" }}>&euro;{totalOriginal.toFixed(2)}</strong></p>
+                    <p>Sconto: <strong style={{ color: "#ff6600" }}>-&euro;{totalSavings.toFixed(2)}</strong></p>
                     <hr />
                     <h3>Totale: <strong>&euro;{totalDiscounted.toFixed(2)}</strong></h3>
 
