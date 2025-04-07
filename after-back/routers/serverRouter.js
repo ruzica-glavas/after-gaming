@@ -24,6 +24,6 @@ router.get("/promotions", getPromotions);
 router.get("/discount-codes/:code", validateDiscountCode);
 router.post("/send-email", sendEmail);
 router.post("/orders", createOrder);
-router.post("/api/send-discount-code", sendDiscountCode);
+router.post("/send-discount-code", sendDiscountCode);
 
 export default router;
