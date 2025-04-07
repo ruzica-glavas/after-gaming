@@ -9,7 +9,7 @@ import { faCubes, faList } from "@fortawesome/free-solid-svg-icons"; // Importa 
 
 export default function Ricerca() {
   const [games, setGames] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Cambiato a false
   const [error, setError] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = searchParams.get("q") || "";
@@ -17,34 +17,15 @@ export default function Ricerca() {
   const priceFilter = searchParams.get("price") || "asc";
   const [viewMode, setViewMode] = useState("grid");
 
-  const handleSearchQueryChange = (query) => {
-    setSearchParams({ 
-      ...Object.fromEntries(searchParams),
-      q: query 
-    });
-  };
-
-  const handlePlatformChange = (e) => {
-    const platform = e.target.value === "Piattaforma" ? null : e.target.value;
-    setSearchParams({ 
-      ...Object.fromEntries(searchParams),
-      platform: platform 
-    });
-  };
-
-  const handlePriceChange = (e) => {
-    setSearchParams({ 
-      ...Object.fromEntries(searchParams),
-      price: e.target.value 
-    });
-  };
-
-  const handleViewModeChange = (mode) => {
-    setViewMode(mode);
-  };
+  // Rimuovi handleSearchQueryChange dato che ora è gestito nel componente SearchBar
 
   useEffect(() => {
     const fetchGames = async () => {
+      if (!searchQuery && !platformFilter) {
+        setGames([]);
+        return;
+      }
+
       setLoading(true);
       try {
         let url = `http://localhost:3000/api/search?query=${searchQuery}`;
@@ -87,14 +68,14 @@ export default function Ricerca() {
       </div>
 
       <div className="d-flex justify-content-center gap-4 mb-4">
-        <select value={platformFilter || ""} onChange={handlePlatformChange} className="form-select w-25">
+        <select value={platformFilter || ""}  className="form-select w-25">
           <option value>Piattaforma</option>
           <option value="PC">PC</option>
           <option value="PS5">Playstation</option>
           <option value="Xbox">Xbox</option>
         </select>
 
-        <select value={priceFilter} onChange={handlePriceChange} className="form-select w-25">
+        <select value={priceFilter}  className="form-select w-25">
           <option value>Prezzo</option>
           <option value="asc">Prezzo crescente</option>
           <option value="desc">Prezzo decrescente</option>
