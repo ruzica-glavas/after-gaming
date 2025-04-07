@@ -11,7 +11,7 @@ export default function AggiungiAlCarrelloButton({ game }) {
     };
 
     return (
-        <button className="d-flex px-4 py-2 gap-1 order-button text-white btn hover-gioco" style={{ backgroundColor: "var(--orange-color)", color: "white" }} onClick={handleAddToCart}>
+        <button className="d-flex px-4 py-2 gap-1 order-button text-white btn hover-gioco" onClick={handleAddToCart}>
             <FontAwesomeIcon icon={faCartShopping} style={{ fontSize: "24px" }} />
             <p className="mb-0">Carrello</p>
         </button>
