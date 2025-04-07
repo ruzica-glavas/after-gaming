@@ -2,37 +2,33 @@ import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function SearchBar() {
-    const [search, setSearch] = useState('');
+    const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
+    const [searchTerm, setSearchTerm] = useState(searchParams.get("q") || "");
 
-    // Effetto per impostare il valore iniziale di 'search' dal parametro URL
-    useEffect(() => {
-        const query = searchParams.get("q") || "";
-        setSearch(query);
-    }, [searchParams]); // Si attiva ogni volta che searchParams cambia
-
-    function handleInput(e) {
-        const query = e.target.value;
-
-        setSearch(query);
-
-        // Aggiorna l'URL con il nuovo parametro di ricerca
-        navigate(`?q=${encodeURIComponent(query)}`);
-    }
-
-    function handleSubmit(e) {
-        e.preventDefault();
-    }
+    const handleInput = (e) => {
+        const value = e.target.value;
+        setSearchTerm(value);
+        
+        // Aggiorna i parametri di ricerca mantenendo gli altri parametri esistenti
+        const newParams = new URLSearchParams(searchParams);
+        if (value) {
+            newParams.set("q", value);
+        } else {
+            newParams.delete("q");
+        }
+        setSearchParams(newParams);
+    };
 
     return (
         <div className="d-flex pb-4 pt-4">
             <input
                 type="text"
-                value={search}
+                value={searchTerm}
                 onChange={handleInput}
                 className="form-control length-input custom-placeholder"
                 placeholder="Cerca gioco..."
+                autoFocus
             />
         </div>
     );

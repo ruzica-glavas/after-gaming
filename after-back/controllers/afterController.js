@@ -130,31 +130,38 @@ export function getProductBySlug(req, res) {
 
 // controller per la ricerca
 export function searchProducts(req, res) {
-  const query = req.query.query;
+  const { query, platform, sort } = req.query;
+  const params = [];
+  let sql = `
+    SELECT id, slug, name, description, price, original_price, image_url, platform, trailer_url 
+    FROM products 
+    WHERE 1=1
+  `;
 
-  if (!query) {
-    return res
-      .status(400)
-      .json({ error: "Il parametro 'query' è obbligatorio" });
+  // Aggiungi filtro di ricerca per nome o descrizione
+  if (query) {
+    sql += ` AND (name LIKE ? OR description LIKE ?)`;
+    params.push(`%${query}%`, `%${query}%`);
   }
 
-  const searchQuery = "%" + query + "%";
-  const sort = req.query.sort || "name"; // Default: ordinamento per nome
-  const sortOrder = sort.includes("desc") ? "DESC" : "ASC";
-  const sortField = sort.replace("_desc", "").replace("_asc", "");
+  // Aggiungi filtro per piattaforma
+  if (platform) {
+    sql += ` AND platform = ?`;
+    params.push(platform);
+  }
 
-  const sql =
-    "SELECT id, slug, name, description, price, original_price, image_url, platform, trailer_url FROM products WHERE name LIKE ? OR description LIKE ? ORDER BY " +
-    sortField +
-    " " +
-    sortOrder;
-  db.query(sql, [searchQuery, searchQuery], function (err, results) {
+  // Aggiungi ordinamento
+  if (sort) {
+    const [field, order] = sort.split('_');
+    sql += ` ORDER BY ${field} ${order.toUpperCase()}`;
+  } else {
+    sql += ` ORDER BY name ASC`;
+  }
+
+  db.query(sql, params, function (err, results) {
     if (err) {
       console.error("Errore nella ricerca dei prodotti:", err);
       return res.status(500).json({ error: "Errore interno del server" });
-    }
-    if (results.length === 0) {
-      return res.status(404).json({ message: "Nessun prodotto trovato" });
     }
     res.status(200).json(results);
   });

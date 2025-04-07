@@ -8,47 +8,74 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCubes, faList } from "@fortawesome/free-solid-svg-icons"; // Importa icone per griglia e lista
 
 export default function Ricerca() {
-  const { products, loading, error } = useGlobalContext();
-  const [filteredGames, setFilteredGames] = useState([]);
+  const [games, setGames] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = searchParams.get("q") || "";
   const platformFilter = searchParams.get("platform");
   const priceFilter = searchParams.get("price") || "asc";
-  const [viewMode, setViewMode] = useState("grid"); // Stato per la modalità di visualizzazione (grid/list)
+  const [viewMode, setViewMode] = useState("grid");
 
-  // Funzione per cambiare la modalità di visualizzazione
+  const handleSearchQueryChange = (query) => {
+    setSearchParams({ 
+      ...Object.fromEntries(searchParams),
+      q: query 
+    });
+  };
+
+  const handlePlatformChange = (e) => {
+    const platform = e.target.value === "Piattaforma" ? null : e.target.value;
+    setSearchParams({ 
+      ...Object.fromEntries(searchParams),
+      platform: platform 
+    });
+  };
+
+  const handlePriceChange = (e) => {
+    setSearchParams({ 
+      ...Object.fromEntries(searchParams),
+      price: e.target.value 
+    });
+  };
+
   const handleViewModeChange = (mode) => {
     setViewMode(mode);
   };
 
-  const handlePlatformChange = (e) => {
-    setSearchParams({ ...Object.fromEntries(searchParams.entries()), platform: e.target.value });
-  };
-
-  const handlePriceChange = (e) => {
-    setSearchParams({ ...Object.fromEntries(searchParams.entries()), price: e.target.value });
-  };
-
-  const handleSearchQueryChange = (e) => {
-    const query = e.target.value;
-    setSearchParams({ ...Object.fromEntries(searchParams.entries()), q: query });
-  };
-
   useEffect(() => {
-    let filtered = products.filter((game) => {
-      const matchQuery = game.name.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchPlatform = platformFilter ? game.platform === platformFilter : true;
-      return matchQuery && matchPlatform;
-    });
+    const fetchGames = async () => {
+      setLoading(true);
+      try {
+        let url = `http://localhost:3000/api/search?query=${searchQuery}`;
+        
+        if (platformFilter) {
+          url += `&platform=${platformFilter}`;
+        }
+        
+        if (priceFilter) {
+          url += `&sort=price_${priceFilter}`;
+        }
 
-    if (priceFilter === "asc") {
-      filtered = filtered.sort((a, b) => a.price - b.price);
-    } else if (priceFilter === "desc") {
-      filtered = filtered.sort((a, b) => b.price - a.price);
-    }
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (!response.ok) {
+          throw new Error(data.error || 'Si è verificato un errore');
+        }
+        
+        setGames(data);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+        setGames([]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    setFilteredGames(filtered);
-  }, [searchQuery, platformFilter, priceFilter, products]);
+    fetchGames();
+  }, [searchQuery, platformFilter, priceFilter]);
 
   if (loading) return <div className="text-center py-4">Caricamento in corso...</div>;
   if (error) return <div className="text-center py-4 text-danger">Si è verificato un errore nel caricamento dei giochi.</div>;
@@ -56,19 +83,19 @@ export default function Ricerca() {
   return (
     <div className="container">
       <div className="container d-flex justify-content-center">
-        <SearchBar value={searchQuery} onChange={handleSearchQueryChange} />
+        <SearchBar/>
       </div>
 
       <div className="d-flex justify-content-center gap-4 mb-4">
         <select value={platformFilter || ""} onChange={handlePlatformChange} className="form-select w-25">
-          <option selected>Piattaforma</option>
+          <option value>Piattaforma</option>
           <option value="PC">PC</option>
           <option value="PS5">Playstation</option>
           <option value="Xbox">Xbox</option>
         </select>
 
         <select value={priceFilter} onChange={handlePriceChange} className="form-select w-25">
-          <option selected>Prezzo</option>
+          <option value>Prezzo</option>
           <option value="asc">Prezzo crescente</option>
           <option value="desc">Prezzo decrescente</option>
         </select>
@@ -91,14 +118,14 @@ export default function Ricerca() {
       </div>
 
       <div>
-        <h4 className="container text-white">{filteredGames.length} risultati</h4>
+        <h4 className="container text-white">{games.length} risultati</h4>
       </div>
 
       {/* Visualizzazione in griglia */}
       {viewMode === "grid" && (
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-6 mx-auto">
-          {filteredGames.length > 0 ? (
-            filteredGames.map((game) => {
+          {games.length > 0 ? (
+            games.map((game) => {
               const discount =
                 game.original_price && game.price < game.original_price
                   ? Math.round(((game.original_price - game.price) / game.original_price) * 100)
@@ -148,8 +175,8 @@ export default function Ricerca() {
       {/* Visualizzazione in lista */}
       {viewMode === "list" && (
         <div className="d-flex flex-column bg-black rounded mb-2 list-view">
-          {filteredGames.length > 0 ? (
-            filteredGames.map((game) => {
+          {games.length > 0 ? (
+            games.map((game) => {
               const discount =
                 game.original_price && game.price < game.original_price
                   ? Math.round(((game.original_price - game.price) / game.original_price) * 100)
