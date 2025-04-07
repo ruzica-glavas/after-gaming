@@ -83,6 +83,7 @@ export default function MainDettaglio() {
                     <h1 className="text-white">{game.name}</h1>
                     <p className="text-white"><b>{game.price}</b> €</p>
                     <p className="text-white">Data di rilascio: <b>{new Date(game.created_at).toLocaleDateString()}</b></p>
+                    <p className="text-white">Piattaforma: <b>{game.platform}</b></p>
 
                     <div className="d-flex justify-content-center gap-3 mt-5">
                         <AggiungiAllaWishlistButton game={game} />
@@ -94,7 +95,7 @@ export default function MainDettaglio() {
                     </div>
 
                     {/* Link per la condivisione */}
-                    <div className="mt-3">
+                    <div className="mt-2">
                         <p className="text-white">Condividi tramite link:</p>
                         <div className="d-flex align-items-center">
                             <input
@@ -106,6 +107,7 @@ export default function MainDettaglio() {
                             />
                             <button
                                 className=" ms-2 hover-gioco"
+                                style={buttonStyle}
                                 onClick={() => {
                                     navigator.clipboard.writeText(shareUrl)
                                         .then(() => alert("Link copiato negli appunti!"))
@@ -178,7 +180,7 @@ export default function MainDettaglio() {
                         <div className="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 mt-3">
                             {featureList.map(({ icon, label }, index) => (
                                 <div key={index} className="col">
-                                    <div className="p-3 border h-100 rounded text-center hover-gioco">
+                                    <div className="p-3 border h-100 rounded text-center hover-gioco d-flex flex-column justify-content-center align-items-center">
                                         <FontAwesomeIcon icon={icon} />
                                         <h3>{label}</h3>
                                     </div>

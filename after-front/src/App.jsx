@@ -9,6 +9,7 @@ import MainUtente from './components/MainUtente';
 import Ricerca from './components/Ricerca';
 import PaginaTendenze from './pages/PaginaTendenze';
 import PaginaUltimiArrivi from './pages/PaginaUltimiArrivi';
+import MainGrazie from './components/Grazie';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
               <Route path="/carello" element={<MainCarello />} />
               <Route path="/wishlist" element={<MainWishlist />} />
               <Route path="/utente" element={<MainUtente />} />
+              <Route path="/grazie" element={<MainGrazie />} />
             </Route>
           </Routes>
         </BrowserRouter>

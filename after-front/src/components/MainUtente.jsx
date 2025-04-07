@@ -290,7 +290,8 @@ Azione richiesta: elaborare l'ordine.
               <button
                 type="button"
                 onClick={gestisciCodiceSconto}
-                className="btn btn-outline-light"
+                className="btn btn-outline-light hover-gioco"
+                style={{ backgroundColor: "#f06c00", color: "#fff" }}
               >
                 Applica
               </button>

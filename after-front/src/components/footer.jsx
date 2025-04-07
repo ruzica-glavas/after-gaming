@@ -2,6 +2,7 @@ import { Container, Row, Col, ListGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faInstagram, faXTwitter, faYoutube, faTwitch, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { NavLink } from 'react-router-dom';
 
 
 export default function Footer() {
@@ -73,9 +74,11 @@ export default function Footer() {
                         <Col className="text-center text-md-end">
                             <div className="location-container d-flex justify-content-center justify-content-md-end align-items-center gap-2 py-4">
                                 <p className="fs-7 mb-0"><FontAwesomeIcon icon={faMapMarkerAlt} /> Italy</p>
+                                <NavLink to="/grazie">
+                                    <button className="order-button text-white btn hover-gioco">GRAZIE !!</button>
+                                </NavLink>
                             </div>
                         </Col>
-
                     </Row>
                 </Container>
             </div>

@@ -87,12 +87,12 @@ export default function MainCarrello() {
                     <hr />
                     <h3>Totale: <strong>&euro;{totalDiscounted.toFixed(2)}</strong></h3>
 
-                    <NavLink to="/utente" className="w-100 mt-3 p-3">
+                    <NavLink to="/utente" className=" mt-3 p-3">
                         <button className="order-button text-white btn w-75 p-3 hover-gioco">Procedi al pagamento {'➔'}</button>
                     </NavLink>
                     <hr />
-                    <NavLink to="/" className="w-100 p-3">
-                        <button className="back-button btn w-75 p-3">{'←'} Torna alla homepage </button>
+                    <NavLink to="/" className=" p-3">
+                        <button className="order-button text-white btn w-75 p-3 hover-gioco">{'←'} Torna alla homepage </button>
                     </NavLink>
 
                 </div>
