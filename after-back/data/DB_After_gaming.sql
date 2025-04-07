@@ -103,7 +103,7 @@ INSERT INTO products (slug, name, description, price, original_price, image_url,
 ('mortal-kombat-1', 'Mortal Kombat 1', 'Rilancio della serie di picchiaduro.', 49.99, 69.99, 'https://www.notebookcheck.com/fileadmin/Notebooks/News/_nc3/1_Mortal_Kombat_1_cr.jpg', 'PS5', 'https://www.youtube.com/embed/lBYvt1_t6Q4?si=_YhTU7Bli0jYW7ME'),
 ('farcry-6', 'Far Cry 6', 'Avventura open-world in un\'isola ribelle.', 39.99, 59.99, 'https://www.heypoorplayer.com/wp-content/uploads/2021/05/far-cry-6.jpeg', 'PC', 'https://www.youtube.com/embed/-IJuKT1mHO8?si=XjTLk9C8JLVK5nge'),
 ('hitman-3', 'Hitman 3', 'Il capitolo finale della trilogia.', 29.99, 39.99, 'https://www.gamespot.com/a/uploads/screen_kubrick/1574/15746725/3784536-321111.jpg', 'Xbox', 'https://www.youtube.com/embed/Z29ORu6_p34?si=lOza8_iVYd0hCRUC'),
-('resident-evil-5', 'Resident Evil 5', 'Survival horror con Chris.', 4.99, 14.99, 'https://cdn-ext.fanatical.com/production/product/1280x720/5dcb7eb8-4550-4621-a95d-c2a1fbf6b9b5.jpeg', 'PC', 'https://www.youtube.com/embed/EUI48f4iWPc?si=-TSG7D4B7jfhSqXL'),
+
 ('dead-space-2', 'Dead Space 2', 'Un horro claustrofibico nei panni di Isac Clark.', 14.99, 29.99, 'https://4.bp.blogspot.com/-ME53MJR3Oxk/TqbifH6MfDI/AAAAAAAADqo/eioXsmxVe9k/s1600/Dead_space_2_Logo_HD_Wallpaper_Vvallpaper.Net.jpg', 'PC', 'https://www.youtube.com/embed/EtEEa4PU7ok?si=-v-roxl33KM0oL9b'),
 ('metro-exodus', 'Metro Exodus', 'Un FPS post-apocalittico.', 19.99, 29.99, 'https://static.polityka.pl/_resource/res/path/15/aa/15aa7307-84dc-4f6d-a6db-5d442eb41b09_f1400x900', 'PC', 'https://www.youtube.com/embed/fbbqlvuovQ0?si=94cEwWJuKYgSuGJ9'),
 ('sniper-elite-5', 'Sniper Elite 5', 'Stealth e tattiche da cecchino.', 29.99, 49.99, 'https://cdn.wccftech.com/wp-content/uploads/2022/05/Sniper-Elite-5-Header.png', 'Xbox', 'https://www.youtube.com/embed/kcQX1djYtQw?si=p60PN4GPr7g0VUNh'),
@@ -154,7 +154,6 @@ INSERT INTO digital_keys (product_id, `key`, is_sold) VALUES
 (28, 'MRTLK-2801-AAAA', FALSE), (28, 'MRTLK-2802-ABCD', FALSE), (28, 'MRTLK-2803-BCDE', FALSE),
 (29, 'FCRY6-2901-AAAA', FALSE), (29, 'FCRY6-2902-ABCD', FALSE), (29, 'FCRY6-2903-BCDE', FALSE),
 (30, 'HTMN3-3001-AAAA', FALSE), (30, 'HTMN3-3002-ABCD', FALSE), (30, 'HTMN3-3003-BCDE', FALSE),
-(31, 'RE5-3101-AAAA', FALSE), (31, 'RE5-3102-ABCD', FALSE), (31, 'RE5-3103-BCDE', FALSE),
 (32, 'DS2-3201-AAAA', FALSE), (32, 'DS2-3202-ABCD', FALSE), (32, 'DS2-3203-BCDE', FALSE),
 (33, 'METRO-3301-AAAA', FALSE), (33, 'METRO-3302-ABCD', FALSE), (33, 'METRO-3303-BCDE', FALSE),
 (34, 'SNIP5-3401-AAAA', FALSE), (34, 'SNIP5-3402-ABCD', FALSE), (34, 'SNIP5-3403-BCDE', FALSE),
@@ -163,6 +162,7 @@ INSERT INTO digital_keys (product_id, `key`, is_sold) VALUES
 (37, 'DAYSG-3701-AAAA', FALSE), (37, 'DAYSG-3702-ABCD', FALSE), (37, 'DAYSG-3703-BCDE', FALSE),
 (38, 'CNTRL-3801-AAAA', FALSE), (38, 'CNTRL-3802-ABCD', FALSE), (38, 'CNTRL-3803-BCDE', FALSE),
 (39, 'MAFIA-3901-AAAA', FALSE), (39, 'MAFIA-3902-ABCD', FALSE), (39, 'MAFIA-3903-BCDE', FALSE);
+
 
 
 select * from digital_keys;
