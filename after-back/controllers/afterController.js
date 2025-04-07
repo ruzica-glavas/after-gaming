@@ -271,6 +271,7 @@ export function createOrder(req, res) {
 
       let total = 0;
       const orderItems = [];
+      const orderedProducts = []; // Per gestire le chiavi digitali
 
       for (const p of products) {
         const productInfo = productMap.get(p.slug);
@@ -282,7 +283,12 @@ export function createOrder(req, res) {
         const price = productInfo.price;
         const itemTotal = price * p.quantity;
         total += itemTotal;
-        orderItems.push([productInfo.id, p.quantity, price]); // Usa product_id invece di slug
+        orderItems.push([productInfo.id, p.quantity, price]);
+        orderedProducts.push({
+          slug: p.slug,
+          productId: productInfo.id,
+          quantity: p.quantity,
+        });
       }
 
       // Inseriamo l'ordine
@@ -303,34 +309,104 @@ export function createOrder(req, res) {
           }
 
           const orderId = orderResult.insertId;
-          const orderItemsValues = orderItems.map((item) => [
-            orderId,
-            item[0],
-            item[1],
-            item[2],
-          ]);
 
-          // Inseriamo i prodotti dell'ordine usando product_id
+          // Recupera chiavi digitali disponibili per ogni prodotto
+          const productIds = orderedProducts.map((p) => p.productId);
           db.query(
-            "INSERT INTO order_product (order_id, product_id, quantity, price_at_purchase) VALUES ?",
-            [orderItemsValues],
-            function (err) {
+            "SELECT id, product_id, `key` FROM digital_keys WHERE product_id IN (?) AND is_sold = FALSE",
+            [productIds],
+            function (err, keyRows) {
               if (err) {
-                console.error("Errore negli item dell'ordine:", err);
+                console.error("Errore nel recupero delle chiavi:", err);
                 return res
                   .status(500)
-                  .json({ error: "Errore negli item dell'ordine" });
+                  .json({ error: "Errore nel recupero delle chiavi digitali" });
               }
 
-              // Costruisci il dettaglio dell'ordine per l'email
-              const orderDetails = orderItems
-                .map(([productId, quantity, price]) => {
-                  const product = productRows.find((p) => p.id === productId);
-                  return `${quantity}x ${product.slug} - ${price}€`;
-                })
-                .join("\n");
+              const keyMap = new Map();
+              keyRows.forEach((key) => {
+                if (!keyMap.has(key.product_id)) {
+                  keyMap.set(key.product_id, []);
+                }
+                keyMap.get(key.product_id).push(key);
+              });
 
-              const emailText = `
+              const orderItemsValues = [];
+              const assignedKeys = []; // Per includere le chiavi nell'email
+
+              for (const product of orderedProducts) {
+                const availableKeys = keyMap.get(product.productId) || [];
+                if (availableKeys.length < product.quantity) {
+                  return res
+                    .status(400)
+                    .json({
+                      error: `Chiavi insufficienti per il prodotto ${product.slug}`,
+                    });
+                }
+
+                for (let i = 0; i < product.quantity; i++) {
+                  const key = availableKeys[i];
+                  orderItemsValues.push([
+                    orderId,
+                    product.productId,
+                    key.id,
+                    1,
+                    productMap.get(product.slug).price,
+                  ]);
+                  assignedKeys.push({ slug: product.slug, key: key.key });
+                }
+              }
+
+              // Inseriamo i prodotti dell'ordine con le chiavi digitali
+              db.query(
+                "INSERT INTO order_product (order_id, product_id, digital_key_id, quantity, price_at_purchase) VALUES ?",
+                [orderItemsValues],
+                function (err) {
+                  if (err) {
+                    console.error("Errore negli item dell'ordine:", err);
+                    return res
+                      .status(500)
+                      .json({ error: "Errore negli item dell'ordine" });
+                  }
+
+                  // Aggiorna le chiavi digitali come vendute
+                  const keyIds = assignedKeys.map((k) =>
+                    k.key.split("-").join("")
+                  ); // Adatta il formato se necessario
+                  db.query(
+                    "UPDATE digital_keys SET is_sold = TRUE WHERE `key` IN (?)",
+                    [keyIds],
+                    function (err) {
+                      if (err) {
+                        console.error(
+                          "Errore nell'aggiornamento delle chiavi:",
+                          err
+                        );
+                        return res
+                          .status(500)
+                          .json({
+                            error: "Errore nell'aggiornamento delle chiavi",
+                          });
+                      }
+
+                      // Costruisci il dettaglio dell'ordine per l'email
+                      const orderDetails = orderItems
+                        .map(([productId, quantity, price]) => {
+                          const product = productRows.find(
+                            (p) => p.id === productId
+                          );
+                          const keysForProduct = assignedKeys
+                            .filter((k) => k.slug === product.slug)
+                            .map((k) => k.key);
+                          return `${quantity}x ${
+                            product.slug
+                          } - ${price}€\nChiavi digitali: ${keysForProduct.join(
+                            ", "
+                          )}`;
+                        })
+                        .join("\n");
+
+                      const emailText = `
 Ordine #${orderId} Confermato!
 
 Grazie ${first_name} ${last_name} per il tuo acquisto!
@@ -340,35 +416,46 @@ Totale: ${total}€
 Indirizzo di fatturazione: ${shipping_address}
 
 Riceverai un'email con gli aggiornamenti sullo stato della spedizione.
+Le tue chiavi digitali sono incluse sopra. Attivale sulla piattaforma corrispondente.
 Contattaci a support@aftergaming.com per assistenza.
 
 Cordiali saluti,
 Il team di After Gaming
-            `.trim();
+                    `.trim();
 
-              if (req.transporter) {
-                req.transporter.sendMail(
-                  {
-                    from: "hi@demomailtrap.co",
-                    to: email,
-                    subject: `Conferma Ordine #${orderId}`,
-                    text: emailText,
-                  },
-                  function (emailErr, info) {
-                    if (emailErr) {
-                      console.error("Errore nell'invio email:", emailErr);
-                    } else {
-                      console.log("Email inviata:", info.response);
+                      if (req.transporter) {
+                        req.transporter.sendMail(
+                          {
+                            from: "hi@demomailtrap.co",
+                            to: email,
+                            subject: `Conferma Ordine #${orderId}`,
+                            text: emailText,
+                          },
+                          function (emailErr, info) {
+                            if (emailErr) {
+                              console.error(
+                                "Errore nell'invio email:",
+                                emailErr
+                              );
+                            } else {
+                              console.log("Email inviata:", info.response);
+                            }
+                          }
+                        );
+                      } else {
+                        console.error("Servizio email non disponibile.");
+                      }
+
+                      res
+                        .status(201)
+                        .json({
+                          message: "Ordine creato con successo",
+                          orderId,
+                        });
                     }
-                  }
-                );
-              } else {
-                console.error("Servizio email non disponibile.");
-              }
-
-              res
-                .status(201)
-                .json({ message: "Ordine creato con successo", orderId });
+                  );
+                }
+              );
             }
           );
         }
