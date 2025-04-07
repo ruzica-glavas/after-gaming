@@ -65,7 +65,7 @@ export default function MainCarrello() {
                                             onChange={(e) => cambiaQuantita(prodotto.id, parseInt(e.target.value))}
                                             className="quantita-dropdown"
                                         >
-                                            {[...Array(4).keys()].map(num => (
+                                            {[...Array(3).keys()].map(num => (
                                                 <option key={num + 1} value={num + 1}>{num + 1}</option>
                                             ))}
                                         </select>
