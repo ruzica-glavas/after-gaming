@@ -82,10 +82,12 @@ export default function Ricerca() {
   
   const handlePriceChange = (e) => {
     const newParams = new URLSearchParams(searchParams);
-    if (e.target.value) {
-      newParams.set("price", e.target.value);
+    if (e.target.value === "") {
+      // Se viene selezionata l'opzione "Piattaforma", rimuovi il parametro
+      newParams.delete("platform");
     } else {
-      newParams.delete("price");
+      // Altrimenti, imposta il nuovo valore della piattaforma
+      newParams.set("platform", e.target.value);
     }
     setSearchParams(newParams);
   };
@@ -98,7 +100,7 @@ export default function Ricerca() {
 
       <div className="d-flex justify-content-center gap-4 mb-4">
         <select value={platformFilter || ""}  onChange={handlePlatformChange} className="form-select w-25">
-          <option value>Piattaforma</option>
+          <option value = "">Piattaforma</option>
           <option value="PC">PC</option>
           <option value="PS5">Playstation</option>
           <option value="Xbox">Xbox</option>
