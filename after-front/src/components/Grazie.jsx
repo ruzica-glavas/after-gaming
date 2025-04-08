@@ -160,6 +160,10 @@ export default function MainGrazie() {
                                 <p className="list-group-item">
                                     Grazie da RUZICA
                                 </p>
+                                <p className="list-group-item">
+                                    ECCO UN CODICE SCONTO DEL 10% PER AVER TROVATO LA NOSTRA PAGINA SEGRETA: <br />
+                                    <strong>GAMER10</strong>
+                                </p>
                             </div>
                         </div>
                         <img
