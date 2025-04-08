@@ -280,7 +280,7 @@ const handleSubmit = (e) => {
               onChange={handleChange}
               className="form-control"
             />
-            {errors.nome && <div className="text-danger">{errors.nome}</div>}
+            {errors.nome && <div className="error fw-bold">{errors.nome}</div>}
           </div>
 
           <div className="mb-3">
@@ -297,7 +297,7 @@ const handleSubmit = (e) => {
               className="form-control"
             />
             {errors.cognome && (
-              <div className="text-danger">{errors.cognome}</div>
+              <div className="error fw-bold">{errors.cognome}</div>
             )}
           </div>
 
@@ -314,7 +314,7 @@ const handleSubmit = (e) => {
               onChange={handleChange}
               className="form-control"
             />
-            {errors.email && <div className="text-danger">{errors.email}</div>}
+            {errors.email && <div className="error fw-bold">{errors.email}</div>}
           </div>
 
           <div className="mb-3">
@@ -331,7 +331,7 @@ const handleSubmit = (e) => {
               className="form-control"
             />
             {errors.indirizzo && (
-              <div className="text-danger">{errors.indirizzo}</div>
+              <div className="error fw-bold">{errors.indirizzo}</div>
             )}
           </div>
 
@@ -364,7 +364,7 @@ const handleSubmit = (e) => {
           {/* ✅ Check accettazione termini */}
           <div className="form-check mb-3">
             <input
-              className="form-check-input"
+              className="form-check-input custom-check-orange"
               type="checkbox"
               id="accettaTermini"
               checked={accettaTermini}
@@ -373,12 +373,12 @@ const handleSubmit = (e) => {
                 setErroreTermini(false);
               }}
             />
-            <label className="form-check-label" htmlFor="accettaTermini">
-              Accetto i <a href="#">termini e condizioni</a> di servizio
+            <label className="form-check-label terms" htmlFor="accettaTermini">
+              Accetto i <a href="#" className="link-orange">termini e condizioni</a> di servizio
             </label>
             {erroreTermini && (
-              <div className="text-danger mt-1">
-                Devi accettare i termini e condizioni.
+              <div className="error fw-bold mt-1">
+                Devi accettare i termini e condizioni
               </div>
             )}
           </div>
@@ -466,3 +466,5 @@ const handleSubmit = (e) => {
     </div>
   );
 }
+
+

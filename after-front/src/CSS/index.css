@@ -455,3 +455,25 @@ footer .fs-7 {
 .not-found{
   background-color: #262626;
 }
+
+.custom-check-orange:checked {
+  background-color: rgb(255, 136, 0);
+  border-color:  rgb(255, 136, 0);
+}
+
+.custom-check-orange:checked::before {
+  background-color:  rgb(255, 136, 0);
+}
+
+.link-orange {
+  color:  rgb(255, 136, 0);
+  text-decoration: underline;
+}
+
+.link-orange:hover {
+  color: darkorange;
+}
+
+.error{
+  color: #fb4747;
+}
