@@ -451,3 +451,7 @@ footer .fs-7 {
   border-radius: 5px;
   font-size: 2rem;
 }
+
+.not-found{
+  background-color: #262626;
+}

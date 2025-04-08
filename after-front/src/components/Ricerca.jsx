@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useGlobalContext } from "../contexts/GlobalContext";
 import SearchBar from "./SearchBar";
 import Tendenze from "./Tendenze";
 import { Link } from "react-router-dom";
@@ -229,7 +228,7 @@ export default function Ricerca() {
               );
             })
           ) : (
-            <div className="text-white bg-dark py-2 w-100">
+            <div className="text-white py-2 w-100 not-found">
               <p className="fs-4">Ops! Sembra che il gioco che cerchi non ci sia...</p>
               <p className="text-white pb-3 fs-5">Ma potrebbero piacerti questi 😉</p>
               <span><Tendenze /></span>
