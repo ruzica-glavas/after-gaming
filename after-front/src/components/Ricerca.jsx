@@ -105,7 +105,6 @@ export default function Ricerca() {
         </select>
 
         <select value={priceFilter}  onChange={handlePriceChange} className="form-select w-25">
-          <option value>Prezzo</option>
           <option value="asc">Prezzo crescente</option>
           <option value="desc">Prezzo decrescente</option>
         </select>
