@@ -456,6 +456,10 @@ footer .fs-7 {
   background-color: #262626;
 }
 
+.thank-you{
+  background-color: #262626;
+}
+
 .custom-check-orange:checked {
   background-color: rgb(255, 136, 0);
   border-color:  rgb(255, 136, 0);

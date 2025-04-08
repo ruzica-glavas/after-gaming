@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
+import { useNavigate } from "react-router-dom";
 
 export default function MainUtente() {
   const { carrello, datiUtente, salvaDatiUtente, svuotaCarrello } =
@@ -11,6 +12,8 @@ export default function MainUtente() {
 
   const [accettaTermini, setAccettaTermini] = useState(false);
   const [erroreTermini, setErroreTermini] = useState(false);
+
+  const navigate = useNavigate();
 
   const gestisciCodiceSconto = async () => {
     try {
@@ -197,6 +200,7 @@ Azione richiesta: elaborare l'ordine.
         alert(
           "Ordine completato! Email inviate con successo sia all'acquirente che al venditore."
         );
+        navigate("/thankyou");
       })
       .catch((error) => {
         console.error("Errore catturato:", error);
