@@ -82,12 +82,11 @@ export default function Ricerca() {
   
   const handlePriceChange = (e) => {
     const newParams = new URLSearchParams(searchParams);
-    if (e.target.value === "") {
-      // Se viene selezionata l'opzione "Piattaforma", rimuovi il parametro
-      newParams.delete("platform");
+    // Mantieni gli altri parametri e aggiorna/rimuovi solo price
+    if (e.target.value) {
+      newParams.set("price", e.target.value);
     } else {
-      // Altrimenti, imposta il nuovo valore della piattaforma
-      newParams.set("platform", e.target.value);
+      newParams.delete("price");
     }
     setSearchParams(newParams);
   };
