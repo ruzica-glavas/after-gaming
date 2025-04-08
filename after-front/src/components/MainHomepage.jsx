@@ -1,7 +1,7 @@
 import React from 'react'
 import Carosello from './Carosello'
-import UltimiArrivi from './UltimiArrivi.jsx'
-import Tendenze from './Tendenze.jsx'
+import UltimiArrivi from '../pages/UltimiArrivi.jsx'
+import Tendenze from '../pages/Tendenze.jsx'
 import { Link } from 'react-router-dom'
 import WelcomePopup from './WelcomePopup.jsx'
 

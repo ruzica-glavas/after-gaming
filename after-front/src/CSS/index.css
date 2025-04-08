@@ -200,7 +200,7 @@ nav.scrolled .searchbar:focus-within {
 .game-name {
   color: white;
   font-weight: 300;
-  width: 250px;
+  width: 160px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

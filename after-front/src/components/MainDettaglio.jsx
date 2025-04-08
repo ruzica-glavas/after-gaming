@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import UltimiArrivi from "./UltimiArrivi";
+import UltimiArrivi from "../pages/UltimiArrivi";
 import AggiungiAlCarrelloButton from "./AggiungiAlCarrelloButton";
 import { useGlobalContext } from '../contexts/GlobalContext';
 import AggiungiAllaWishlistButton from "./AggiungiAllaWishlistButton";

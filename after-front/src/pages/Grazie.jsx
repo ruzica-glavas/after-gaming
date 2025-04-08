@@ -1,6 +1,6 @@
 import grazieImage from "../public/imgs/grazie.png";
 
-export default function MainGrazie() {
+export default function Grazie() {
     return (
         <div className="container py-5">
             <style>

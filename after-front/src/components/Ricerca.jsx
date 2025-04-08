@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import SearchBar from "./SearchBar";
-import Tendenze from "./Tendenze";
+import Tendenze from "../pages/Tendenze";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCubes, faList } from "@fortawesome/free-solid-svg-icons"; // Importa icone per griglia e lista
@@ -98,7 +98,7 @@ export default function Ricerca() {
 
       <div className="d-flex justify-content-center gap-4 mb-4">
         <select value={platformFilter || ""}  onChange={handlePlatformChange} className="form-select w-25">
-          <option value = "">Piattaforma</option>
+          <option value = "">Tutte le piattaforme</option>
           <option value="PC">PC</option>
           <option value="PS5">Playstation</option>
           <option value="Xbox">Xbox</option>
