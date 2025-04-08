@@ -2,25 +2,28 @@ import React, { useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 
 export default function MainUtente() {
-  const { carrello, datiUtente, salvaDatiUtente, svuotaCarrello } = useGlobalContext();
+  const { carrello, datiUtente, salvaDatiUtente, svuotaCarrello } =
+    useGlobalContext();
 
   const [codiceSconto, setCodiceSconto] = useState("");
   const [scontoApplicato, setScontoApplicato] = useState(0);
   const [messaggioSconto, setMessaggioSconto] = useState("");
-  const [discountCodes, setDiscountCodes] = useState([]);
-  const [isLoadingDiscountCodes, setIsLoadingDiscountCodes] = useState(true);
 
   const [accettaTermini, setAccettaTermini] = useState(false);
   const [erroreTermini, setErroreTermini] = useState(false);
 
   const gestisciCodiceSconto = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/discount-codes/${codiceSconto}`);
+      const response = await fetch(
+        `http://localhost:3000/api/discount-codes/${codiceSconto}`
+      );
       const data = await response.json();
-  
+
       if (response.ok) {
         setScontoApplicato(data.discount_percentage);
-        setMessaggioSconto(`✅ Codice sconto applicato: -${data.discount_percentage}%`);
+        setMessaggioSconto(
+          `✅ Codice sconto applicato: -${data.discount_percentage}%`
+        );
       } else {
         setScontoApplicato(0);
         setMessaggioSconto("❌ Codice sconto non valido.");
@@ -37,7 +40,10 @@ export default function MainUtente() {
     0
   );
 
-  const totaleScontato = (totaleOriginale * (1 - scontoApplicato / 100)).toFixed(2);
+  const totaleScontato = (
+    totaleOriginale *
+    (1 - scontoApplicato / 100)
+  ).toFixed(2);
 
   const [formData, setFormData] = useState({
     nome: "",
@@ -79,7 +85,7 @@ export default function MainUtente() {
 
     if (!accettaTermini) {
       setErroreTermini(true);
-      return; 
+      return;
     }
 
     setErroreTermini(false);
@@ -104,7 +110,9 @@ export default function MainUtente() {
       !carrello ||
       carrello.length === 0
     ) {
-      alert("Completa i dati utente e aggiungi almeno un prodotto al carrello.");
+      alert(
+        "Completa i dati utente e aggiungi almeno un prodotto al carrello."
+      );
       setIsLoading(false);
       return;
     }
@@ -141,7 +149,9 @@ export default function MainUtente() {
         const orderDetails = carrello
           .map(
             (p) =>
-              `${p.quantita || 1}x ${p.name} - €${Number(p.price || 0).toFixed(2)}`
+              `${p.quantita || 1}x ${p.name} - €${Number(p.price || 0).toFixed(
+                2
+              )}`
           )
           .join("\n");
 
@@ -195,7 +205,9 @@ Azione richiesta: elaborare l'ordine.
       })
       .then(() => {
         svuotaCarrello();
-        alert("Ordine completato! Email inviate con successo sia all'acquirente che al venditore.");
+        alert(
+          "Ordine completato! Email inviate con successo sia all'acquirente che al venditore."
+        );
       })
       .catch((error) => {
         console.error("Errore catturato:", error);
@@ -229,9 +241,15 @@ Azione richiesta: elaborare l'ordine.
 
       <div className="rounded p-2" style={{ backgroundColor: "#ffffff20" }}>
         <h2 className="text-start">Inserisci i tuoi dati</h2>
-        <form onSubmit={handleSubmit} noValidate className="mb-4 p-2 shadow-sm rounded">
+        <form
+          onSubmit={handleSubmit}
+          noValidate
+          className="mb-4 p-2 shadow-sm rounded"
+        >
           <div className="mb-3">
-            <label htmlFor="nome" className="form-label">Nome</label>
+            <label htmlFor="nome" className="form-label">
+              Nome
+            </label>
             <input
               type="text"
               id="nome"
@@ -245,7 +263,9 @@ Azione richiesta: elaborare l'ordine.
           </div>
 
           <div className="mb-3">
-            <label htmlFor="cognome" className="form-label">Cognome</label>
+            <label htmlFor="cognome" className="form-label">
+              Cognome
+            </label>
             <input
               type="text"
               id="cognome"
@@ -255,11 +275,15 @@ Azione richiesta: elaborare l'ordine.
               onChange={handleChange}
               className="form-control"
             />
-            {errors.cognome && <div className="text-danger">{errors.cognome}</div>}
+            {errors.cognome && (
+              <div className="text-danger">{errors.cognome}</div>
+            )}
           </div>
 
           <div className="mb-3">
-            <label htmlFor="email" className="form-label">Email</label>
+            <label htmlFor="email" className="form-label">
+              Email
+            </label>
             <input
               type="email"
               id="email"
@@ -273,7 +297,9 @@ Azione richiesta: elaborare l'ordine.
           </div>
 
           <div className="mb-3">
-            <label htmlFor="indirizzo" className="form-label">Indirizzo</label>
+            <label htmlFor="indirizzo" className="form-label">
+              Indirizzo
+            </label>
             <input
               type="text"
               id="indirizzo"
@@ -283,11 +309,15 @@ Azione richiesta: elaborare l'ordine.
               onChange={handleChange}
               className="form-control"
             />
-            {errors.indirizzo && <div className="text-danger">{errors.indirizzo}</div>}
+            {errors.indirizzo && (
+              <div className="text-danger">{errors.indirizzo}</div>
+            )}
           </div>
 
           <div className="mb-3">
-            <label htmlFor="codiceSconto" className="form-label">Hai un codice sconto?</label>
+            <label htmlFor="codiceSconto" className="form-label">
+              Hai un codice sconto?
+            </label>
             <div className="d-flex gap-2">
               <input
                 type="text"
@@ -326,7 +356,9 @@ Azione richiesta: elaborare l'ordine.
               Accetto i <a href="#">termini e condizioni</a> di servizio
             </label>
             {erroreTermini && (
-              <div className="text-danger mt-1">Devi accettare i termini e condizioni.</div>
+              <div className="text-danger mt-1">
+                Devi accettare i termini e condizioni.
+              </div>
             )}
           </div>
 
@@ -343,7 +375,10 @@ Azione richiesta: elaborare l'ordine.
       </div>
 
       {datiUtente && (
-        <div className="carrello-riepilogo p-4 shadow-sm rounded" style={{ backgroundColor: "#ffffff20" }}>
+        <div
+          className="carrello-riepilogo p-4 shadow-sm rounded"
+          style={{ backgroundColor: "#ffffff20" }}
+        >
           <h4 className="mb-3">Riepilogo Ordine</h4>
           {carrello.length === 0 ? (
             <p className="text-white">Il carrello è vuoto.</p>
@@ -366,16 +401,28 @@ Azione richiesta: elaborare l'ordine.
           <div className="mt-1 pt-2 d-flex justify-content-between align-items-start flex-wrap border-top row">
             <div className="text-start w-100">
               <h4 className="mb-3">Dati Utente</h4>
-              <p><strong>Nome:</strong> {datiUtente.nome}</p>
-              <p><strong>Cognome:</strong> {datiUtente.cognome}</p>
-              <p><strong>Email:</strong> {datiUtente.email}</p>
-              <p><strong>Indirizzo:</strong> {datiUtente.indirizzo}</p>
+              <p>
+                <strong>Nome:</strong> {datiUtente.nome}
+              </p>
+              <p>
+                <strong>Cognome:</strong> {datiUtente.cognome}
+              </p>
+              <p>
+                <strong>Email:</strong> {datiUtente.email}
+              </p>
+              <p>
+                <strong>Indirizzo:</strong> {datiUtente.indirizzo}
+              </p>
             </div>
             <div className="text-end w-100 d-flex justify-content-end">
               <button
                 onClick={confermaOrdine}
                 className="btn text-white hover-gioco ms-auto"
-                style={{ backgroundColor: "#f06c00", minWidth: "220px", height: "100%" }}
+                style={{
+                  backgroundColor: "#f06c00",
+                  minWidth: "220px",
+                  height: "100%",
+                }}
                 disabled={isLoading}
               >
                 {isLoading ? (
