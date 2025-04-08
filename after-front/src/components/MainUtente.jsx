@@ -13,13 +13,22 @@ export default function MainUtente() {
   const [accettaTermini, setAccettaTermini] = useState(false);
   const [erroreTermini, setErroreTermini] = useState(false);
 
-  const gestisciCodiceSconto = () => {
-    if (codiceSconto.toLowerCase() === "after10") {
-      setScontoApplicato(10);
-      setMessaggioSconto("✅ Codice sconto applicato: -10%");
-    } else {
+  const gestisciCodiceSconto = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/discount-codes/${codiceSconto}`);
+      const data = await response.json();
+  
+      if (response.ok) {
+        setScontoApplicato(data.discount_percentage);
+        setMessaggioSconto(`✅ Codice sconto applicato: -${data.discount_percentage}%`);
+      } else {
+        setScontoApplicato(0);
+        setMessaggioSconto("❌ Codice sconto non valido.");
+      }
+    } catch (error) {
+      console.error("Errore nella verifica del codice sconto:", error);
       setScontoApplicato(0);
-      setMessaggioSconto("❌ Codice sconto non valido.");
+      setMessaggioSconto("❌ Errore nella verifica del codice sconto.");
     }
   };
 
