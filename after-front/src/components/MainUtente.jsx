@@ -7,13 +7,15 @@ export default function MainUtente() {
   const [codiceSconto, setCodiceSconto] = useState("");
   const [scontoApplicato, setScontoApplicato] = useState(0);
   const [messaggioSconto, setMessaggioSconto] = useState("");
-  const [discountCodes, setDiscountCodes] = useState([]); // Stato per i codici sconto
+  const [discountCodes, setDiscountCodes] = useState([]);
   const [isLoadingDiscountCodes, setIsLoadingDiscountCodes] = useState(true);
 
+  const [accettaTermini, setAccettaTermini] = useState(false);
+  const [erroreTermini, setErroreTermini] = useState(false);
+
   const gestisciCodiceSconto = () => {
-    // Esempio semplice: un solo codice sconto valido
     if (codiceSconto.toLowerCase() === "after10") {
-      setScontoApplicato(10); // 10% di sconto
+      setScontoApplicato(10);
       setMessaggioSconto("✅ Codice sconto applicato: -10%");
     } else {
       setScontoApplicato(0);
@@ -36,7 +38,7 @@ export default function MainUtente() {
   });
 
   const [errors, setErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false); // 🔄 stato per il loader
+  const [isLoading, setIsLoading] = useState(false);
 
   const validate = () => {
     let newErrors = {};
@@ -65,6 +67,14 @@ export default function MainUtente() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!accettaTermini) {
+      setErroreTermini(true);
+      return; 
+    }
+
+    setErroreTermini(false);
+
     if (validate()) {
       console.log("Dati salvati nel contesto:", formData);
       salvaDatiUtente(formData);
@@ -72,7 +82,7 @@ export default function MainUtente() {
   };
 
   const confermaOrdine = () => {
-    setIsLoading(true); // 🔄 Avvia il loader
+    setIsLoading(true);
     console.log("Inizio confermaOrdine - datiUtente:", datiUtente);
     console.log("Inizio confermaOrdine - carrello:", carrello);
 
@@ -85,9 +95,8 @@ export default function MainUtente() {
       !carrello ||
       carrello.length === 0
     ) {
-      console.log("Validazione fallita - datiUtente o carrello incompleti");
       alert("Completa i dati utente e aggiungi almeno un prodotto al carrello.");
-      setIsLoading(false); // ❌ Stop se errore
+      setIsLoading(false);
       return;
     }
 
@@ -123,15 +132,9 @@ export default function MainUtente() {
         const orderDetails = carrello
           .map(
             (p) =>
-              `${p.quantita || 1}x ${p.name} - €${Number(p.price || 0).toFixed(
-                2
-              )}`
+              `${p.quantita || 1}x ${p.name} - €${Number(p.price || 0).toFixed(2)}`
           )
           .join("\n");
-
-        const total = carrello
-          .reduce((sum, p) => sum + Number(p.price || 0) * (p.quantita || 1), 0)
-          .toFixed(2);
 
         const customerEmailText = `
 Ordine #${orderId} Confermato!
@@ -182,7 +185,7 @@ Azione richiesta: elaborare l'ordine.
         );
       })
       .then(() => {
-        svuotaCarrello()
+        svuotaCarrello();
         alert("Ordine completato! Email inviate con successo sia all'acquirente che al venditore.");
       })
       .catch((error) => {
@@ -190,13 +193,12 @@ Azione richiesta: elaborare l'ordine.
         alert(`Si è verificato un errore: ${error.message}`);
       })
       .finally(() => {
-        setIsLoading(false); // ✅ Fine: disattiva loader
+        setIsLoading(false);
       });
   };
 
   return (
     <div className="container mt-5 mb-5 p-4 text-white d-flex flex-column gap-4">
-      {/* Overlay per il loader */}
       {isLoading && (
         <div
           className="overlay d-flex justify-content-center align-items-center"
@@ -219,7 +221,6 @@ Azione richiesta: elaborare l'ordine.
       <div className="rounded p-2" style={{ backgroundColor: "#ffffff20" }}>
         <h2 className="text-start">Inserisci i tuoi dati</h2>
         <form onSubmit={handleSubmit} noValidate className="mb-4 p-2 shadow-sm rounded">
-          {/* Campi del form */}
           <div className="mb-3">
             <label htmlFor="nome" className="form-label">Nome</label>
             <input
@@ -275,6 +276,7 @@ Azione richiesta: elaborare l'ordine.
             />
             {errors.indirizzo && <div className="text-danger">{errors.indirizzo}</div>}
           </div>
+
           <div className="mb-3">
             <label htmlFor="codiceSconto" className="form-label">Hai un codice sconto?</label>
             <div className="d-flex gap-2">
@@ -297,6 +299,26 @@ Azione richiesta: elaborare l'ordine.
               </button>
             </div>
             {messaggioSconto && <div className="mt-2">{messaggioSconto}</div>}
+          </div>
+
+          {/* ✅ Check accettazione termini */}
+          <div className="form-check mb-3">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              id="accettaTermini"
+              checked={accettaTermini}
+              onChange={() => {
+                setAccettaTermini(!accettaTermini);
+                setErroreTermini(false);
+              }}
+            />
+            <label className="form-check-label" htmlFor="accettaTermini">
+              Accetto i <a href="#">termini e condizioni</a> di servizio
+            </label>
+            {erroreTermini && (
+              <div className="text-danger mt-1">Devi accettare i termini e condizioni.</div>
+            )}
           </div>
 
           <div className="text-end">
@@ -331,9 +353,7 @@ Azione richiesta: elaborare l'ordine.
               ))}
             </ul>
           )}
-          <p className="text-end fw-bold">
-            Totale: €{totaleScontato}
-          </p>
+          <p className="text-end fw-bold">Totale: €{totaleScontato}</p>
           <div className="mt-1 pt-2 d-flex justify-content-between align-items-start flex-wrap border-top row">
             <div className="text-start w-100">
               <h4 className="mb-3">Dati Utente</h4>

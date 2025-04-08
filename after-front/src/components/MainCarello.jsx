@@ -82,8 +82,8 @@ export default function MainCarrello() {
                             <button className="order-button text-white btn w-100 p-3 hover-gioco">Procedi al pagamento {'➔'}</button>
                         </NavLink>
                         <hr />
-                        <NavLink to="/" className="d-block">
-                            <button className="order-button text-white btn w-100 p-3 hover-gioco">{'←'} Torna alla homepage</button>
+                        <NavLink to="/" className="w-100 p-1">
+                            <button className="back-button btn w-100 p-3">{'←'} Torna alla homepage </button>
                         </NavLink>
                     </div>
                 </div>
