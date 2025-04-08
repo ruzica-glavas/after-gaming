@@ -43,10 +43,8 @@ export default function MainDettaglio() {
 
             const iframe = trailer.querySelector("iframe");
             if (iframe) {
-                // Avvia il video automaticamente
                 iframe.src += (iframe.src.includes("?") ? "&" : "?") + "autoplay=1";
 
-                // Richiede la modalità schermo intero
                 if (iframe.requestFullscreen) {
                     iframe.requestFullscreen();
                 } else if (iframe.mozRequestFullScreen) {
@@ -71,15 +69,15 @@ export default function MainDettaglio() {
         { icon: faShareNodes, label: "Family sharing" },
     ];
 
-    const shareUrl = window.location.href;  // URL della pagina corrente
+    const shareUrl = window.location.href;  
 
     return (
         <div className="container mt-5 pb-5 text-center">
             <div className="game-image-dettaglio-container row">
-                <div className="col-6 p-0">
-                    <img src={game.image_url} alt={game.name} className="game-image-dettaglio" />
+                <div className="col-12 col-md-6 p-0">
+                    <img src={game.image_url} alt={game.name} className="game-image-dettaglio img-fluid" />
                 </div>
-                <div className="col-6 d-flex flex-column justify-content-center align-items-center">
+                <div className="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center">
                     <h1 className="text-white">{game.name}</h1>
                     <p className="text-white"><b>{game.price}</b> €</p>
                     <p className="text-white">Data di rilascio: <b>{new Date(game.created_at).toLocaleDateString()}</b></p>
@@ -94,7 +92,6 @@ export default function MainDettaglio() {
                         </button>
                     </div>
 
-                    {/* Link per la condivisione */}
                     <div className="mt-2">
                         <p className="text-white">Condividi tramite link:</p>
                         <div className="d-flex align-items-center">
@@ -106,7 +103,7 @@ export default function MainDettaglio() {
                                 style={{ width: "80%" }}
                             />
                             <button
-                                className=" ms-2 hover-gioco"
+                                className="ms-2 hover-gioco"
                                 style={buttonStyle}
                                 onClick={() => {
                                     navigator.clipboard.writeText(shareUrl)
@@ -134,14 +131,14 @@ export default function MainDettaglio() {
             </div>
 
             <div id="game-trailer" className="col-12 mt-5">
-                <iframe width="1000" height="500" src={game.trailer_url} title={game.name} allow="autoplay"></iframe>
+                <iframe width="100%" height="500" src={game.trailer_url} title={game.name} allow="autoplay"></iframe>
             </div>
 
             <div className="container mt-5">
                 <div className="row">
                     <h2 className="text-white text-start"><b>Configurazioni</b></h2>
 
-                    {[
+                    {[ 
                         {
                             title: "Configurazione Minima",
                             specs: [
@@ -165,7 +162,7 @@ export default function MainDettaglio() {
                             ],
                         },
                     ].map(({ title, specs }, index) => (
-                        <div key={index} className="col-6 text-start mt-4">
+                        <div key={index} className="col-12 col-md-6 text-start mt-4">
                             <h3 className="text-white">{title}</h3>
                             <ul className="list-unstyled mt-3 text-secondary">
                                 {specs.map(({ label, value }, i) => (
@@ -177,7 +174,7 @@ export default function MainDettaglio() {
 
                     <div className="container text-center mt-5 text-white">
                         <h2 className="text-white text-start">Caratteristiche del gioco</h2>
-                        <div className="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 mt-3">
+                        <div className="row row-cols-1 row-cols-md-3 row-cols-lg-5 g-2 g-lg-3 mt-3">
                             {featureList.map(({ icon, label }, index) => (
                                 <div key={index} className="col">
                                     <div className="p-3 border h-100 rounded text-center hover-gioco d-flex flex-column justify-content-center align-items-center">
