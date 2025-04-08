@@ -394,32 +394,40 @@ export function createOrder(req, res) {
                       // Costruisci il dettaglio dell'ordine per l'email
                       const orderDetails = orderItems
                         .map(([productId, quantity, price]) => {
-                          const product = productRows.find(
-                            (p) => p.id === productId
-                          );
+                          const product = productRows.find((p) => p.id === productId);
                           const keysForProduct = assignedKeys
                             .filter((k) => k.slug === product.slug)
                             .map((k) => k.key);
-                          return `${quantity}x ${
-                            product.slug
-                          } - ${price}€\nChiavi digitali: ${keysForProduct.join(
-                            ", "
-                          )}`;
+                          
+                          // Formatta ogni prodotto con il suo codice
+                          return `
+                      Prodotto: ${product.name}
+                      Quantità: ${quantity}x
+                      Prezzo: ${price}€
+                      Codice di attivazione: ${keysForProduct.join(", ")}
+                      -------------------`;
                         })
                         .join("\n");
-
-                      const emailText = `
+const emailText = `
 Ordine #${orderId} Confermato!
 
-Grazie ${first_name} ${last_name} per il tuo acquisto!
-Dettagli dell'ordine:
+Gentile ${first_name} ${last_name},
+grazie per il tuo acquisto su After Gaming!
+
+DETTAGLI ORDINE:
 ${orderDetails}
-Totale: ${total}€
+
+Totale pagato: ${total}€
 Indirizzo di fatturazione: ${shipping_address}
 
-Riceverai un'email con gli aggiornamenti sullo stato della spedizione.
-Le tue chiavi digitali sono incluse sopra. Attivale sulla piattaforma corrispondente.
-Contattaci a support@aftergaming.com per assistenza.
+IMPORTANTE:
+- I codici di attivazione sopra indicati sono unici e personali
+- Attiva i tuoi giochi sulla piattaforma corrispondente
+- Conserva questa email come prova d'acquisto
+
+Per assistenza:
+Email: support@aftergaming.com
+Sito web: http://localhost:3000
 
 Cordiali saluti,
 Il team di After Gaming
