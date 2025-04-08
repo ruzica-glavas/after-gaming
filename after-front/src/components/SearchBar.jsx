@@ -17,16 +17,16 @@ export default function SearchBar() {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="d-flex pb-4 pt-4 w-50">
+        <form onSubmit={handleSubmit} className="d-flex gap-2 pb-4 pt-4 w-50 w-md-75 w-lg-50">
             <input
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                className="form-control length-input custom-placeholder"
+                className="form-control flex-grow-1 custom-placeholder"
                 placeholder="Cerca gioco..."
                 autoFocus
             />
-            <button type="submit" className="btn btn-warning ms-2">
+            <button type="submit" className="btn btn-warning">
                 Cerca
             </button>
         </form>
