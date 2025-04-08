@@ -21,23 +21,28 @@ export default function Ricerca() {
 
   useEffect(() => {
     const fetchGames = async () => {
-      if (!searchQuery && !platformFilter) {
-        setGames([]);
-        return;
-      }
-
       setLoading(true);
       try {
-        let url = `http://localhost:3000/api/search?query=${searchQuery}`;
+        let url = 'http://localhost:3000/api/search';
         
+        // Aggiungi i parametri solo se sono presenti
+        const params = new URLSearchParams();
+        if (searchQuery) {
+          params.append('query', searchQuery);
+        }
         if (platformFilter) {
-          url += `&platform=${platformFilter}`;
+          params.append('platform', platformFilter);
         }
-        
         if (priceFilter) {
-          url += `&sort=price_${priceFilter}`;
+          params.append('sort', `price_${priceFilter}`);
         }
-
+  
+        // Aggiungi i parametri all'URL solo se ce ne sono
+        const queryString = params.toString();
+        if (queryString) {
+          url += `?${queryString}`;
+        }
+  
         const response = await fetch(url);
         const data = await response.json();
         
@@ -54,7 +59,7 @@ export default function Ricerca() {
         setLoading(false);
       }
     };
-
+  
     fetchGames();
   }, [searchQuery, platformFilter, priceFilter]);
 
@@ -143,13 +148,13 @@ export default function Ricerca() {
                 </div>
               );
             })
-          ) : (
+          ) : searchQuery ? (
             <div className="text-white py-2 w-100">
               <p className="fs-4">Ops! Sembra che il gioco che cerchi non ci sia...</p>
               <p className="text-white pb-3 fs-5">Ma potrebbero piacerti questi 😉</p>
               <span><Tendenze /></span>
             </div>
-          )}
+          ) :null}
         </div>
       )}
 

@@ -138,13 +138,13 @@ export function searchProducts(req, res) {
     WHERE 1=1
   `;
 
-  // Aggiungi filtro di ricerca per nome o descrizione
+  // Aggiungi filtro di ricerca per nome o descrizione solo se query è presente
   if (query) {
     sql += ` AND (name LIKE ? OR description LIKE ?)`;
     params.push(`%${query}%`, `%${query}%`);
   }
 
-  // Aggiungi filtro per piattaforma
+  // Aggiungi filtro per piattaforma solo se platform è presente
   if (platform) {
     sql += ` AND platform = ?`;
     params.push(platform);
@@ -166,7 +166,6 @@ export function searchProducts(req, res) {
     res.status(200).json(results);
   });
 }
-
 export function getPromotions(req, res) {
   db.query(
     "SELECT id, slug, name, description, price, original_price, image_url, platform, trailer_url FROM products WHERE original_price IS NOT NULL",
