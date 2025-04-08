@@ -10,6 +10,8 @@ import Ricerca from './components/Ricerca';
 import PaginaTendenze from './pages/PaginaTendenze';
 import PaginaUltimiArrivi from './pages/PaginaUltimiArrivi';
 import MainGrazie from './components/Grazie';
+import NotFound from './pages/NotFound';
+import ThankYou from './pages/ThankYou';
 
 function App() {
 
@@ -29,6 +31,8 @@ function App() {
               <Route path="/utente" element={<MainUtente />} />
               <Route path="/grazie" element={<MainGrazie />} />
             </Route>
+            <Route path="/*" element={<NotFound />} />
+            <Route path="/thankyou" element={<ThankYou />} />
           </Routes>
         </BrowserRouter>
       </GlobalProvider>
