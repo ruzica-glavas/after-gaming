@@ -57,43 +57,32 @@ export default function MainUtente() {
 
   const validate = () => {
     let newErrors = {};
+  
+  // Regex per controllare solo lettere (inclusi spazi e caratteri accentati)
+  const nameRegex = /^[A-Za-zÀ-ÿ\s]+$/;
 
-    if (formData.nome.trim() === "") {
-      newErrors.nome = "Il nome è obbligatorio.";
-    }
-    if (formData.cognome.trim() === "") {
-      newErrors.cognome = "Il cognome è obbligatorio.";
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Inserisci un'email valida.";
-    }
-    if (formData.indirizzo.trim() === "") {
-      newErrors.indirizzo = "L'indirizzo è obbligatorio.";
-    }
+  if (formData.nome.trim() === "") {
+    newErrors.nome = "Il nome è obbligatorio.";
+  } else if (!nameRegex.test(formData.nome.trim())) {
+    newErrors.nome = "Il nome può contenere solo lettere.";
+  }
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  if (formData.cognome.trim() === "") {
+    newErrors.cognome = "Il cognome è obbligatorio.";
+  } else if (!nameRegex.test(formData.cognome.trim())) {
+    newErrors.cognome = "Il cognome può contenere solo lettere.";
+  }
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: "" });
-  };
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    newErrors.email = "Inserisci un'email valida.";
+  }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  if (formData.indirizzo.trim() === "") {
+    newErrors.indirizzo = "L'indirizzo è obbligatorio.";
+  }
 
-    if (!accettaTermini) {
-      setErroreTermini(true);
-      return;
-    }
-
-    setErroreTermini(false);
-
-    if (validate()) {
-      console.log("Dati salvati nel contesto:", formData);
-      salvaDatiUtente(formData);
-    }
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
   };
 
   const confermaOrdine = () => {
@@ -217,6 +206,38 @@ Azione richiesta: elaborare l'ordine.
         setIsLoading(false);
       });
   };
+
+  // Aggiungi questa funzione prima del return
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  
+  // Regex per controllare solo lettere e spazi
+  const nameRegex = /^[A-Za-zÀ-ÿ\s]*$/;
+  
+  // Se il campo è nome o cognome, valida l'input
+  if ((name === 'nome' || name === 'cognome')) {
+    if (nameRegex.test(value)) {
+      setFormData({ ...formData, [name]: value });
+      setErrors({ ...errors, [name]: "" });
+    }
+  } else {
+    // Per altri campi (email, indirizzo), accetta tutti i caratteri
+    setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: "" });
+  }
+};
+
+// Aggiungi anche la funzione handleSubmit che manca
+const handleSubmit = (e) => {
+  e.preventDefault();
+  if (validate()) {
+    if (!accettaTermini) {
+      setErroreTermini(true);
+      return;
+    }
+    salvaDatiUtente(formData);
+  }
+};
 
   return (
     <div className="container mt-5 mb-5 p-4 text-white d-flex flex-column gap-4">
