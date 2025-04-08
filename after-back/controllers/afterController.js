@@ -319,16 +319,15 @@ export function createOrder(req, res) {
           // Recupera chiavi digitali disponibili per ogni prodotto
           const productIds = orderedProducts.map((p) => p.productId);
           db.query(
-            "SELECT id, product_id, `key` FROM digital_keys WHERE product_id IN (?) AND is_sold = FALSE",
+            "SELECT id, product_id, `key`, is_sold FROM digital_keys WHERE product_id IN (?) AND is_sold = FALSE",
             [productIds],
             function (err, keyRows) {
               if (err) {
                 console.error("Errore nel recupero delle chiavi:", err);
-                return res
-                  .status(500)
-                  .json({ error: "Errore nel recupero delle chiavi digitali" });
+                return res.status(500).json({ error: "Errore nel recupero delle chiavi digitali" });
               }
-
+        
+              // Verifica disponibilità chiavi
               const keyMap = new Map();
               keyRows.forEach((key) => {
                 if (!keyMap.has(key.product_id)) {
@@ -336,18 +335,24 @@ export function createOrder(req, res) {
                 }
                 keyMap.get(key.product_id).push(key);
               });
-
-              const orderItemsValues = [];
-              const assignedKeys = []; // Per includere le chiavi nell'email
-
+        
+              // Controlla se ci sono abbastanza chiavi per ogni prodotto
               for (const product of orderedProducts) {
                 const availableKeys = keyMap.get(product.productId) || [];
                 if (availableKeys.length < product.quantity) {
                   return res.status(400).json({
-                    error: `Chiavi insufficienti per il prodotto ${product.slug}`,
+                    error: `Chiavi non disponibili per il prodotto ${product.slug}. Rimaste ${availableKeys.length} chiavi.`
                   });
                 }
-
+              }
+        
+              // Assegna le chiavi e marca come vendute
+              const orderItemsValues = [];
+              const keysToUpdate = [];
+              const assignedKeys = [];
+        
+              for (const product of orderedProducts) {
+                const availableKeys = keyMap.get(product.productId);
                 for (let i = 0; i < product.quantity; i++) {
                   const key = availableKeys[i];
                   orderItemsValues.push([
@@ -357,9 +362,23 @@ export function createOrder(req, res) {
                     1,
                     productMap.get(product.slug).price,
                   ]);
+                  keysToUpdate.push(key.id);
                   assignedKeys.push({ slug: product.slug, key: key.key });
                 }
               }
+        
+              // Aggiorna le chiavi come vendute in una singola query
+              db.query(
+                "UPDATE digital_keys SET is_sold = TRUE WHERE id IN (?)",
+                [keysToUpdate],
+                function (err) {
+                  if (err) {
+                    console.error("Errore nell'aggiornamento delle chiavi:", err);
+                    return res.status(500).json({ error: "Errore nell'aggiornamento delle chiavi" });
+                  }
+                }
+              );
+              
 
               // Inseriamo i prodotti dell'ordine con le chiavi digitali
               db.query(
