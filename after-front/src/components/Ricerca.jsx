@@ -66,6 +66,30 @@ export default function Ricerca() {
   if (loading) return <div className="text-center py-4">Caricamento in corso...</div>;
   if (error) return <div className="text-center py-4 text-danger">Si è verificato un errore nel caricamento dei giochi.</div>;
 
+  const handleViewModeChange = (mode) => {
+    setViewMode(mode);
+  };
+
+  const handlePlatformChange = (e) => {
+    const newParams = new URLSearchParams(searchParams);
+    if (e.target.value) {
+      newParams.set("platform", e.target.value);
+    } else {
+      newParams.delete("platform");
+    }
+    setSearchParams(newParams);
+  };
+  
+  const handlePriceChange = (e) => {
+    const newParams = new URLSearchParams(searchParams);
+    if (e.target.value) {
+      newParams.set("price", e.target.value);
+    } else {
+      newParams.delete("price");
+    }
+    setSearchParams(newParams);
+  };
+
   return (
     <div className="container">
       <div className="container d-flex justify-content-center">
@@ -73,14 +97,14 @@ export default function Ricerca() {
       </div>
 
       <div className="d-flex justify-content-center gap-4 mb-4">
-        <select value={platformFilter || ""}  className="form-select w-25">
+        <select value={platformFilter || ""}  onChange={handlePlatformChange} className="form-select w-25">
           <option value>Piattaforma</option>
           <option value="PC">PC</option>
           <option value="PS5">Playstation</option>
           <option value="Xbox">Xbox</option>
         </select>
 
-        <select value={priceFilter}  className="form-select w-25">
+        <select value={priceFilter}  onChange={handlePriceChange} className="form-select w-25">
           <option value>Prezzo</option>
           <option value="asc">Prezzo crescente</option>
           <option value="desc">Prezzo decrescente</option>
