@@ -396,6 +396,21 @@ footer .fs-7 {
   font-size: 18px;
 }
 
+.nel-carrello{
+  color: #42d502;
+}
+
+.nel-carrello.animate {
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.3); }
+  60% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
 @media (max-width: 768px) {
   .carousel-title {
     display: none;
