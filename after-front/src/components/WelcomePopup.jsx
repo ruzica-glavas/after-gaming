@@ -62,8 +62,8 @@ export default function WelcomePopup() {
 
                 {!submitted ? (
                     <>
-                        <h5 className="mb-3">🎉 Benvenuto!</h5>
-                        <p>Inserisci la tua email per il codice sconto</p>
+                        <h5 className="mb-3">🎉 Benvenuto! 🎉</h5>
+                        <p>Il tuo primo regalo? Uno sconto! Basta inserire la tua email qui sotto 💌</p>
                         <form onSubmit={handleSubmit} className="d-flex flex-column gap-2">
                             <input
                                 type="email"
@@ -97,7 +97,8 @@ const styles = {
         left: 0,
         width: '100vw',
         height: '100vh',
-        backgroundColor: 'rgba(0, 0, 0, 0.25)',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backdropFilter: 'blur(4px)',
         zIndex: 9999,
         display: 'flex',
         alignItems: 'center',
