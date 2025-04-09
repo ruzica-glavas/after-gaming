@@ -11,7 +11,7 @@ export default function MainWishlist() {
     if (error) return <div className="text-center py-4 text-danger">Si è verificato un errore nel caricamento dei giochi.</div>;
 
     return (
-        <div className="wishlist-container container d-flex flex-column mb-3" style={{height: "550px"}}>
+        <div className="wishlist-container container d-flex flex-column mb-3">
             <h2 className="wishlist-titolo text-white mb-4">La tua lista desideri</h2>
 
             {wishlist.length === 0 ? (
