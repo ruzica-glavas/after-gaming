@@ -51,11 +51,11 @@ export default function MainWishlist() {
                                         <span className="wishlist-nome d-block mb-2 text-end">{prodotto.name}</span>
                                         <div className="wishlist-prezzi">
                                             <span className="wishlist-prezzo-originale d-block">
-                                                &euro;{prodotto.original_price}
+                                                {prodotto.original_price}&euro;
                                             </span>
                                             {prodotto.price && (
                                                 <span className="wishlist-prezzo-scontato d-block">
-                                                    &euro;{prodotto.price}
+                                                    {prodotto.price} &euro;
                                                 </span>
                                             )}
                                         </div>
