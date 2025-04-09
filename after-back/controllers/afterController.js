@@ -367,19 +367,8 @@ export function createOrder(req, res) {
                 }
               }
         
-              // Aggiorna le chiavi come vendute in una singola query
-              db.query(
-                "UPDATE digital_keys SET is_sold = TRUE WHERE id IN (?)",
-                [keysToUpdate],
-                function (err) {
-                  if (err) {
-                    console.error("Errore nell'aggiornamento delle chiavi:", err);
-                    return res.status(500).json({ error: "Errore nell'aggiornamento delle chiavi" });
-                  }
-                }
-              );
+            
               
-
               // Inseriamo i prodotti dell'ordine con le chiavi digitali
               db.query(
                 "INSERT INTO order_product (order_id, product_id, digital_key_id, quantity, price_at_purchase) VALUES ?",
