@@ -410,23 +410,23 @@ export function createOrder(req, res) {
                         });
                       }
 
-                      // Costruisci il dettaglio dell'ordine per l'email
-                      const orderDetails = orderItems
-                        .map(([productId, quantity, price]) => {
-                          const product = productRows.find((p) => p.id === productId);
-                          const keysForProduct = assignedKeys
-                            .filter((k) => k.slug === product.slug)
-                            .map((k) => k.key);
-                          
-                          // Formatta ogni prodotto con il suo codice
-                          return `
-                      Prodotto: ${product.name}
-                      Quantità: ${quantity}x
-                      Prezzo: ${price}€
-                      Codice di attivazione: ${keysForProduct.join(", ")}
-                      -------------------`;
-                        })
-                        .join("\n");
+// Costruisci il dettaglio dell'ordine per l'email
+const orderDetails = orderItems
+  .map(([productId, quantity, price]) => {
+    const product = productRows.find(p => p.id === productId);
+    const keysForProduct = assignedKeys
+      .filter(k => k.slug === product.slug)
+      .map(k => k.key);
+    
+    return `
+Prodotto: ${product.name}
+Quantità: ${quantity}x
+Prezzo: ${price}€
+Codice di attivazione: ${keysForProduct.join(", ")}
+-------------------`;
+  })
+  .join("\n");
+
 const emailText = `
 Ordine #${orderId} Confermato!
 
@@ -450,7 +450,7 @@ Sito web: http://localhost:3000
 
 Cordiali saluti,
 Il team di After Gaming
-                    `.trim();
+`.trim();
 
                       if (req.transporter) {
                         req.transporter.sendMail(
