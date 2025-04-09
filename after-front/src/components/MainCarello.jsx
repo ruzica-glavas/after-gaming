@@ -69,7 +69,7 @@ export default function MainCarrello() {
                                         </select>
                                     </div>
 
-                                    <span className="carrello-prezzo">&euro;{(prodotto.price * prodotto.quantita).toFixed(2)}</span>
+                                    <span className="carrello-prezzo">{(prodotto.price * prodotto.quantita).toFixed(2)}&euro;</span>
                                 </div>
                             </div>
                         ))
@@ -79,10 +79,10 @@ export default function MainCarrello() {
                 <div className="col-12 col-lg-4">
                     <div className="carrello-riepilogo text-white p-4 rounded" style={{ background: '#333' }}>
                         <h4>Riepilogo Carrello</h4>
-                        <p>Prezzo Originale: <strong style={{ color: "#ff4c4c" }}>&euro;{totalOriginal.toFixed(2)}</strong></p>
-                        <p>Sconto: <strong style={{ color: "#ff6600" }}>-&euro;{totalSavings.toFixed(2)}</strong></p>
+                        <p>Prezzo Originale: <strong style={{ color: "#ff4c4c" }}>{totalOriginal.toFixed(2)}&euro;</strong></p>
+                        <p>Sconto: <strong style={{ color: "#ff6600" }}>-{totalSavings.toFixed(2)}&euro;</strong></p>
                         <hr />
-                        <h3>Totale: <strong>&euro;{totalDiscounted.toFixed(2)}</strong></h3>
+                        <h3>Totale: <strong>{totalDiscounted.toFixed(2)}&euro;</strong></h3>
 
                         <NavLink to="/utente" className="mt-3 d-block">
                             <button className="order-button text-white btn w-100 p-3 hover-gioco">Procedi al pagamento {'➔'}</button>
