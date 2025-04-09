@@ -1,127 +1,127 @@
 /* wishlist */
 .wishlist-container {
-    background-color: #181818;
-    padding: 20px;
-    border-radius: 8px;
-    color: white;
-  }
-  
-  .wishlist-titolo {
-    font-size: 24px;
-    margin-bottom: 15px;
-  }
-  
-  .wishlist-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #242424;
-    padding: 15px;
-    border-radius: 6px;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-  
+  background-color: #181818;
+  padding: 20px;
+  border-radius: 8px;
+  color: white;
+}
+
+.wishlist-titolo {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.wishlist-item {
+  display: flex;
+  flex-direction: column;
+  background-color: #242424;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+
+}
+
+.wishlist-image-container {
+  position: relative;
+  width: 500px; /* Forziamo una larghezza fissa */
+  height: 300px; /* Forziamo un'altezza fissa */
+}
+
+.wishlist-img {
+  width: 750px; /* Fa sì che l'immagine si adatti al contenitore */
+  height: 100px; /* L'immagine si adatta alla altezza del contenitore */
+  object-fit: cover; /* Mantiene le proporzioni dell'immagine */
+  border-radius: 5px;
+}
+
+.wishlist-remove-icon {
+  position: absolute;
+  top: 9px;
+  right: 15px;
+  color: white; /* Cambia il colore in rosso */
+  cursor: pointer;
+  font-size: 20px; /* Aumentiamo la dimensione dell'icona */
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 6px;
+  padding-inline: 10px;
+  border-radius: 45%;
+  z-index: 1; /* Assicura che l'icona sia sopra l'immagine */
+}
+
+.wishlist-nome {
+  font-size: 16px;
+  font-weight: bold;
+  display: block;
+}
+
+.wishlist-prezzi {
+  display: flex;
+  justify-content: end;
+  align-items: baseline;
+  gap: 10px; /* Aggiungi spazio tra i prezzi */
+}
+
+.wishlist-prezzo-originale {
+  font-size: 16px;
+  text-decoration: line-through; /* Barrato per il prezzo originale */
+  color: grey; 
+}
+
+.wishlist-prezzo-scontato {
+  font-size: 18px;
+  font-weight: bold;
+  color: white; 
+}
+
+
+.wishlist-aggiungi-carrello {
+  font-size: 12px;
+  color: white; /* Imposta il colore del testo a bianco */
+  background-color: var(--orange-color); /* Imposta il colore di sfondo a arancione */
+  cursor: pointer;
+  margin-top: 5px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--orange-color); /* Bordo arancione per il bottone */
+}
+
+.wishlist-aggiungi-carrello:hover {
+  background-color: darkorange; 
+  border-color: darkorange; 
+}
+
+.wishlist-remove-icon {
+  transition: all 0.3s ease;
+  font-size: 1.5rem;
+}
+
+.wishlist-remove-icon:hover {
+  color: #dc3545; /* Colore rosso più vivo */
+  background-color: #fff;
+  transform: scale(1.2); /* Ingrandimento al passaggio del mouse */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Aggiunta di un'ombra */
+}
+
+.wishlist-remove-icon:active {
+  transform: scale(0.9); /* Effetto di clic (pulsante che si riduce) */
+  background-color: #dc3545; /* Cambio di colore durante il clic */
+  color: white; /* Icona bianca al clic */
+}
+
+/* Responsive per mobile */
+@media (max-width: 576px) {
   .wishlist-image-container {
-    position: relative;
-    width: 500px; /* Forziamo una larghezza fissa */
-    height: 300px; /* Forziamo un'altezza fissa */
+      width: 120px; /* Modifichiamo la larghezza per dispositivi mobili */
+      height: 100px; /* Modifichiamo l'altezza per dispositivi mobili */
   }
-  
+
   .wishlist-img {
-    width: 100%; /* Fa sì che l'immagine si adatti al contenitore */
-    height: 100%; /* L'immagine si adatta alla altezza del contenitore */
-    object-fit: cover; /* Mantiene le proporzioni dell'immagine */
-    border-radius: 5px;
-  }
-  
-  .wishlist-remove-icon {
-    position: absolute;
-    top: 9px;
-    right: 15px;
-    color: white; /* Cambia il colore in rosso */
-    cursor: pointer;
-    font-size: 20px; /* Aumentiamo la dimensione dell'icona */
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 6px;
-    padding-inline: 10px;
-    border-radius: 45%;
-    z-index: 1; /* Assicura che l'icona sia sopra l'immagine */
-  }
-  
-  .wishlist-nome {
-    font-size: 16px;
-    font-weight: bold;
-    display: block;
-  }
-  
-  .wishlist-prezzi {
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-    gap: 10px; /* Aggiungi spazio tra i prezzi */
-  }
-  
-  .wishlist-prezzo-originale {
-    font-size: 16px;
-    text-decoration: line-through; /* Barrato per il prezzo originale */
-    color: grey; 
-  }
-  
-  .wishlist-prezzo-scontato {
-    font-size: 18px;
-    font-weight: bold;
-    color: white; 
-  }
-  
-  
-  .wishlist-aggiungi-carrello {
-    font-size: 12px;
-    color: white; /* Imposta il colore del testo a bianco */
-    background-color: var(--orange-color); /* Imposta il colore di sfondo a arancione */
-    cursor: pointer;
-    margin-top: 5px;
-    padding: 8px 12px;
-    border-radius: 4px;
-    border: 1px solid var(--orange-color); /* Bordo arancione per il bottone */
-  }
-
-  .wishlist-aggiungi-carrello:hover {
-    background-color: darkorange; 
-    border-color: darkorange; 
+      width: 510px;
+      height: 230px;
   }
 
   .wishlist-remove-icon {
-    transition: all 0.3s ease;
-    font-size: 1.5rem;
+      font-size: 14px; /* Diminuiamo la dimensione dell'icona per dispositivi mobili */
   }
-  
-  .wishlist-remove-icon:hover {
-    color: #dc3545; /* Colore rosso più vivo */
-    background-color: #fff;
-    transform: scale(1.2); /* Ingrandimento al passaggio del mouse */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Aggiunta di un'ombra */
-  }
-  
-  .wishlist-remove-icon:active {
-    transform: scale(0.9); /* Effetto di clic (pulsante che si riduce) */
-    background-color: #dc3545; /* Cambio di colore durante il clic */
-    color: white; /* Icona bianca al clic */
-  }
-  
-  /* Responsive per mobile */
-  @media (max-width: 576px) {
-    .wishlist-image-container {
-        width: 120px; /* Modifichiamo la larghezza per dispositivi mobili */
-        height: 100px; /* Modifichiamo l'altezza per dispositivi mobili */
-    }
-  
-    .wishlist-img {
-        width: 100%;
-        height: 100%;
-    }
-  
-    .wishlist-remove-icon {
-        font-size: 14px; /* Diminuiamo la dimensione dell'icona per dispositivi mobili */
-    }
-  }
+}
+

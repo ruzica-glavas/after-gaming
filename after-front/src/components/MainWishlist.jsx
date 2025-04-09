@@ -15,7 +15,7 @@ export default function MainWishlist() {
             <h2 className="wishlist-titolo text-white mb-4">La tua lista desideri</h2>
 
             {wishlist.length === 0 ? (
-                <div className="text-white text-center p-4 rounded  bg-dark">
+                <div className="text-white text-center p-4 rounded bg-dark">
                     <h4 className="mb-3">La tua lista desideri è vuota 🎮💔...</h4>
                     <p className="mb-4">Scopri i giochi aggiunti da poco e riempi il tuo carrello di avventure!</p>
                     <Link to="/ultimi-arrivi">
@@ -49,7 +49,7 @@ export default function MainWishlist() {
                                 <div className="col-md-9 d-flex flex-column justify-content-between align-items-end text-end">
                                     <div>
                                         <span className="wishlist-nome d-block mb-2 text-end">{prodotto.name}</span>
-                                        <div className="wishlist-prezzi">
+                                        <div className="wishlist-prezzi text-end">
                                             <span className="wishlist-prezzo-originale d-block">
                                                 {prodotto.original_price}&euro;
                                             </span>
