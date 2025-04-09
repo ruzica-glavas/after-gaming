@@ -500,7 +500,7 @@ export function sendDiscountCode(req, res) {
 
   // Usa un codice sconto esistente dalla tabella discount_codes
   const discountCode = "WELCOME5"; // Codice predefinito dalla tua tabella discount_codes
-  const discountValue = "5€"; // Valore fisso, puoi modificarlo o recuperarlo dal DB
+  const discountValue = "5%"; // Valore fisso, puoi modificarlo o recuperarlo dal DB
 
   const emailText = `
 Benvenuto su After Gaming!
