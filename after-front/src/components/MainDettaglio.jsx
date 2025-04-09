@@ -7,6 +7,7 @@ import UltimiArrivi from "../pages/UltimiArrivi";
 import AggiungiAlCarrelloButton from "./AggiungiAlCarrelloButton";
 import { useGlobalContext } from '../contexts/GlobalContext';
 import AggiungiAllaWishlistButton from "./AggiungiAllaWishlistButton";
+import Tendenze from "../pages/Tendenze";
 
 export default function MainDettaglio() {
     const { slug } = useParams();
@@ -22,7 +23,7 @@ export default function MainDettaglio() {
                 const { data } = await axios.get('http://localhost:3000/api/products');
                 const foundGame = data.find(game => game.slug === slug);
                 setGame(foundGame || null);
-                setError(foundGame ? null : "Gioco non trovato");
+                setError(foundGame ? null : "Ops! Sembra che il gioco che cerchi non ci sia...");
             } catch (err) {
                 setError("Errore nel recupero dei giochi");
             } finally {
@@ -34,7 +35,13 @@ export default function MainDettaglio() {
     }, [slug]);
 
     if (loading) return <div>Loading...</div>;
-    if (error) return <div className="text-center py-4 text-danger">{error}</div>;
+    if (error) return <div className="text-center py-4 fw-bold fs-3 " style={{'color': '#ff8800'}}>{error}
+        <div className="text-white py-2 w-100 not-found">
+            <p className="text-white pb-3 fs-5">Ma potrebbero piacerti questi 😉</p>
+            <span><Tendenze /></span>
+        </div>
+    </div>
+        ;
 
     const handleTrailerClick = () => {
         const trailer = document.getElementById("game-trailer");
@@ -69,7 +76,7 @@ export default function MainDettaglio() {
         { icon: faShareNodes, label: "Family sharing" },
     ];
 
-    const shareUrl = window.location.href;  
+    const shareUrl = window.location.href;
 
     return (
         <div className="container mt-5 pb-5 text-center">
@@ -138,7 +145,7 @@ export default function MainDettaglio() {
                 <div className="row">
                     <h2 className="text-white text-start"><b>Configurazioni</b></h2>
 
-                    {[ 
+                    {[
                         {
                             title: "Configurazione Minima",
                             specs: [
