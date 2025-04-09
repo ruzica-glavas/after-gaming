@@ -10,7 +10,7 @@ export default function MainHomepage() {
         <>
             <WelcomePopup /> {/* <-- blocca la pagina finché non chiuso */}
             
-            <div className="container d-flex flex-column align-items-center justify-content-center p-5 my-4 rounded-4 bg-dark bg-opacity-75 shadow-lg" style={{ backdropFilter: 'blur(8px)' }}>
+            <div className="container d-flex flex-column align-items-center justify-content-center p-5 my-4 rounded-4 bg-opacity-75 " style={{ backdropFilter: 'blur(8px)' }}>
                 <h3
                     className="carousel-title fw-bold display-5 mb-4 text-white text-center"
                     style={{textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)', }}
